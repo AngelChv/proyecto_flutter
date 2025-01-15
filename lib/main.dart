@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_flutter/theme/theme_constants.dart';
+import 'package:proyecto_flutter/theme/theme_manager.dart';
 import 'package:proyecto_flutter/ui/screens/abstract_screen.dart';
 import 'package:proyecto_flutter/ui/screens/films_screen.dart';
 import 'package:proyecto_flutter/ui/screens/lists_screen.dart';
@@ -8,17 +10,46 @@ void main() {
   runApp(const App());
 }
 
-class App extends StatelessWidget {
+final ThemeManager _themeManager = ThemeManager();
+
+class App extends StatefulWidget {
   const App({super.key});
+
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  // todo usar provider en lugar de esto:
+
+  themeListener() {
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  @override
+  void initState() {
+    _themeManager.addListener(themeListener);
+    super.initState();
+  }
+
+
+  @override
+  void dispose() {
+    _themeManager.removeListener(themeListener);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Filmoteca',
-      theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)),
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: _themeManager.themeMode,
       home: Home(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -43,11 +74,25 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme
+            .of(context)
+            .appBarTheme
+            .backgroundColor,
         title: Text(_screens[_currentPageIndex].title), // TODO: usar provider
+        // TODO: añadir actions (buscar...)
+        actions: [
+          Switch(
+            value: _themeManager.themeMode == ThemeMode.dark,
+            onChanged: (newValue) => _themeManager.toggleTheme(newValue),
+          )
+        ],
       ),
       body: Row(
         children: [
-          if (MediaQuery.of(context).size.width >= 640)
+          if (MediaQuery
+              .of(context)
+              .size
+              .width >= 640)
             NavigationRail(
               destinations: _screens.map((screen) {
                 return NavigationRailDestination(
@@ -69,21 +114,24 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      bottomNavigationBar: (MediaQuery.of(context).size.width < 640)
+      bottomNavigationBar: (MediaQuery
+          .of(context)
+          .size
+          .width < 640)
           ? NavigationBar(
-              selectedIndex: _currentPageIndex,
-              destinations: _screens.map((screen) {
-                return NavigationDestination(
-                  icon: Icon(screen.icon),
-                  label: screen.title,
-                );
-              }).toList(),
-              onDestinationSelected: (int index) {
-                setState(() {
-                  _currentPageIndex = index;
-                });
-              },
-            )
+        selectedIndex: _currentPageIndex,
+        destinations: _screens.map((screen) {
+          return NavigationDestination(
+            icon: Icon(screen.icon),
+            label: screen.title,
+          );
+        }).toList(),
+        onDestinationSelected: (int index) {
+          setState(() {
+            _currentPageIndex = index;
+          });
+        },
+      )
           : null,
     );
   }

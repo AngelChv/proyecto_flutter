@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_flutter/ui/screens/abstract_screen.dart';
 
-class ListsScreen extends StatelessWidget {
-  static const title = "Listas";
-  static const icon = Icons.list_alt_rounded;
+class ListsScreen extends StatelessWidget implements AbstractScreen {
+  @override
+  final title = "Listas";
+  @override
+  final icon = Icons.list;
   const ListsScreen({super.key});
 
   @override

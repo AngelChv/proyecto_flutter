@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_flutter/ui/screens/abstract_screen.dart';
 import 'package:proyecto_flutter/ui/screens/films_screen.dart';
 import 'package:proyecto_flutter/ui/screens/lists_screen.dart';
 import 'package:proyecto_flutter/ui/screens/profile_screen.dart';
@@ -30,30 +31,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final List<Widget> _screens = [
+  final List<AbstractScreen> _screens = [
     FilmsScreen(),
     ListsScreen(),
     ProfileScreen(),
-  ];
-
-  final List<NavigationDestination> _navigations = [
-    // Películas
-    NavigationDestination(
-      icon: Icon(Icons.movie),
-      label: "Películas",
-    ),
-
-    // Listas
-    NavigationDestination(
-      icon: Icon(Icons.list),
-      label: "Listas",
-    ),
-
-    // Perfil
-    NavigationDestination(
-      icon: Icon(Icons.person),
-      label: "Perfil",
-    ),
   ];
 
   int _currentPageIndex = 0;
@@ -62,18 +43,48 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_navigations[_currentPageIndex].label), // TODO: usar provider
+        title: Text(_screens[_currentPageIndex].title), // TODO: usar provider
       ),
-      body: _screens[_currentPageIndex],
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _currentPageIndex,
-        destinations: _navigations,
-        onDestinationSelected: (int index) {
-          setState(() {
-            _currentPageIndex = index;
-          });
-        },
+      body: Row(
+        children: [
+          if (MediaQuery.of(context).size.width >= 640)
+            NavigationRail(
+              destinations: _screens.map((screen) {
+                return NavigationRailDestination(
+                  icon: Icon(screen.icon),
+                  label: Text(screen.title),
+                );
+              }).toList(),
+              selectedIndex: _currentPageIndex,
+              onDestinationSelected: (index) {
+                setState(() {
+                  _currentPageIndex = index;
+                });
+              },
+            ),
+
+          // Screen
+          Expanded(
+            child: _screens[_currentPageIndex] as Widget,
+          ),
+        ],
       ),
+      bottomNavigationBar: (MediaQuery.of(context).size.width < 640)
+          ? NavigationBar(
+              selectedIndex: _currentPageIndex,
+              destinations: _screens.map((screen) {
+                return NavigationDestination(
+                  icon: Icon(screen.icon),
+                  label: screen.title,
+                );
+              }).toList(),
+              onDestinationSelected: (int index) {
+                setState(() {
+                  _currentPageIndex = index;
+                });
+              },
+            )
+          : null,
     );
   }
 }

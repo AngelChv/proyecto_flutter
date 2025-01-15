@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_flutter/ui/screens/abstract_screen.dart';
 
-class ProfileScreen extends StatelessWidget {
-  static const title = "Perfil";
-  static const icon = Icons.person_2_rounded;
+class ProfileScreen extends StatelessWidget implements AbstractScreen {
+  @override
+  final title = "Perfil";
+  @override
+  final icon = Icons.person;
   const ProfileScreen({super.key});
 
   @override

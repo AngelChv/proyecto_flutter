@@ -8,6 +8,10 @@ class ListsScreen extends StatelessWidget implements AbstractScreen {
   final icon = Icons.list;
   @override
   final appBarActions = const [];
+  @override
+  floatingActionButton(_) {
+    return null;
+  }
 
   const ListsScreen({super.key});
 

@@ -32,10 +32,11 @@ class SqliteManager {
     final dbPath = join(await factory.getDatabasesPath(), 'film.db');
     _db = await factory.openDatabase(dbPath);
     // Crear tablas si no existen:
-    _dataDefinition();
-    //_sampleData();
+    await _dataDefinition();
+    //await _sampleData();
     return _db;
   }
+
 
   /// Crea las tablas si no existen
   static Future<void> _dataDefinition() async {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:proyecto_flutter/data/model/sqlite_manager.dart';
 import 'package:proyecto_flutter/ui/core/view_model/app_view_model.dart';
 import 'package:proyecto_flutter/ui/core/theme/theme_constants.dart';
 import 'package:proyecto_flutter/ui/core/widgets/abstract_screen.dart';
@@ -10,7 +9,6 @@ import 'package:proyecto_flutter/ui/profile/view_model/profile_view_model.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  SqliteManager.startDb();
 
   runApp(MultiProvider(
     providers: [
@@ -62,7 +60,7 @@ class _HomeState extends State<Home> {
    super.initState();
    // Leer solo una vez el valor, ya que es inmutable.
    screens = context.read<AppViewModel>().screens;
-   changePage = context.read<AppViewModel>().changePage;
+   changePage = context.read<AppViewModel>().changeNavigationPage;
   }
 
   @override
@@ -70,8 +68,8 @@ class _HomeState extends State<Home> {
     // todo: mover el switch a la configuración
     final profileVieModel = context.watch<ProfileViewModel>();
 
+    final currentPage = context.watch<AppViewModel>().currentPage;
     final currentPageIndex = context.watch<AppViewModel>().currentPageIndex;
-    final currentPage = screens[currentPageIndex];
 
     return Scaffold(
       appBar: AppBar(
@@ -112,6 +110,9 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
+
+      floatingActionButton: currentPage.floatingActionButton(context),
+
       bottomNavigationBar: (MediaQuery.of(context).size.width < 640)
           ? NavigationBar(
               selectedIndex: currentPageIndex,

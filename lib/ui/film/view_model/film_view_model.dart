@@ -14,4 +14,9 @@ class FilmViewModel extends ChangeNotifier {
       notifyListeners();
     });
   }
+
+  createFilm() {
+
+    notifyListeners();
+  }
 }

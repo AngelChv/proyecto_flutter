@@ -8,6 +8,10 @@ class ProfileScreen extends StatelessWidget implements AbstractScreen {
   final icon = Icons.person;
   @override
   final appBarActions = const [];
+  @override
+  floatingActionButton(_) {
+    return null;
+  }
 
   const ProfileScreen({super.key});
 

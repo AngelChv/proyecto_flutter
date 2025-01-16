@@ -15,8 +15,21 @@ class AppViewModel extends ChangeNotifier {
   int _currentPageIndex = 0;
   int get currentPageIndex => _currentPageIndex;
 
-  void changePage(int value) {
+  late AbstractScreen _currentPage;
+  AbstractScreen get currentPage => _currentPage;
+
+  AppViewModel() {
+    _currentPage = _screens.first;
+  }
+
+  void changeNavigationPage(int value) {
     _currentPageIndex = value;
+    _currentPage = _screens[value];
+    notifyListeners();
+  }
+
+  void changePage(AbstractScreen screen) {
+    _currentPage = screen;
     notifyListeners();
   }
 }

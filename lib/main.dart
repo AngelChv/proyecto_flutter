@@ -34,7 +34,6 @@ class _AppState extends State<App> {
     super.initState();
   }
 
-
   @override
   void dispose() {
     _themeManager.removeListener(themeListener);
@@ -74,25 +73,28 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme
-            .of(context)
-            .appBarTheme
-            .backgroundColor,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         title: Text(_screens[_currentPageIndex].title), // TODO: usar provider
         // TODO: añadir actions (buscar...)
         actions: [
+          // Actions establecidos en la página actual
+          // Se usa el operador ... para separar una lista en elementos individuales.
+          // como puede ser nulo se usa ?
+          ...?_screens[_currentPageIndex].appBarActions,
           Switch(
             value: _themeManager.themeMode == ThemeMode.dark,
             onChanged: (newValue) => _themeManager.toggleTheme(newValue),
           )
         ],
+/*
+        [
+
+        ],
+*/
       ),
       body: Row(
         children: [
-          if (MediaQuery
-              .of(context)
-              .size
-              .width >= 640)
+          if (MediaQuery.of(context).size.width >= 640)
             NavigationRail(
               destinations: _screens.map((screen) {
                 return NavigationRailDestination(
@@ -114,24 +116,21 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      bottomNavigationBar: (MediaQuery
-          .of(context)
-          .size
-          .width < 640)
+      bottomNavigationBar: (MediaQuery.of(context).size.width < 640)
           ? NavigationBar(
-        selectedIndex: _currentPageIndex,
-        destinations: _screens.map((screen) {
-          return NavigationDestination(
-            icon: Icon(screen.icon),
-            label: screen.title,
-          );
-        }).toList(),
-        onDestinationSelected: (int index) {
-          setState(() {
-            _currentPageIndex = index;
-          });
-        },
-      )
+              selectedIndex: _currentPageIndex,
+              destinations: _screens.map((screen) {
+                return NavigationDestination(
+                  icon: Icon(screen.icon),
+                  label: screen.title,
+                );
+              }).toList(),
+              onDestinationSelected: (int index) {
+                setState(() {
+                  _currentPageIndex = index;
+                });
+              },
+            )
           : null,
     );
   }

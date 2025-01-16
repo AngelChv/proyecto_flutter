@@ -6,6 +6,11 @@ class FilmsScreen extends StatelessWidget implements AbstractScreen {
   final title = "Películas";
   @override
   final icon = Icons.local_movies;
+  @override
+  final appBarActions = const [
+    Icon(Icons.search),
+  ];
+
   const FilmsScreen({super.key});
 
   @override

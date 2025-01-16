@@ -6,6 +6,9 @@ class ProfileScreen extends StatelessWidget implements AbstractScreen {
   final title = "Perfil";
   @override
   final icon = Icons.person;
+  @override
+  final appBarActions = const [];
+
   const ProfileScreen({super.key});
 
   @override

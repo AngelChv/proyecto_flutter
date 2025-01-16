@@ -6,6 +6,9 @@ class ListsScreen extends StatelessWidget implements AbstractScreen {
   final title = "Listas";
   @override
   final icon = Icons.list;
+  @override
+  final appBarActions = const [];
+
   const ListsScreen({super.key});
 
   @override

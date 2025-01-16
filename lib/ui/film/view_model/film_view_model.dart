@@ -15,8 +15,10 @@ class FilmViewModel extends ChangeNotifier {
     });
   }
 
-  createFilm() {
-
+  createFilm(Film film) {
+    filmRepository.insert(film);
+    // todo realizar comprobaciones
+    _films.add(film);
     notifyListeners();
   }
 }

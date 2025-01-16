@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_flutter/domain/models/film.dart';
 
 class FilmViewModel extends ChangeNotifier {
   // Código provisional.
-  final List<String> _films = [];
-  List<String> get films => List.unmodifiable(_films);
+  final List<Film> _films = List.generate(1000, (index) {
+    return Film(
+      title: "Title-$index",
+      director: "Director-$index",
+      year: index,
+      duration: Duration(minutes: index),
+      description: "Descripción",
+      posterPath: "https://placehold.co/900x1600/png",
+    );
+  });
 
-  void addFilm(String film) {
-    _films.add(film);
-    notifyListeners();
-  }
-
-  void removeFilm(String film) {
-    _films.remove(film);
-    notifyListeners();
-  }
+  List<Film> get films => List.unmodifiable(_films);
 }
-

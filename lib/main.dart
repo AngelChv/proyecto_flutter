@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto_flutter/theme/theme_constants.dart';
-import 'package:proyecto_flutter/theme/theme_manager.dart';
-import 'package:proyecto_flutter/ui/screens/abstract_screen.dart';
-import 'package:proyecto_flutter/ui/screens/films_screen.dart';
-import 'package:proyecto_flutter/ui/screens/lists_screen.dart';
-import 'package:proyecto_flutter/ui/screens/profile_screen.dart';
+import 'package:proyecto_flutter/ui/core/widgets/abstract_screen.dart';
+import 'package:proyecto_flutter/ui/core/theme/theme_constants.dart';
+import 'package:proyecto_flutter/ui/core/theme/theme_manager.dart';
+import 'package:proyecto_flutter/ui/film/widgets/films_screen.dart';
+import 'package:proyecto_flutter/ui/list/widgets/lists_screen.dart';
+import 'package:proyecto_flutter/ui/profile/widgets/profile_screen.dart';
 
 void main() {
   runApp(const App());
@@ -86,11 +86,6 @@ class _HomeState extends State<Home> {
             onChanged: (newValue) => _themeManager.toggleTheme(newValue),
           )
         ],
-/*
-        [
-
-        ],
-*/
       ),
       body: Row(
         children: [

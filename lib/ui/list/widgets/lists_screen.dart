@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto_flutter/ui/screens/abstract_screen.dart';
+import 'package:proyecto_flutter/ui/core/widgets/abstract_screen.dart';
 
 class ListsScreen extends StatelessWidget implements AbstractScreen {
   @override

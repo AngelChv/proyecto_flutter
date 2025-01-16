@@ -2,19 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_flutter/ui/core/view_model/app_view_model.dart';
 import 'package:proyecto_flutter/ui/core/theme/theme_constants.dart';
-import 'package:proyecto_flutter/ui/core/theme/theme_manager.dart';
 import 'package:proyecto_flutter/ui/core/widgets/abstract_screen.dart';
+import 'package:proyecto_flutter/ui/profile/view_model/profile_view_model.dart';
 
 void main() {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => AppViewModel()),
+      ChangeNotifierProvider(create: (_) => ProfileViewModel()),
     ],
     child: const App(),
   ));
 }
-
-final ThemeManager _themeManager = ThemeManager();
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -24,33 +23,15 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  // todo usar provider en lugar de esto:
-
-  themeListener() {
-    if (mounted) {
-      setState(() {});
-    }
-  }
-
-  @override
-  void initState() {
-    _themeManager.addListener(themeListener);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _themeManager.removeListener(themeListener);
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final themeMode = context.watch<ProfileViewModel>().themeMode;
+
     return MaterialApp(
       title: 'Filmoteca',
       theme: lightTheme,
       darkTheme: darkTheme,
-      themeMode: _themeManager.themeMode,
+      themeMode: themeMode,
       home: Home(),
       debugShowCheckedModeBanner: false,
     );
@@ -78,6 +59,9 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    // todo: mover el switch a la configuración
+    final profileVieModel = context.watch<ProfileViewModel>();
+
     final currentPageIndex = context.watch<AppViewModel>().currentPageIndex;
     final currentPage = screens[currentPageIndex];
 
@@ -93,8 +77,8 @@ class _HomeState extends State<Home> {
           ...?currentPage.appBarActions,
 
           Switch(
-            value: _themeManager.themeMode == ThemeMode.dark,
-            onChanged: (newValue) => _themeManager.toggleTheme(newValue),
+            value: profileVieModel.themeMode == ThemeMode.dark,
+            onChanged: (newValue) => profileVieModel.toggleTheme(newValue),
           )
         ],
       ),

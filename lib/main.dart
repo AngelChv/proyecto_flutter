@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto_flutter/ui/core/widgets/abstract_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:proyecto_flutter/ui/core/view_model/app_view_model.dart';
 import 'package:proyecto_flutter/ui/core/theme/theme_constants.dart';
 import 'package:proyecto_flutter/ui/core/theme/theme_manager.dart';
-import 'package:proyecto_flutter/ui/film/widgets/films_screen.dart';
-import 'package:proyecto_flutter/ui/list/widgets/lists_screen.dart';
-import 'package:proyecto_flutter/ui/profile/widgets/profile_screen.dart';
+import 'package:proyecto_flutter/ui/core/widgets/abstract_screen.dart';
 
 void main() {
-  runApp(const App());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => AppViewModel()),
+    ],
+    child: const App(),
+  ));
 }
 
 final ThemeManager _themeManager = ThemeManager();
@@ -61,26 +65,33 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final List<AbstractScreen> _screens = [
-    FilmsScreen(),
-    ListsScreen(),
-    ProfileScreen(),
-  ];
+  late final List<AbstractScreen> screens;
+  late void Function(int) changePage;
 
-  int _currentPageIndex = 0;
+  @override
+  void initState() {
+   super.initState();
+   // Leer solo una vez el valor, ya que es inmutable.
+   screens = context.read<AppViewModel>().screens;
+   changePage = context.read<AppViewModel>().changePage;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final currentPageIndex = context.watch<AppViewModel>().currentPageIndex;
+    final currentPage = screens[currentPageIndex];
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-        title: Text(_screens[_currentPageIndex].title), // TODO: usar provider
+        title: Text(currentPage.title),
         // TODO: añadir actions (buscar...)
         actions: [
           // Actions establecidos en la página actual
           // Se usa el operador ... para separar una lista en elementos individuales.
           // como puede ser nulo se usa ?
-          ...?_screens[_currentPageIndex].appBarActions,
+          ...?currentPage.appBarActions,
+
           Switch(
             value: _themeManager.themeMode == ThemeMode.dark,
             onChanged: (newValue) => _themeManager.toggleTheme(newValue),
@@ -91,39 +102,35 @@ class _HomeState extends State<Home> {
         children: [
           if (MediaQuery.of(context).size.width >= 640)
             NavigationRail(
-              destinations: _screens.map((screen) {
+              destinations: screens.map((screen) {
                 return NavigationRailDestination(
                   icon: Icon(screen.icon),
                   label: Text(screen.title),
                 );
               }).toList(),
-              selectedIndex: _currentPageIndex,
+              selectedIndex: currentPageIndex,
               onDestinationSelected: (index) {
-                setState(() {
-                  _currentPageIndex = index;
-                });
+                changePage(index);
               },
             ),
 
           // Screen
           Expanded(
-            child: _screens[_currentPageIndex] as Widget,
+            child: currentPage as Widget,
           ),
         ],
       ),
       bottomNavigationBar: (MediaQuery.of(context).size.width < 640)
           ? NavigationBar(
-              selectedIndex: _currentPageIndex,
-              destinations: _screens.map((screen) {
+              selectedIndex: currentPageIndex,
+              destinations: screens.map((screen) {
                 return NavigationDestination(
                   icon: Icon(screen.icon),
                   label: screen.title,
                 );
               }).toList(),
               onDestinationSelected: (int index) {
-                setState(() {
-                  _currentPageIndex = index;
-                });
+                changePage(index);
               },
             )
           : null,

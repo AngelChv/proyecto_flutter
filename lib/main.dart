@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:proyecto_flutter/data/model/sqlite_manager.dart';
 import 'package:proyecto_flutter/ui/core/view_model/app_view_model.dart';
 import 'package:proyecto_flutter/ui/core/theme/theme_constants.dart';
 import 'package:proyecto_flutter/ui/core/widgets/abstract_screen.dart';
@@ -8,6 +9,9 @@ import 'package:proyecto_flutter/ui/list/view_model/list_view_model.dart';
 import 'package:proyecto_flutter/ui/profile/view_model/profile_view_model.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SqliteManager.startDb();
+
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => AppViewModel()),

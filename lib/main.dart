@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:proyecto_flutter/ui/core/view_model/app_view_model.dart';
-import 'package:proyecto_flutter/ui/core/theme/theme_constants.dart';
-import 'package:proyecto_flutter/ui/core/widgets/abstract_screen.dart';
-import 'package:proyecto_flutter/ui/film/view_model/film_view_model.dart';
-import 'package:proyecto_flutter/ui/list/view_model/list_view_model.dart';
-import 'package:proyecto_flutter/ui/profile/view_model/profile_view_model.dart';
+import 'package:proyecto_flutter/core/presentation/view_model/app_view_model.dart';
+import 'package:proyecto_flutter/core/presentation/theme/theme_constants.dart';
+import 'package:proyecto_flutter/core/presentation/widgets/abstract_screen.dart';
+import 'package:proyecto_flutter/film/presentation/view_model/film_view_model.dart';
+import 'package:proyecto_flutter/list/presentation/view_model/list_view_model.dart';
+import 'package:proyecto_flutter/profile/presentation/view_model/profile_view_model.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:proyecto_flutter/core/presentation/go_router_config.dart';
 import 'package:proyecto_flutter/core/presentation/view_model/app_view_model.dart';
 import 'package:proyecto_flutter/core/presentation/theme/theme_constants.dart';
 import 'package:proyecto_flutter/core/presentation/widgets/abstract_screen.dart';
@@ -33,12 +34,12 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     final themeMode = context.watch<ProfileViewModel>().themeMode;
 
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Filmoteca',
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: themeMode,
-      home: Home(),
+      routerConfig: routerConfig,
       debugShowCheckedModeBanner: false,
     );
   }

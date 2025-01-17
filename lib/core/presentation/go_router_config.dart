@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:proyecto_flutter/core/domain/app_routes.dart';
 import 'package:proyecto_flutter/core/presentation/widgets/scaffold_with_nested_navigation.dart';
+import 'package:proyecto_flutter/film/presentation/widgets/film_form_screen.dart';
 import 'package:proyecto_flutter/film/presentation/widgets/films_screen.dart';
 import 'package:proyecto_flutter/list/presentation/widgets/lists_screen.dart';
 import 'package:proyecto_flutter/profile/presentation/widgets/profile_screen.dart';
@@ -36,7 +38,7 @@ final GlobalKey<NavigatorState> _shellNavigatorProfileKey =
 /// Funciona en base a rutas, permite redirección, protección, pasar parámetros
 /// y rutas anidadas.
 final GoRouter routerConfig = GoRouter(
-  initialLocation: '/films',
+  initialLocation: AppRoutes.films,
   navigatorKey: _rootNavigatorKey,
   routes: [
     StatefulShellRoute.indexedStack(
@@ -49,10 +51,18 @@ final GoRouter routerConfig = GoRouter(
           navigatorKey: _shellNavigatorFilmKey,
           routes: [
             GoRoute(
-              path: '/films',
+              path: AppRoutes.films,
               pageBuilder: (context, state) => const NoTransitionPage(
                 child: FilmsScreen(),
               ),
+              routes: [
+                GoRoute(
+                  path: AppRoutes.addFilm.toRelativeRoute(),
+                  // Importante las subpáginas se deben construir
+                  // con builder no Pagebuilder
+                  builder: (context, state) => const FilmFormScreen(),
+                ),
+              ],
             ),
           ],
         ),
@@ -61,7 +71,7 @@ final GoRouter routerConfig = GoRouter(
           navigatorKey: _shellNavigatorListKey,
           routes: [
             GoRoute(
-              path: '/lists',
+              path: AppRoutes.lists,
               pageBuilder: (context, state) => const NoTransitionPage(
                 child: ListsScreen(),
               ),
@@ -73,7 +83,7 @@ final GoRouter routerConfig = GoRouter(
           navigatorKey: _shellNavigatorProfileKey,
           routes: [
             GoRoute(
-              path: '/profile',
+              path: AppRoutes.profile,
               pageBuilder: (context, state) => const NoTransitionPage(
                 child: ProfileScreen(),
               ),

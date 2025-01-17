@@ -1,18 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto_flutter/core/presentation/widgets/abstract_screen.dart';
 
-class ProfileScreen extends StatelessWidget implements AbstractScreen {
-  @override
-  final title = "Perfil";
-  @override
-  final icon = Icons.person;
-  @override
-  final appBarActions = const [];
-  @override
-  floatingActionButton(_) {
-    return null;
-  }
-
+class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override

@@ -8,6 +8,13 @@ class FilmViewModel extends ChangeNotifier {
   List<Film> _films = [];
   List<Film> get films => List.unmodifiable(_films);
 
+  Film? _selectedFilm;
+  Film? get selectedFilm => _selectedFilm;
+  selectFilm(Film filmToSelect) {
+    _selectedFilm = filmToSelect;
+    notifyListeners();
+  }
+
   FilmViewModel() {
     filmRepository.getAll().then((result) {
       _films = result;

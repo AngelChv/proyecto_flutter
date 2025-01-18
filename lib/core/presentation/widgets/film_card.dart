@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../film/domain/film.dart';
+import '../../../film/presentation/view_model/film_view_model.dart';
 
 class FilmCard extends StatelessWidget {
   const FilmCard({
@@ -21,6 +23,7 @@ class FilmCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        context.read<FilmViewModel>().selectFilm(_film);
         _onTap!(_film);
       },
       onLongPress: () {

@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_flutter/core/presentation/style_constants.dart';
 import 'package:proyecto_flutter/core/presentation/widgets/film_card.dart';
@@ -25,7 +26,11 @@ class FilmDetailsScreen extends StatelessWidget {
           ),
           IconButton(
             tooltip: "Borrar película",
-            onPressed: () {},
+            onPressed: () async {
+              if (await context.read<FilmViewModel>().deleteFilm(film)) {
+                GoRouter.of(context).pop();
+              }
+            },
             icon: Icon(Icons.delete),
           ),
         ],

@@ -34,4 +34,13 @@ class FilmViewModel extends ChangeNotifier {
     notifyListeners();
     return isSuccess;
   }
+
+  Future<bool> deleteFilm(Film film) async {
+    if (await filmRepository.delete(film.id!)) {
+      _films.remove(film);
+      notifyListeners();
+      return true;
+    }
+    return false;
+  }
 }

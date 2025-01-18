@@ -5,9 +5,18 @@ import '../../../film/domain/film.dart';
 import 'film_card.dart';
 
 class FilmsGrid extends StatelessWidget {
-  const FilmsGrid({super.key, required films}) : _films = films;
+  const FilmsGrid({
+    super.key,
+    required films,
+    void Function(Film film)? onFilmTap,
+    void Function(Film film)? onFilmLongPress,
+  })  : _onFilmLongPress = onFilmLongPress,
+        _onFilmTap = onFilmTap,
+        _films = films;
 
   final List<Film> _films;
+  final void Function(Film film)? _onFilmTap;
+  final void Function(Film film)? _onFilmLongPress;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +33,8 @@ class FilmsGrid extends StatelessWidget {
       itemCount: _films.length,
       itemBuilder: (context, index) {
         return FilmCard(
+          onTap: _onFilmTap,
+          onLongPress: _onFilmLongPress,
           film: _films[index],
         );
       },

@@ -18,7 +18,15 @@ class FilmsScreen extends StatelessWidget {
         title: Text("Películas"),
         // TODO: añadir actions (buscar...)
       ),
-      body: FilmsGrid(films: films),
+      body: FilmsGrid(
+        onFilmTap: (film) {
+          GoRouter.of(context).go(AppRoutes.filmDetails);
+        },
+        onFilmLongPress: (film) {
+          print("Longpress");
+        },
+        films: films,
+      ),
       floatingActionButton: FloatingActionButton(
         tooltip: "Crear película",
         onPressed: () {

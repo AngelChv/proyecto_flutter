@@ -5,25 +5,40 @@ import '../../../film/domain/film.dart';
 class FilmCard extends StatelessWidget {
   const FilmCard({
     super.key,
-    required this.film,
-  });
+    required Film film,
+    void Function(Film film)? onTap,
+    void Function(Film film)? onLongPress,
+  })  : _film = film,
+        _onLongPress = onLongPress,
+        _onTap = onTap;
 
-  final Film film;
+  final void Function(Film film)? _onTap;
+  final void Function(Film film)? _onLongPress;
+
+  final Film _film;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AspectRatio(
-            aspectRatio: 9 / 16,
-            child: Poster(
-              imagePath: film.posterPath,
+    return GestureDetector(
+      onTap: () {
+        _onTap!(_film);
+      },
+      onLongPress: () {
+        _onLongPress!(_film);
+      },
+      child: Card(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AspectRatio(
+              aspectRatio: 9 / 16,
+              child: Poster(
+                imagePath: _film.posterPath,
+              ),
             ),
-          ),
-          Expanded(child: FilmInfo(film: film)),
-        ],
+            Expanded(child: FilmInfo(film: _film)),
+          ],
+        ),
       ),
     );
   }

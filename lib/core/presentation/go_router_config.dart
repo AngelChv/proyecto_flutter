@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:proyecto_flutter/core/domain/app_routes.dart';
 import 'package:proyecto_flutter/core/presentation/widgets/scaffold_with_nested_navigation.dart';
+import 'package:proyecto_flutter/film/presentation/widgets/film_details_screen.dart';
 import 'package:proyecto_flutter/film/presentation/widgets/film_form_screen.dart';
 import 'package:proyecto_flutter/film/presentation/widgets/films_screen.dart';
 import 'package:proyecto_flutter/list/presentation/widgets/lists_screen.dart';
@@ -59,11 +60,17 @@ final GoRouter routerConfig = GoRouter(
                 child: FilmsScreen(),
               ),
               routes: [
+                // AddFilm
                 GoRoute(
                   path: AppRoutes.addFilm.toRelativeRoute(),
                   // Importante las subpáginas se deben construir
                   // con builder no Pagebuilder
                   builder: (context, state) => const FilmFormScreen(),
+                ),
+                // FilmDetails
+                GoRoute(
+                  path: AppRoutes.filmDetails.toRelativeRoute(),
+                  builder: (context, state) => const FilmDetailsScreen(),
                 ),
               ],
             ),

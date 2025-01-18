@@ -14,6 +14,7 @@ class ListsScreen extends StatelessWidget {
         onPressed: () {
           // todo
         },
+        // TODO: icono de añadir lista, en lugar de add genérico.
         child: Icon(Icons.add),
       ),
     );

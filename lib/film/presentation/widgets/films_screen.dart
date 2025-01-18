@@ -20,6 +20,7 @@ class FilmsScreen extends StatelessWidget {
       ),
       body: FilmsGrid(films: films),
       floatingActionButton: FloatingActionButton(
+        tooltip: "Crear película",
         onPressed: () {
           GoRouter.of(context).go(AppRoutes.addFilm);
         },

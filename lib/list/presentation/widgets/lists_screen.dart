@@ -11,6 +11,7 @@ class ListsScreen extends StatelessWidget {
       ),
       body: const Placeholder(),
       floatingActionButton: FloatingActionButton(
+        tooltip: "Crear lista",
         onPressed: () {
           // todo
         },

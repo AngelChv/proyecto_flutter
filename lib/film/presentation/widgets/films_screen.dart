@@ -14,7 +14,6 @@ class FilmsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         // TODO: usar un recurso para el string
         title: Text("Películas"),
         // TODO: añadir actions (buscar...)

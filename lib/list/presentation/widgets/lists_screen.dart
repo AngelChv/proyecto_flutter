@@ -5,6 +5,17 @@ class ListsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Listas"),
+      ),
+      body: const Placeholder(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // todo
+        },
+        child: Icon(Icons.add),
+      ),
+    );
   }
 }

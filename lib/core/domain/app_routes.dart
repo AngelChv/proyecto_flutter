@@ -12,7 +12,7 @@ abstract class AppRoutes {
   static const String addFilmsToList = '/lists/details/addFilmsToList';
 
   static const String profile = '/profile';
-  static const String profileSettings = '/profile/settings';
+  static const String settingsMenu = '/profile/settings';
   static const String generalSettings = '/profile/settings/general';
   static const String userSettings = '/profile/settings/user';
 }

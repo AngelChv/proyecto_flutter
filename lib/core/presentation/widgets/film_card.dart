@@ -45,14 +45,23 @@ class FilmInfo extends StatelessWidget {
         spacing: 4,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(film.title, style: Theme.of(context).textTheme.headlineLarge),
-          Text(film.director),
+          Text(
+            film.title,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
+          Text(
+            film.director,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
           YearDurationText(year: film.year, duration: film.duration),
           const Divider(),
           Flexible(
             child: Text(
               film.description,
-              overflow: TextOverflow.fade,
               softWrap: true,
             ),
           ),

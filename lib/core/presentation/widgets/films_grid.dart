@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_flutter/core/presentation/style_constants.dart';
 
 import '../../../film/domain/film.dart';
 import 'film_card.dart';
@@ -10,8 +11,9 @@ class FilmsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isWideScreen = MediaQuery.of(context).size.width >= 600;
     return GridView.builder(
-      padding: EdgeInsets.all(16),
+      padding: isWideScreen ? mediumMargin : compactMargin,
       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 600, // Ancho máximo de cada tarjeta
         childAspectRatio: 3 / 2,

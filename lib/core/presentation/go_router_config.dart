@@ -5,7 +5,9 @@ import 'package:proyecto_flutter/core/presentation/widgets/scaffold_with_nested_
 import 'package:proyecto_flutter/film/presentation/widgets/film_form_screen.dart';
 import 'package:proyecto_flutter/film/presentation/widgets/films_screen.dart';
 import 'package:proyecto_flutter/list/presentation/widgets/lists_screen.dart';
+import 'package:proyecto_flutter/profile/presentation/widgets/general_settings_screen.dart';
 import 'package:proyecto_flutter/profile/presentation/widgets/profile_screen.dart';
+import 'package:proyecto_flutter/profile/presentation/widgets/settings_menu_screen.dart';
 
 /// Clave única del Gestor de rutas raíz de la app.
 ///
@@ -87,6 +89,22 @@ final GoRouter routerConfig = GoRouter(
               pageBuilder: (context, state) => const NoTransitionPage(
                 child: ProfileScreen(),
               ),
+              routes: [
+                GoRoute(
+                  path: AppRoutes.settingsMenu.toRelativeRoute(),
+                  // Importante las subpáginas se deben construir
+                  // con builder no Pagebuilder
+                  builder: (context, state) => const SettingsMenuScreen(),
+                  routes: [
+                    GoRoute(
+                      path: AppRoutes.generalSettings.toRelativeRoute(),
+                      // Importante las subpáginas se deben construir
+                      // con builder no Pagebuilder
+                      builder: (context, state) => const GeneralSettingsScreen(),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ],
         ),

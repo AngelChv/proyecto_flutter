@@ -1,5 +1,7 @@
 abstract class AppRoutes {
-  // TODO: comprobar si es necesario la ruta raiz "/"
+  // TODO: comprobar si es necesario la ruta raíz "/"
+  // Puede que reestructure los subniveles, quizá no es necesario que
+  // haya 3 niveles.
   static const String films = '/films';
   static const String addFilm = '/films/addFilm';
   static const String filmDetails = '/films/details';

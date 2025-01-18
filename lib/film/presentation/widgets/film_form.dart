@@ -1,25 +1,33 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-
 import '../../domain/film.dart';
 
-class FilmForm extends StatefulWidget {
-  const FilmForm({super.key, required this.onCompleteForm});
-
-  final void Function(Film film) onCompleteForm;
-
-  @override
-  State<FilmForm> createState() => _FilmFormState();
-}
-
-class _FilmFormState extends State<FilmForm> {
-  final _formKey = GlobalKey<FormState>();
+class FilmForm extends StatelessWidget {
+  final GlobalKey<FormState> _formKey;
   final _titleController = TextEditingController();
   final _directorController = TextEditingController();
   final _yearController = TextEditingController();
-  int? _year;
   final _descriptionController = TextEditingController();
+  get directorController => _directorController;
+  get yearController => _yearController;
+  get descriptionController => _descriptionController;
+  get titleController => _titleController;
+
+  FilmForm(this._formKey, {super.key});
+
+  Film? submit() {
+    Film? film;
+    if (_formKey.currentState!.validate()) {
+      film = Film(
+        title: _titleController.text,
+        director: _directorController.text,
+        year: int.parse(_yearController.text.toString()),
+        duration: Duration(minutes: 1),
+        description: _descriptionController.text,
+        posterPath: "https://placehold.co/900x1600/png",
+      );
+    }
+    return film;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,8 +76,8 @@ class _FilmFormState extends State<FilmForm> {
               if (value == null || value.isEmpty) {
                 return "Introduzca el año de estreno";
               }
-              _year = int.tryParse(value);
-              if (_year == null || _year! < 1895 || _year! > DateTime.now().year) {
+              final year = int.tryParse(value);
+              if (year == null || year < 1895 || year > DateTime.now().year) {
                 return 'Por favor ingrese un año válido entre 1895 y ${DateTime.now().year}';
               }
               return null;
@@ -82,30 +90,16 @@ class _FilmFormState extends State<FilmForm> {
               labelText: 'Descripción',
               border: OutlineInputBorder(),
             ),
-            maxLines: 5,  // Permite hasta 5 líneas de texto
-            keyboardType: TextInputType.text,  // Permite texto libre
+            maxLines: 5,
+            // Permite hasta 5 líneas de texto
+            keyboardType: TextInputType.text,
+            // Permite texto libre
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Por favor ingrese una descripción';
               }
               return null;
             },
-          ),
-          ElevatedButton(
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                final Film film = Film(
-                  title: _titleController.text,
-                  director: _directorController.text,
-                  year: _year!,
-                  duration: Duration(minutes: 1),
-                  description: _descriptionController.text,
-                  posterPath: "https://placehold.co/900x1600/png",
-                );
-                widget.onCompleteForm(film);
-              }
-            },
-            child: const Text("Crear"),
           ),
         ],
       ),

@@ -6,6 +6,9 @@ import 'package:proyecto_flutter/film/presentation/view_model/film_view_model.da
 import 'package:proyecto_flutter/list/presentation/view_model/list_view_model.dart';
 import 'package:proyecto_flutter/profile/presentation/view_model/profile_view_model.dart';
 
+// Si se quieren manejar los snackbar de manera global
+//final scaffoldKey = GlobalKey<ScaffoldMessengerState>();
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -32,6 +35,7 @@ class _AppState extends State<App> {
     final themeMode = context.watch<ProfileViewModel>().themeMode;
 
     return MaterialApp.router(
+      //scaffoldMessengerKey: scaffoldKey,
       title: 'Filmoteca',
       theme: lightTheme,
       darkTheme: darkTheme,

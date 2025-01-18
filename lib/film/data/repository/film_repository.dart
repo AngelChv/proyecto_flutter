@@ -16,4 +16,12 @@ class FilmRepository {
   Future<int?> insert(Film film) {
     return filmService.insert(film);
   }
+
+  Future<bool> update(Film film) {
+    return filmService.update(film);
+  }
+
+  Future<bool> delete(int id) {
+    return filmService.delete(id);
+  }
 }

@@ -22,10 +22,16 @@ class FilmViewModel extends ChangeNotifier {
     });
   }
 
-  createFilm(Film film) {
-    filmRepository.insert(film);
+  Future<bool> createFilm(Film film) async {
+    final int? id = await filmRepository.insert(film);
     // todo realizar comprobaciones
-    _films.add(film);
+    bool isSuccess = false;
+    if (id != null) {
+      film.id = id;
+      _films.add(film);
+      isSuccess = true;
+    }
     notifyListeners();
+    return isSuccess;
   }
 }

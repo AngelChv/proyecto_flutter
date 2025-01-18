@@ -25,4 +25,28 @@ class FilmSqliteService implements FilmService {
     final Database? db = await SqliteManager.db;
     return await db?.insert('films', film.toMap());
   }
+
+  @override
+  Future<bool> update(Film film) async {
+    final Database? db = await SqliteManager.db;
+    final int? count = await db?.update(
+        "tasks",
+        film.toMap(),
+        where: "id = ?",
+        whereArgs: [film.id]
+    );
+
+    return count == 1;
+  }
+
+  @override
+  Future<bool> delete(int id) async {
+    final Database? db = await SqliteManager.db;
+    final int count = await db?.delete(
+        "films",
+        where: "id = ?",
+        whereArgs: [id]
+    ) ?? 0;
+    return count == 1;
+  }
 }

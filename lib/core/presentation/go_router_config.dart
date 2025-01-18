@@ -65,7 +65,7 @@ final GoRouter routerConfig = GoRouter(
                   path: AppRoutes.addFilm.toRelativeRoute(),
                   // Importante las subpáginas se deben construir
                   // con builder no Pagebuilder
-                  builder: (context, state) => const FilmFormScreen(),
+                  builder: (context, state) => FilmFormScreen(),
                 ),
                 // FilmDetails
                 GoRoute(

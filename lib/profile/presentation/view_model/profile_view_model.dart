@@ -37,6 +37,6 @@ class ProfileViewModel extends ChangeNotifier {
   get language => _language;
 
   changeLanguage(String key) {
-    _language = (_languages.containsKey(key) ? key : _language)!;
+    _language = _languages.containsKey(key) ? key : _language;
   }
 }

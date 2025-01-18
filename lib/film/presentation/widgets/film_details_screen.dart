@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +27,11 @@ class FilmDetailsScreen extends StatelessWidget {
             tooltip: "Borrar película",
             onPressed: () async {
               if (await context.read<FilmViewModel>().deleteFilm(film)) {
-                GoRouter.of(context).pop();
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Película eliminada")));
+                  GoRouter.of(context).pop();
+                }
               }
             },
             icon: Icon(Icons.delete),

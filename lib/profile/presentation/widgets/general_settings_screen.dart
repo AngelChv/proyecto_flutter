@@ -26,8 +26,9 @@ class GeneralSettingsScreen extends StatelessWidget {
         title: Text("Ajustes/General"),
       ),
       body: Padding(
-        padding: isWideScreen ? mediumMargin : compactMargin,
+        padding: EdgeInsets.all(isWideScreen ? mediumMargin : compactMargin),
         child: Column(
+          // TODO: hacerlo mas responsive para que no ocupe toda la pantalla
           children: [
             Card(
               child: ListTile(

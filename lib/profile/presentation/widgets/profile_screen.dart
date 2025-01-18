@@ -13,9 +13,14 @@ class ProfileScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("Perfil"),
         actions: [
-          IconButton(onPressed: () {
-            GoRouter.of(context).go(AppRoutes.settingsMenu);
-          }, icon: Icon(Icons.settings)),
+          IconButton(
+            padding: EdgeInsets.all(compactMargin),
+            tooltip: "Ajustes",
+            onPressed: () {
+              GoRouter.of(context).go(AppRoutes.settingsMenu);
+            },
+            icon: Icon(Icons.settings),
+          ),
         ],
       ),
       body: const Placeholder(),

@@ -15,7 +15,7 @@ class SettingsMenuScreen extends StatelessWidget {
         title: Text("Ajustes"),
       ),
       body: Padding(
-        padding: isWideScreen ? mediumMargin : compactMargin,
+        padding: EdgeInsets.all(isWideScreen ? mediumMargin : compactMargin),
         child: Column(
           children: [
             Card(
@@ -26,6 +26,17 @@ class SettingsMenuScreen extends StatelessWidget {
                 trailing: Icon(Icons.arrow_right),
                 onTap: () {
                   GoRouter.of(context).go(AppRoutes.generalSettings);
+                },
+              ),
+            ),
+            Card(
+              child: ListTile(
+                // TODO: usar recurso para el string
+                leading: Icon(Icons.person),
+                title: Text("Perfil"),
+                trailing: Icon(Icons.arrow_right),
+                onTap: () {
+                  GoRouter.of(context).go(AppRoutes.userSettings);
                 },
               ),
             ),

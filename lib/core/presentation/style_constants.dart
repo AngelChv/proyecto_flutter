@@ -1,4 +1,2 @@
-import 'package:flutter/cupertino.dart';
-
-const EdgeInsets compactMargin = EdgeInsets.all(16);
-const EdgeInsets mediumMargin = EdgeInsets.all(24);
+const double compactMargin = 16;
+const double mediumMargin = 24;

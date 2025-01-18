@@ -7,6 +7,7 @@ import 'package:proyecto_flutter/film/presentation/widgets/films_screen.dart';
 import 'package:proyecto_flutter/list/presentation/widgets/lists_screen.dart';
 import 'package:proyecto_flutter/profile/presentation/widgets/general_settings_screen.dart';
 import 'package:proyecto_flutter/profile/presentation/widgets/profile_screen.dart';
+import 'package:proyecto_flutter/profile/presentation/widgets/profile_settings_screen.dart';
 import 'package:proyecto_flutter/profile/presentation/widgets/settings_menu_screen.dart';
 
 /// Clave única del Gestor de rutas raíz de la app.
@@ -90,17 +91,17 @@ final GoRouter routerConfig = GoRouter(
                 child: ProfileScreen(),
               ),
               routes: [
-                GoRoute(
+                GoRoute( // Settings
                   path: AppRoutes.settingsMenu.toRelativeRoute(),
-                  // Importante las subpáginas se deben construir
-                  // con builder no Pagebuilder
                   builder: (context, state) => const SettingsMenuScreen(),
                   routes: [
-                    GoRoute(
+                    GoRoute( // General
                       path: AppRoutes.generalSettings.toRelativeRoute(),
-                      // Importante las subpáginas se deben construir
-                      // con builder no Pagebuilder
                       builder: (context, state) => const GeneralSettingsScreen(),
+                    ),
+                    GoRoute( // Usuario
+                      path: AppRoutes.userSettings.toRelativeRoute(),
+                      builder: (context, state) => const ProfileSettingsScreen(),
                     ),
                   ],
                 ),

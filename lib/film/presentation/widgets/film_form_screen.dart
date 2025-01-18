@@ -18,7 +18,7 @@ class FilmFormScreen extends StatelessWidget {
         title: Text("Crear Película"),
       ),
       body: Padding(
-        padding: isWideScreen ? mediumMargin : compactMargin,
+        padding: EdgeInsets.all(isWideScreen ? mediumMargin : compactMargin),
         child: FilmForm(
           onCompleteForm: (film) {
             context.read<FilmViewModel>().createFilm(film);

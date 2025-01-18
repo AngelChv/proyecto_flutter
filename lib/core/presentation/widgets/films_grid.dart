@@ -14,7 +14,7 @@ class FilmsGrid extends StatelessWidget {
     final isWideScreen = MediaQuery.of(context).size.width >= 600;
     return GridView.builder(
       // todo el margen debería estar en FilmsScreen
-      padding: isWideScreen ? mediumMargin : compactMargin,
+      padding: EdgeInsets.all(isWideScreen ? mediumMargin : compactMargin),
       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 600, // Ancho máximo de cada tarjeta
         childAspectRatio: 3 / 2,

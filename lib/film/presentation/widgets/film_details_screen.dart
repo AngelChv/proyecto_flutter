@@ -18,6 +18,8 @@ class FilmDetailsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(film.title),
         actions: [
+          // TODO: usar un MenuAnchor por si no hay espacio para los actions
+          // y que se muestren en un menú desplegable.
           IconButton(
             tooltip: "Editar película",
             onPressed: () {},

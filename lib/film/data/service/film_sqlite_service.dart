@@ -30,7 +30,7 @@ class FilmSqliteService implements FilmService {
   Future<bool> update(Film film) async {
     final Database? db = await SqliteManager.db;
     final int? count = await db?.update(
-        "tasks",
+        "films",
         film.toMap(),
         where: "id = ?",
         whereArgs: [film.id]

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:proyecto_flutter/film/presentation/view_model/film_view_model.dart';
 import '../../domain/film.dart';
 
 class FilmForm extends StatelessWidget {
   final GlobalKey<FormState> _formKey;
+  final bool _isEditing;
   final _titleController = TextEditingController();
   final _directorController = TextEditingController();
   final _yearController = TextEditingController();
@@ -12,7 +15,19 @@ class FilmForm extends StatelessWidget {
   get descriptionController => _descriptionController;
   get titleController => _titleController;
 
-  FilmForm(this._formKey, {super.key});
+  FilmForm(this._formKey, {super.key, required bool isEditing}) : _isEditing = isEditing;
+
+  void loadData(BuildContext context) {
+    if (_isEditing) {
+      final Film? film = context.watch<FilmViewModel>().selectedFilm;
+      if (film != null) {
+        _titleController.text = film.title;
+        directorController.text = film.director;
+        _yearController.text = film.year.toString();
+        descriptionController.text = film.description;
+      }
+    }
+  }
 
   Film? submit() {
     Film? film;
@@ -31,6 +46,8 @@ class FilmForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    loadData(context);
+
     return Form(
       key: _formKey,
       child: Column(

@@ -22,7 +22,7 @@ class _FilmFormScreenState extends State<FilmFormScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final filmForm = FilmForm(_formKey);
+    final filmForm = FilmForm(_formKey, isEditing: widget.isEditing);
     final isWideScreen = MediaQuery.of(context).size.width >= 600;
 
     return Scaffold(
@@ -34,25 +34,32 @@ class _FilmFormScreenState extends State<FilmFormScreen> {
         child: filmForm,
       ),
       floatingActionButton: FloatingActionButton(
-        tooltip: "Crear Película",
+        tooltip: widget.isEditing ? "Editar Película" : "Crear Película",
         child: Icon(Icons.check),
         onPressed: () async {
-          if (widget.isEditing) {
-            // todo
-          } else {
-            final film = filmForm.submit();
-            if (film != null) {
-              if (!(await context.read<FilmViewModel>().createFilm(film)) && context.mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Error al crear la película")));
-              } else if (context.mounted) {
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text("Película creada")));
-                context.pop();
-              }
-              // otro forma de usar snackbar
-              //scaffoldKey.currentState?.showSnackBar(SnackBar(content: Text(message)));
+          final film = filmForm.submit();
+          if (film != null) {
+            bool isSuccess;
+            if (widget.isEditing) {
+              isSuccess = await context.read<FilmViewModel>().editFilm(film);
+            } else {
+              isSuccess = await context.read<FilmViewModel>().createFilm(film);
             }
+
+            if (isSuccess && context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(widget.isEditing
+                      ? "Película modificada"
+                      : "Película creada")));
+              context.pop();
+            } else if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(widget.isEditing
+                      ? "Error al modificar la película"
+                      : "Error al crear la película")));
+            }
+            // otro forma de usar snackbar
+            //scaffoldKey.currentState?.showSnackBar(SnackBar(content: Text(message)));
           }
         },
       ),

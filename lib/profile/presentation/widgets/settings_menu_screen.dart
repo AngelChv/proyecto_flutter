@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:proyecto_flutter/core/domain/app_routes.dart';
 import 'package:proyecto_flutter/core/presentation/style_constants.dart';
 
 class SettingsMenuScreen extends StatelessWidget {
@@ -25,7 +24,7 @@ class SettingsMenuScreen extends StatelessWidget {
                 title: Text("General"),
                 trailing: Icon(Icons.arrow_right),
                 onTap: () {
-                  GoRouter.of(context).go(AppRoutes.generalSettings);
+                  context.goNamed("generalSettings");
                 },
               ),
             ),
@@ -36,7 +35,7 @@ class SettingsMenuScreen extends StatelessWidget {
                 title: Text("Perfil"),
                 trailing: Icon(Icons.arrow_right),
                 onTap: () {
-                  GoRouter.of(context).go(AppRoutes.userSettings);
+                  context.goNamed("userSettings");
                 },
               ),
             ),

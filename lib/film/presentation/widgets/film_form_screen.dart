@@ -7,8 +7,11 @@ import '../../../core/presentation/style_constants.dart';
 import '../view_model/film_view_model.dart';
 
 class FilmFormScreen extends StatefulWidget {
+// Necesito que sea StateFul para poder manejar el contexto en la lambda
+// asíncrona mediante context.mounted
+  const FilmFormScreen({super.key, required this.isEditing});
 
-  const FilmFormScreen({super.key});
+  final bool isEditing;
 
   @override
   State<FilmFormScreen> createState() => _FilmFormScreenState();
@@ -17,21 +20,6 @@ class FilmFormScreen extends StatefulWidget {
 class _FilmFormScreenState extends State<FilmFormScreen> {
   final _formKey = GlobalKey<FormState>();
 
-/*  submit() async {
-    final film = _form.submit();
-    if (film != null) {
-      if (!(await context.read<FilmViewModel>().createFilm(film)) && mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Error al crear la película")));
-      } else if (mounted) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("Película creada")));
-        GoRouter.of(context).pop();
-      }
-      // otro forma de usar snackbar
-      //scaffoldKey.currentState?.showSnackBar(SnackBar(content: Text(message)));
-    }
-  }*/
   @override
   Widget build(BuildContext context) {
     final filmForm = FilmForm(_formKey);
@@ -39,7 +27,7 @@ class _FilmFormScreenState extends State<FilmFormScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Crear Película"),
+        title: Text(widget.isEditing ? "Editar película" : "Crear película"),
       ),
       body: Padding(
         padding: EdgeInsets.all(isWideScreen ? mediumMargin : compactMargin),
@@ -49,7 +37,9 @@ class _FilmFormScreenState extends State<FilmFormScreen> {
         tooltip: "Crear Película",
         child: Icon(Icons.check),
         onPressed: () async {
-          if (_formKey.currentState!.validate()) {
+          if (widget.isEditing) {
+            // todo
+          } else {
             final film = filmForm.submit();
             if (film != null) {
               if (!(await context.read<FilmViewModel>().createFilm(film)) && context.mounted) {
@@ -58,23 +48,11 @@ class _FilmFormScreenState extends State<FilmFormScreen> {
               } else if (context.mounted) {
                 ScaffoldMessenger.of(context)
                     .showSnackBar(SnackBar(content: Text("Película creada")));
-                GoRouter.of(context).pop();
+                context.pop();
               }
               // otro forma de usar snackbar
               //scaffoldKey.currentState?.showSnackBar(SnackBar(content: Text(message)));
             }
-
-/*
-            final film = Film(
-              title: filmForm.titleController.text,
-              director: filmForm.directorController.text,
-              year: int.parse(filmForm.yearController.text),
-              description: filmForm.descriptionController.text,
-              duration: Duration(minutes: 120),
-              posterPath: "https://placehold.co/900x1600/png",
-            );
-*/
-
           }
         },
       ),

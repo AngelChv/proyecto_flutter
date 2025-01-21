@@ -36,6 +36,7 @@ class FilmForm extends StatelessWidget {
       child: Column(
         spacing: 24,
         children: [
+          // TODO: añadir timePicker para la duración.
           TextFormField(
             controller: _titleController,
             decoration: const InputDecoration(
@@ -64,6 +65,7 @@ class FilmForm extends StatelessWidget {
               return null;
             },
           ),
+          // TODO: añadir datepicker para el año
           TextFormField(
             controller: _yearController,
             keyboardType: TextInputType.number,

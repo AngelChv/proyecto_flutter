@@ -22,7 +22,11 @@ class FilmDetailsScreen extends StatelessWidget {
           // y que se muestren en un menú desplegable.
           IconButton(
             tooltip: "Editar película",
-            onPressed: () {},
+            onPressed: () {
+              context.goNamed("filmForm", pathParameters: {
+                "isEditing": "true"
+              });
+            },
             icon: Icon(Icons.edit),
           ),
           IconButton(
@@ -32,7 +36,7 @@ class FilmDetailsScreen extends StatelessWidget {
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text("Película eliminada")));
-                  GoRouter.of(context).pop();
+                  context.pop();
                 }
               }
             },

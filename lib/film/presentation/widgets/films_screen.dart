@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:proyecto_flutter/core/domain/app_routes.dart';
 import 'package:proyecto_flutter/core/presentation/widgets/films_grid.dart';
 import 'package:proyecto_flutter/film/presentation/view_model/film_view_model.dart';
 
@@ -20,7 +19,7 @@ class FilmsScreen extends StatelessWidget {
       ),
       body: FilmsGrid(
         onFilmTap: (film) {
-          GoRouter.of(context).go(AppRoutes.filmDetails);
+          context.goNamed("filmDetails");
         },
         onFilmLongPress: (film) {
           print("Longpress");
@@ -30,7 +29,9 @@ class FilmsScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         tooltip: "Crear película",
         onPressed: () {
-          GoRouter.of(context).go(AppRoutes.addFilm);
+          context.goNamed("filmForm", pathParameters: {
+            "isEditing": "false"
+          });
         },
         child: Icon(Icons.add),
       ),

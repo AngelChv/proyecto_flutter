@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:proyecto_flutter/core/presentation/style_constants.dart';
 
-import '../../../core/domain/app_routes.dart';
-
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -17,7 +15,7 @@ class ProfileScreen extends StatelessWidget {
             padding: EdgeInsets.all(compactMargin),
             tooltip: "Ajustes",
             onPressed: () {
-              GoRouter.of(context).go(AppRoutes.settingsMenu);
+              context.goNamed("settings");
             },
             icon: Icon(Icons.settings),
           ),

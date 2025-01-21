@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:proyecto_flutter/core/domain/app_routes.dart';
 import 'package:proyecto_flutter/core/presentation/widgets/scaffold_with_nested_navigation.dart';
 import 'package:proyecto_flutter/film/presentation/widgets/film_details_screen.dart';
 import 'package:proyecto_flutter/film/presentation/widgets/film_form_screen.dart';
@@ -42,7 +41,7 @@ final GlobalKey<NavigatorState> _shellNavigatorProfileKey =
 /// Funciona en base a rutas, permite redirección, protección, pasar parámetros
 /// y rutas anidadas.
 final GoRouter routerConfig = GoRouter(
-  initialLocation: AppRoutes.films,
+  initialLocation: "/films",
   navigatorKey: _rootNavigatorKey,
   routes: [
     StatefulShellRoute.indexedStack(
@@ -55,21 +54,27 @@ final GoRouter routerConfig = GoRouter(
           navigatorKey: _shellNavigatorFilmKey,
           routes: [
             GoRoute(
-              path: AppRoutes.films,
+              name: "films",
+              path: "/films",
               pageBuilder: (context, state) => const NoTransitionPage(
                 child: FilmsScreen(),
               ),
               routes: [
-                // AddFilm
+                // FilmForm
                 GoRoute(
-                  path: AppRoutes.addFilm.toRelativeRoute(),
+                  name: "filmForm",
+                  path: "/films/form/:isEditing",
                   // Importante las subpáginas se deben construir
                   // con builder no Pagebuilder
-                  builder: (context, state) => FilmFormScreen(),
+                  builder: (context, state) {
+                    final isEditing = state.pathParameters["isEditing"] == "true";
+                    return FilmFormScreen(isEditing: isEditing);
+                  },
                 ),
                 // FilmDetails
                 GoRoute(
-                  path: AppRoutes.filmDetails.toRelativeRoute(),
+                  name: "filmDetails",
+                  path: "/films/details",
                   builder: (context, state) => const FilmDetailsScreen(),
                 ),
               ],
@@ -81,7 +86,8 @@ final GoRouter routerConfig = GoRouter(
           navigatorKey: _shellNavigatorListKey,
           routes: [
             GoRoute(
-              path: AppRoutes.lists,
+              name: "lists",
+              path: "/lists",
               pageBuilder: (context, state) => const NoTransitionPage(
                 child: ListsScreen(),
               ),
@@ -93,21 +99,25 @@ final GoRouter routerConfig = GoRouter(
           navigatorKey: _shellNavigatorProfileKey,
           routes: [
             GoRoute(
-              path: AppRoutes.profile,
+              name: "profile",
+              path: "/profile",
               pageBuilder: (context, state) => const NoTransitionPage(
                 child: ProfileScreen(),
               ),
               routes: [
                 GoRoute( // Settings
-                  path: AppRoutes.settingsMenu.toRelativeRoute(),
+                  name: "settings",
+                  path: "/profile/settings",
                   builder: (context, state) => const SettingsMenuScreen(),
                   routes: [
                     GoRoute( // General
-                      path: AppRoutes.generalSettings.toRelativeRoute(),
+                      name: "generalSettings",
+                      path: "/profile/settings/general",
                       builder: (context, state) => const GeneralSettingsScreen(),
                     ),
                     GoRoute( // Usuario
-                      path: AppRoutes.userSettings.toRelativeRoute(),
+                      name: "userSettings",
+                      path: "/profile/settings/user",
                       builder: (context, state) => const ProfileSettingsScreen(),
                     ),
                   ],

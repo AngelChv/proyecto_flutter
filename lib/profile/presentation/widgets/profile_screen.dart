@@ -15,7 +15,7 @@ class ProfileScreen extends StatelessWidget {
             padding: EdgeInsets.all(compactMargin),
             tooltip: "Ajustes",
             onPressed: () {
-              context.goNamed("settings");
+              context.pushNamed("settings");
             },
             icon: Icon(Icons.settings),
           ),

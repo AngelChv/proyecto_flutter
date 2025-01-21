@@ -23,7 +23,7 @@ class FilmDetailsScreen extends StatelessWidget {
           IconButton(
             tooltip: "Editar película",
             onPressed: () {
-              context.goNamed("filmForm", pathParameters: {
+              context.pushNamed("filmForm", pathParameters: {
                 "isEditing": "true"
               });
             },

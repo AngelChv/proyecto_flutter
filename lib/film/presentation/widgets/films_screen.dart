@@ -19,7 +19,7 @@ class FilmsScreen extends StatelessWidget {
       ),
       body: FilmsGrid(
         onFilmTap: (film) {
-          context.goNamed("filmDetails");
+          context.pushNamed("filmDetails");
         },
         onFilmLongPress: (film) {
           print("Longpress");
@@ -29,7 +29,7 @@ class FilmsScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         tooltip: "Crear película",
         onPressed: () {
-          context.goNamed("filmForm", pathParameters: {
+          context.pushNamed("filmForm", pathParameters: {
             "isEditing": "false"
           });
         },

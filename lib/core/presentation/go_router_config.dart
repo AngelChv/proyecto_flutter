@@ -63,7 +63,7 @@ final GoRouter routerConfig = GoRouter(
                 // FilmForm
                 GoRoute(
                   name: "filmForm",
-                  path: "/films/form/:isEditing",
+                  path: "form/:isEditing",
                   // Importante las subpáginas se deben construir
                   // con builder no Pagebuilder
                   builder: (context, state) {
@@ -74,7 +74,7 @@ final GoRouter routerConfig = GoRouter(
                 // FilmDetails
                 GoRoute(
                   name: "filmDetails",
-                  path: "/films/details",
+                  path: "details",
                   builder: (context, state) => const FilmDetailsScreen(),
                 ),
               ],
@@ -107,17 +107,17 @@ final GoRouter routerConfig = GoRouter(
               routes: [
                 GoRoute( // Settings
                   name: "settings",
-                  path: "/profile/settings",
+                  path: "settings",
                   builder: (context, state) => const SettingsMenuScreen(),
                   routes: [
                     GoRoute( // General
                       name: "generalSettings",
-                      path: "/profile/settings/general",
+                      path: "settings/general",
                       builder: (context, state) => const GeneralSettingsScreen(),
                     ),
                     GoRoute( // Usuario
                       name: "userSettings",
-                      path: "/profile/settings/user",
+                      path: "settings/user",
                       builder: (context, state) => const ProfileSettingsScreen(),
                     ),
                   ],

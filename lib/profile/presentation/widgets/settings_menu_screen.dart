@@ -24,7 +24,7 @@ class SettingsMenuScreen extends StatelessWidget {
                 title: Text("General"),
                 trailing: Icon(Icons.arrow_right),
                 onTap: () {
-                  context.goNamed("generalSettings");
+                  context.pushNamed("generalSettings");
                 },
               ),
             ),
@@ -35,7 +35,7 @@ class SettingsMenuScreen extends StatelessWidget {
                 title: Text("Perfil"),
                 trailing: Icon(Icons.arrow_right),
                 onTap: () {
-                  context.goNamed("userSettings");
+                  context.pushNamed("userSettings");
                 },
               ),
             ),

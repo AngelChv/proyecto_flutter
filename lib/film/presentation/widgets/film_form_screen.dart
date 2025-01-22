@@ -23,16 +23,12 @@ class _FilmFormScreenState extends State<FilmFormScreen> {
   @override
   Widget build(BuildContext context) {
     final filmForm = FilmForm(_formKey, isEditing: widget.isEditing);
-    final isWideScreen = MediaQuery.of(context).size.width >= 600;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.isEditing ? "Editar película" : "Crear película"),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(isWideScreen ? mediumMargin : compactMargin),
-        child: filmForm,
-      ),
+      body: filmForm,
       floatingActionButton: FloatingActionButton(
         tooltip: widget.isEditing ? "Editar Película" : "Crear Película",
         child: Icon(Icons.check),

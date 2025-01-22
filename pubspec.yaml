@@ -32,7 +32,7 @@ dependencies:
   sqflite_common_ffi: ^2.3.4+4
   sqflite: ^2.0.0
   path:
-  provider:
+  provider: ^6.1.2
   flutter:
     sdk: flutter
 

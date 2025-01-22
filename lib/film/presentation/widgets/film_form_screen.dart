@@ -45,10 +45,11 @@ class _FilmFormScreenState extends State<FilmFormScreen> {
               context.pop(
                   widget.isEditing ? "Película modificada" : "Película creada");
             } else if (context.mounted) {
-              // TODO: quizá no hacer pop, solo mostrar el snackbar.
-              context.pop(widget.isEditing
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(widget.isEditing
                   ? "Error al modificar la película"
-                  : "Error al crear la película");
+                  : "Error al crear la película"),
+              ));
             }
             // otro forma de usar snackbar
             //scaffoldKey.currentState?.showSnackBar(SnackBar(content: Text(message)));

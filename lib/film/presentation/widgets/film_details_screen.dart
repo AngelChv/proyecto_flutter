@@ -37,14 +37,15 @@ class FilmDetailsScreen extends StatelessWidget {
           IconButton(
             tooltip: "Borrar película",
             onPressed: () async {
-              if (await context.read<FilmViewModel>().deleteFilm(film)) {
-                if (context.mounted) {
+              final isSuccess = await context.read<FilmViewModel>().deleteFilm(film);
+                if (isSuccess && context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text("Película eliminada")));
-                  // TODO: enviar mensaje en el pop.
                   context.pop();
+                } else if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Error al eliminar la película")));
                 }
-              }
             },
             icon: Icon(Icons.delete),
           ),

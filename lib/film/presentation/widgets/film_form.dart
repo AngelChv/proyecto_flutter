@@ -101,7 +101,7 @@ class FilmForm extends StatelessWidget {
       if (film != null) {
         _titleController.text = film.title;
         directorController.text = film.director;
-        _yearController.text = film.year.toString();
+        _yearController.text = "${film.year}";
         descriptionController.text = film.description;
       }
     }

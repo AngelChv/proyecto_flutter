@@ -28,10 +28,15 @@ class FilmsScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: "Crear película",
-        onPressed: () {
-          context.pushNamed("filmForm", pathParameters: {
-            "isEditing": "false"
-          });
+        onPressed: () async {
+          final String? message = await context.pushNamed<String>("filmForm",
+              pathParameters: {"isEditing": "false"});
+
+          if (context.mounted && message != null) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(message),
+            ));
+          }
         },
         child: Icon(Icons.add),
       ),

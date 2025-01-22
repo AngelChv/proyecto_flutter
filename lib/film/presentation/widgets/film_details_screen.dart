@@ -22,10 +22,15 @@ class FilmDetailsScreen extends StatelessWidget {
           // y que se muestren en un menú desplegable.
           IconButton(
             tooltip: "Editar película",
-            onPressed: () {
-              context.pushNamed("filmForm", pathParameters: {
-                "isEditing": "true"
-              });
+            onPressed: () async {
+              final String? message = await context.pushNamed<String>("filmForm",
+                  pathParameters: {"isEditing": "true"});
+
+              if (context.mounted && message != null) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(message)),
+                );
+              }
             },
             icon: Icon(Icons.edit),
           ),
@@ -36,6 +41,7 @@ class FilmDetailsScreen extends StatelessWidget {
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text("Película eliminada")));
+                  // TODO: enviar mensaje en el pop.
                   context.pop();
                 }
               }

@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_flutter/film/presentation/widgets/film_form.dart';
 
-import '../../../core/presentation/style_constants.dart';
 import '../view_model/film_view_model.dart';
 
 class FilmFormScreen extends StatefulWidget {
@@ -43,16 +42,12 @@ class _FilmFormScreenState extends State<FilmFormScreen> {
             }
 
             if (isSuccess && context.mounted) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text(widget.isEditing
-                      ? "Película modificada"
-                      : "Película creada")));
-              context.pop();
+              context.pop(
+                  widget.isEditing ? "Película modificada" : "Película creada");
             } else if (context.mounted) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text(widget.isEditing
-                      ? "Error al modificar la película"
-                      : "Error al crear la película")));
+              context.pop(widget.isEditing
+                  ? "Error al modificar la película"
+                  : "Error al crear la película");
             }
             // otro forma de usar snackbar
             //scaffoldKey.currentState?.showSnackBar(SnackBar(content: Text(message)));

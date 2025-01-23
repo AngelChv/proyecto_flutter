@@ -12,13 +12,15 @@ class FilmDetailsScreen extends StatelessWidget {
 
   _deleteFilm(BuildContext context, Film film) async {
     final isSuccess = await context.read<FilmViewModel>().deleteFilm(film);
-    if (isSuccess && context.mounted) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Película eliminada")));
-      context.pop();
-    } else if (context.mounted) {
+    if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Error al eliminar la película")));
+        SnackBar(
+          content: Text(isSuccess
+              ? "Película eliminada"
+              : "Error al eliminar la película")
+        )
+      );
+      isSuccess ? context.pop() : null;
     }
   }
 

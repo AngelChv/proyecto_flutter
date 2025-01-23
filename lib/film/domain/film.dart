@@ -41,6 +41,33 @@ class Film {
     );
   }
 
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Film &&
+          runtimeType == other.runtimeType &&
+          // Para comprobar si realmente se ha editado algo en el formulario
+          // películas, tengo que omitir la comprobación del id,
+          // debido a que la película nueva todavía no tiene.
+          //id == other.id &&
+          title == other.title &&
+          director == other.director &&
+          year == other.year &&
+          duration == other.duration &&
+          description == other.description &&
+          posterPath == other.posterPath;
+
+  @override
+  int get hashCode =>
+      id.hashCode ^
+      title.hashCode ^
+      director.hashCode ^
+      year.hashCode ^
+      duration.hashCode ^
+      description.hashCode ^
+      posterPath.hashCode;
+
   @override
   String toString() {
     return 'Film{id: $id, title: $title, director: $director, year: $year, duration: $duration, description: $description, posterPath: $posterPath}';

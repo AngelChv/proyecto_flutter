@@ -107,10 +107,15 @@ class FilmForm extends StatelessWidget {
     }
   }
 
-  Film? submit() {
-    Film? film;
+  /// Valida el formulario y devuelve la nueva película.
+  /// Si el formulario no se valida devuelve null.
+  /// Si al editar una película no se modifica nada, devuelve null
+  /// y lanza un snackbar.
+  Film? submit(BuildContext context) {
+    Film? newFilm;
     if (_formKey.currentState!.validate()) {
-      film = Film(
+      final oldFilm = context.read<FilmViewModel>().selectedFilm;
+      newFilm = Film(
         title: _titleController.text,
         director: _directorController.text,
         year: int.parse(_yearController.text.toString()),
@@ -118,8 +123,18 @@ class FilmForm extends StatelessWidget {
         description: _descriptionController.text,
         posterPath: "https://placehold.co/900x1600/png",
       );
+
+      // Comprobar si se ha modificado algo;
+      if (newFilm == oldFilm) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("No se ha modificado nada"),
+          ),
+        );
+        newFilm = null;
+      }
     }
-    return film;
+    return newFilm;
   }
 
   @override

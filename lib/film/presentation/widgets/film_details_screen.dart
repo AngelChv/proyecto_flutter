@@ -5,8 +5,22 @@ import 'package:proyecto_flutter/core/presentation/style_constants.dart';
 import 'package:proyecto_flutter/core/presentation/widgets/film_card.dart';
 import 'package:proyecto_flutter/film/presentation/view_model/film_view_model.dart';
 
+import '../../domain/film.dart';
+
 class FilmDetailsScreen extends StatelessWidget {
   const FilmDetailsScreen({super.key});
+
+  _deleteFilm(BuildContext context, Film film) async {
+    final isSuccess = await context.read<FilmViewModel>().deleteFilm(film);
+    if (isSuccess && context.mounted) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Película eliminada")));
+      context.pop();
+    } else if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Error al eliminar la película")));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +37,8 @@ class FilmDetailsScreen extends StatelessWidget {
           IconButton(
             tooltip: "Editar película",
             onPressed: () async {
-              final String? message = await context.pushNamed<String>("filmForm",
+              final String? message = await context.pushNamed<String>(
+                  "filmForm",
                   pathParameters: {"isEditing": "true"});
 
               if (context.mounted && message != null) {
@@ -37,15 +52,28 @@ class FilmDetailsScreen extends StatelessWidget {
           IconButton(
             tooltip: "Borrar película",
             onPressed: () async {
-              final isSuccess = await context.read<FilmViewModel>().deleteFilm(film);
-                if (isSuccess && context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Película eliminada")));
-                  context.pop();
-                } else if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Error al eliminar la película")));
-                }
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text("Está seguro que desea eliminar la película"),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        context.pop();
+                      },
+                      child: Text("NO"),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        context.pop();
+                        _deleteFilm(context, film);
+                      },
+                      child: Text("SI"),
+                    ),
+                  ],
+                ),
+                barrierDismissible: false,
+              );
             },
             icon: Icon(Icons.delete),
           ),

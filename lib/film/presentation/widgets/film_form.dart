@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_flutter/film/presentation/view_model/film_view_model.dart';
+import 'package:proyecto_flutter/util/conversor.dart';
 import '../../../core/presentation/style_constants.dart';
 import '../../domain/film.dart';
 
@@ -10,6 +11,9 @@ class FilmForm extends StatelessWidget {
   final _titleController = TextEditingController();
   final _directorController = TextEditingController();
   final _yearController = TextEditingController();
+  // Si no uso un controller tendría un valor no final en un stateless
+  // y no puede ser el formulario stateful para poder acceder a submit()
+  final _durationController = TextEditingController();
   final _descriptionController = TextEditingController();
 
   get directorController => _directorController;
@@ -75,6 +79,36 @@ class FilmForm extends StatelessWidget {
         },
       ),
       TextFormField(
+        readOnly: true,
+        controller: _durationController,
+        decoration: InputDecoration(
+          hintText: "Haga click para introducir la duración",
+          border: OutlineInputBorder(),
+        ),
+        onTap: () async {
+          final resultTime = await showTimePicker(
+            context: context,
+            initialTime: TimeOfDay(minute: 1, hour: 0),
+          );
+          if (resultTime != null) {
+            // Todo: intentar hacer el widget stateful para usar context.mounted
+            // TODO: creo que el format puede dar fallo con el pareTimeOfDay()
+            _durationController.text = resultTime.format(context);
+          }
+        },
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return "Introduzca una duración";
+          }
+          try {
+            parseTimeOfDay(value);
+            return null;
+          } catch (e) {
+            return 'Por favor ingrese una duración válida';
+          }
+        },
+      ),
+      TextFormField(
         controller: _descriptionController,
         decoration: InputDecoration(
           hintText: "Ingrese una descripción",
@@ -100,9 +134,10 @@ class FilmForm extends StatelessWidget {
       final Film? film = context.watch<FilmViewModel>().selectedFilm;
       if (film != null) {
         _titleController.text = film.title;
-        directorController.text = film.director;
+        _directorController.text = film.director;
         _yearController.text = "${film.year}";
-        descriptionController.text = film.description;
+        _durationController.text = minutesToTimeOfDay(film.duration).format(context);
+        _descriptionController.text = film.description;
       }
     }
   }
@@ -115,11 +150,12 @@ class FilmForm extends StatelessWidget {
     Film? newFilm;
     if (_formKey.currentState!.validate()) {
       final oldFilm = context.read<FilmViewModel>().selectedFilm;
+      final duration = parseTimeOfDay(_durationController.text);
       newFilm = Film(
         title: _titleController.text,
         director: _directorController.text,
         year: int.parse(_yearController.text.toString()),
-        duration: Duration(minutes: 1),
+        duration: timeOfDayToMinutes(duration),
         description: _descriptionController.text,
         posterPath: "https://placehold.co/900x1600/png",
       );

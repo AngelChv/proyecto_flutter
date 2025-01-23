@@ -3,7 +3,7 @@ class Film {
   final String title;
   final String director;
   final int year;
-  final Duration duration;
+  final int duration;
   final String description;
   final String posterPath;
 
@@ -22,7 +22,7 @@ class Film {
       'title': title,
       'director': director,
       'year': year,
-      'duration': duration.inMinutes,
+      'duration': duration,
       'description': description,
       'poster_path': posterPath,
     };
@@ -35,7 +35,7 @@ class Film {
       title: map['title'],
       director: map['director'],
       year: map['year'],
-      duration: Duration(minutes: map['duration']),
+      duration: map['duration'],
       description: map['description'],
       posterPath: map['poster_path'],
     );

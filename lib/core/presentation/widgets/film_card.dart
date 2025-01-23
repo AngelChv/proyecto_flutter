@@ -75,7 +75,7 @@ class FilmInfo extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
-          YearDurationText(year: film.year, duration: film.duration),
+          YearDurationText(year: film.year, duration: Duration(minutes: film.duration)),
           const Divider(),
           Flexible(
             child: Text(

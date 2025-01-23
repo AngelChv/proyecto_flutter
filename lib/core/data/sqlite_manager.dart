@@ -60,7 +60,7 @@ class SqliteManager {
           title: "Film-$index",
           director: "Director",
           year: 1990,
-          duration: Duration(hours: 1, minutes: 20),
+          duration: 120,
           description:
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tristique vel felis nec dictum. Duis ligula lacus, pellentesque in quam nec, varius dignissim ex. Sed venenatis euismod facilisis. Donec placerat dolor sit amet diam dapibus vulputate. Sed cursus leo ipsum, nec malesuada augue accumsan aliquam. Integer faucibus diam ac magna ornare scelerisque vitae consectetur quam. Vivamus feugiat metus ultricies risus condimentum fermentum. Morbi massa sapien, malesuada nec hendrerit ac, dapibus id mauris. Phasellus scelerisque ex in odio suscipit pulvinar. Aliquam vitae felis sit amet nunc finibus facilisis. Duis viverra orci eget aliquam aliquet. Vestibulum ut auctor lacus. Curabitur vitae lacinia nisl. Proin eget rutrum lacus, id viverra eros. Curabitur et venenatis risus. Mauris lacus turpis, imperdiet a egestas bibendum, tincidunt in lacus.",
           posterPath: "https://placehold.co/900x1600/png");

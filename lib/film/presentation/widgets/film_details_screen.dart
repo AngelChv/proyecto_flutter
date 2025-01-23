@@ -105,7 +105,7 @@ class FilmDetailsCompact extends StatelessWidget {
         Poster(imagePath: film.posterPath),
         Text(film.title),
         Text(film.director),
-        YearDurationText(year: film.year, duration: film.duration),
+        YearDurationText(year: film.year, duration: Duration(minutes: film.duration)),
         Text(film.description),
       ],
     );
@@ -136,7 +136,7 @@ class FilmDetailsExpanded extends StatelessWidget {
               children: [
                 Text(film.title),
                 Text(film.director),
-                YearDurationText(year: film.year, duration: film.duration),
+                YearDurationText(year: film.year, duration: Duration(minutes: film.duration)),
                 Text(film.description),
               ],
             ),

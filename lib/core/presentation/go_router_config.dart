@@ -112,12 +112,12 @@ final GoRouter routerConfig = GoRouter(
                   routes: [
                     GoRoute( // General
                       name: "generalSettings",
-                      path: "settings/general",
+                      path: "general",
                       builder: (context, state) => const GeneralSettingsScreen(),
                     ),
                     GoRoute( // Usuario
                       name: "userSettings",
-                      path: "settings/user",
+                      path: "user",
                       builder: (context, state) => const ProfileSettingsScreen(),
                     ),
                   ],

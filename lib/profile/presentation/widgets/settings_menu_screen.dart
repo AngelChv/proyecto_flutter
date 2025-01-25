@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:proyecto_flutter/core/presentation/style_constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsMenuScreen extends StatelessWidget {
   const SettingsMenuScreen({super.key});
@@ -11,7 +12,7 @@ class SettingsMenuScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Ajustes"),
+        title: Text(AppLocalizations.of(context)!.settings),
       ),
       body: Padding(
         padding: EdgeInsets.all(isWideScreen ? mediumMargin : compactMargin),
@@ -21,7 +22,7 @@ class SettingsMenuScreen extends StatelessWidget {
               child: ListTile(
                 // TODO: usar recurso para el string
                 leading: Icon(Icons.edit),
-                title: Text("General"),
+                title: Text(AppLocalizations.of(context)!.general),
                 trailing: Icon(Icons.arrow_right),
                 onTap: () {
                   context.pushNamed("generalSettings");
@@ -32,7 +33,7 @@ class SettingsMenuScreen extends StatelessWidget {
               child: ListTile(
                 // TODO: usar recurso para el string
                 leading: Icon(Icons.person),
-                title: Text("Perfil"),
+                title: Text(AppLocalizations.of(context)!.profile),
                 trailing: Icon(Icons.arrow_right),
                 onTap: () {
                   context.pushNamed("userSettings");

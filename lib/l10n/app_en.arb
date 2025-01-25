@@ -28,7 +28,10 @@
   "lists": "Lists",
   "createList": "Create list",
   "profile": "Profile",
+  "settings": "Settings",
+  "general": "General",
   "generalSettings": "Settings - General",
+  "profileSettings": "Settings - Profile",
   "darkMode": "Dark mode",
   "language": "Language",
   "logout": "Log out"

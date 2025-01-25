@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:proyecto_flutter/core/presentation/style_constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -9,11 +10,11 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Perfil"),
+        title: Text(AppLocalizations.of(context)!.profile),
         actions: [
           IconButton(
             padding: EdgeInsets.all(compactMargin),
-            tooltip: "Ajustes",
+            tooltip: AppLocalizations.of(context)!.settings,
             onPressed: () {
               context.pushNamed("settings");
             },

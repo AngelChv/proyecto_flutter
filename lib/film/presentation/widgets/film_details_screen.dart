@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:proyecto_flutter/core/presentation/style_constants.dart';
 import 'package:proyecto_flutter/core/presentation/widgets/film_card.dart';
 import 'package:proyecto_flutter/film/presentation/view_model/film_view_model.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../domain/film.dart';
 
 class FilmDetailsScreen extends StatelessWidget {
@@ -16,8 +16,8 @@ class FilmDetailsScreen extends StatelessWidget {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(isSuccess
-              ? "Película eliminada"
-              : "Error al eliminar la película")
+              ? AppLocalizations.of(context)!.deletedFilm
+              : AppLocalizations.of(context)!.deletingFilmError)
         )
       );
       isSuccess ? context.pop() : null;
@@ -37,7 +37,7 @@ class FilmDetailsScreen extends StatelessWidget {
           // TODO: usar un MenuAnchor por si no hay espacio para los actions
           // y que se muestren en un menú desplegable.
           IconButton(
-            tooltip: "Editar película",
+            tooltip: AppLocalizations.of(context)!.editFilm,
             onPressed: () async {
               final String? message = await context.pushNamed<String>(
                   "filmForm",
@@ -52,25 +52,25 @@ class FilmDetailsScreen extends StatelessWidget {
             icon: Icon(Icons.edit),
           ),
           IconButton(
-            tooltip: "Borrar película",
+            tooltip: AppLocalizations.of(context)!.deleteFilm,
             onPressed: () async {
               showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
-                  title: Text("Está seguro que desea eliminar la película"),
+                  title: Text(AppLocalizations.of(context)!.askDeletingFilm),
                   actions: [
                     TextButton(
                       onPressed: () {
                         context.pop();
                       },
-                      child: Text("NO"),
+                      child: Text(AppLocalizations.of(context)!.no),
                     ),
                     TextButton(
                       onPressed: () {
                         context.pop();
                         _deleteFilm(context, film);
                       },
-                      child: Text("SI"),
+                      child: Text(AppLocalizations.of(context)!.yes),
                     ),
                   ],
                 ),

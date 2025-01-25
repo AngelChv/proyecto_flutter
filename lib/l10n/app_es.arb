@@ -1,5 +1,13 @@
 {
+  "yes": "SI",
+  "no": "NO",
   "films": "Películas",
+  "createFilm": "Crear película",
+  "deleteFilm": "Eliminar película",
+  "askDeletingFilm": "¿Está seguro que desea eliminar la película?",
+  "deletedFilm": "Película eliminada",
+  "deletingFilmError": "Error al eliminar la película",
+  "editFilm": "Editar película",
   "lists": "Listas",
   "profile": "Perfil"
 }

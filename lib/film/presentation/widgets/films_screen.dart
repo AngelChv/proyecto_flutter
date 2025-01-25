@@ -30,7 +30,7 @@ class FilmsScreen extends StatelessWidget {
         films: films,
       ),
       floatingActionButton: FloatingActionButton(
-        tooltip: "Crear película",
+        tooltip: AppLocalizations.of(context)!.createFilm,
         onPressed: () async {
           final String? message = await context.pushNamed<String>("filmForm",
               pathParameters: {"isEditing": "false"});

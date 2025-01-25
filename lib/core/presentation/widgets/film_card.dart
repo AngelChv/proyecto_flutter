@@ -114,6 +114,7 @@ class YearDurationText extends StatelessWidget {
     // Convierte la duración a un formato legible (ej. 1h 30m)
     final hours = duration.inHours;
     final minutes = duration.inMinutes % 60;
+    // TODO: mirar si puedo usar una localización para esto
     return '${hours > 0 ? '$hours h' : ''} ${minutes > 0 ? '$minutes m' : ''}'
         .trim();
   }

@@ -1,5 +1,13 @@
 {
+  "yes": "YES",
+  "no": "NO",
   "films": "Films",
+  "createFilm": "Create film",
+  "deleteFilm": "Delete film",
+  "askDeletingFilm": "Are you sure you want to delete the film?",
+  "deletedFilm": "Film deleted",
+  "deletingFilmError": "Error deleting the film",
+  "editFilm": "Edit film",
   "lists": "Lists",
   "profile": "Profile"
 }

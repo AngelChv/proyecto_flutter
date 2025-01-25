@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_flutter/core/presentation/widgets/films_grid.dart';
 import 'package:proyecto_flutter/film/presentation/view_model/film_view_model.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../core/presentation/style_constants.dart';
 
 class FilmsScreen extends StatelessWidget {
@@ -16,8 +16,7 @@ class FilmsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        // TODO: usar un recurso para el string
-        title: Text("Películas"),
+        title: Text(AppLocalizations.of(context)!.films),
         // TODO: añadir actions (buscar...)
       ),
       body: FilmsGrid(

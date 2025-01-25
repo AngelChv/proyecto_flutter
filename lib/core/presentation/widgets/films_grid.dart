@@ -21,7 +21,6 @@ class FilmsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      // todo el margen debería estar en FilmsScreen
       padding: _padding,
       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 600, // Ancho máximo de cada tarjeta

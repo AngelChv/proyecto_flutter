@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_flutter/core/presentation/go_router_config.dart';
 import 'package:proyecto_flutter/core/presentation/theme/theme_constants.dart';
@@ -35,10 +34,12 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     final themeMode = context.watch<ProfileViewModel>().themeMode;
+    final String localeKey = context.watch<ProfileViewModel>().language;
 
     return MaterialApp.router(
       //scaffoldMessengerKey: scaffoldKey,
       title: 'Filmoteca',
+      locale: localeKey.isEmpty ? null : Locale(localeKey),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       theme: lightTheme,

@@ -15,11 +15,12 @@ class ProfileViewModel extends ChangeNotifier {
 
   // Idioma
   static const Map<String, String> _languages = {
-    "ES": "Español",
-    "EN": "Inglés",
-    "GE": "Alemán",
-    "IT": "Italiano",
-    "PO": "Portugués",
+    "": "Predeterminado del sistema",
+    "es": "Español",
+    "en": "Inglés",
+    "ge": "Alemán",
+    "it": "Italiano",
+    "po": "Portugués",
   };
 
   get languages => _languages;
@@ -33,10 +34,12 @@ class ProfileViewModel extends ChangeNotifier {
     }).toList();
   }
 
+  // TODO: usar sharedPreferences
   String _language = _languages.keys.first;
   get language => _language;
 
   changeLanguage(String key) {
     _language = _languages.containsKey(key) ? key : _language;
+    notifyListeners();
   }
 }

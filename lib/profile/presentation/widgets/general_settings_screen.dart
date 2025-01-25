@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_flutter/core/presentation/style_constants.dart';
 import 'package:proyecto_flutter/profile/presentation/view_model/profile_view_model.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GeneralSettingsScreen extends StatelessWidget {
   const GeneralSettingsScreen({super.key});
@@ -10,20 +11,15 @@ class GeneralSettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final reader = context.read<ProfileViewModel>();
     final bool isDarkMode =
-        context
-            .watch<ProfileViewModel>()
-            .themeMode == ThemeMode.dark;
-    final bool isWideScreen = MediaQuery
-        .of(context)
-        .size
-        .width >= 600;
+        context.watch<ProfileViewModel>().themeMode == ThemeMode.dark;
+    final bool isWideScreen = MediaQuery.of(context).size.width >= 600;
     final List<DropdownMenuEntry<String>> languages =
-    reader.languagesAsDropDownMenuEntries();
+        reader.languagesAsDropDownMenuEntries();
     final String selectedLanguage = reader.language;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Ajustes/General"),
+        title: Text(AppLocalizations.of(context)!.generalSettings),
       ),
       body: Padding(
         padding: EdgeInsets.all(isWideScreen ? mediumMargin : compactMargin),
@@ -33,7 +29,7 @@ class GeneralSettingsScreen extends StatelessWidget {
             Card(
               child: ListTile(
                 // TODO: usar recurso para el string
-                title: Text("Modo oscuro"),
+                title: Text(AppLocalizations.of(context)!.darkMode),
                 trailing: Switch(
                     value: isDarkMode,
                     onChanged: (value) {
@@ -44,7 +40,7 @@ class GeneralSettingsScreen extends StatelessWidget {
             Card(
               child: ListTile(
                 // TODO: usar recurso para el string
-                title: Text("Idioma"),
+                title: Text(AppLocalizations.of(context)!.language),
                 trailing: DropdownMenu(
                   initialSelection: selectedLanguage,
                   dropdownMenuEntries: languages,
@@ -57,7 +53,7 @@ class GeneralSettingsScreen extends StatelessWidget {
             Card(
               child: ListTile(
                 // TODO: usar recurso para el string
-                title: Text("Cerrar sesión"),
+                title: Text(AppLocalizations.of(context)!.logout),
                 onTap: () {
                   // TODO: cerrar sesión.
                 },

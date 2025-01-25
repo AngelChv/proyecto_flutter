@@ -27,5 +27,9 @@
   "nothingHasBeenChanged": "No se ha modificado nada",
   "lists": "Listas",
   "createList": "Crear lista",
-  "profile": "Perfil"
+  "profile": "Perfil",
+  "generalSettings": "Ajustes - General",
+  "darkMode": "Modo oscuro",
+  "language": "Idioma",
+  "logout": "Cerrar sesión"
 }

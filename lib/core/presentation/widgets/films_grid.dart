@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto_flutter/core/presentation/style_constants.dart';
 
 import '../../../film/domain/film.dart';
 import 'film_card.dart';
@@ -9,21 +8,21 @@ class FilmsGrid extends StatelessWidget {
     super.key,
     required films,
     void Function(Film film)? onFilmTap,
-    void Function(Film film)? onFilmLongPress,
-  })  : _onFilmLongPress = onFilmLongPress,
+    void Function(Film film)? onFilmLongPress, EdgeInsetsGeometry? padding,
+  })  : _padding = padding, _onFilmLongPress = onFilmLongPress,
         _onFilmTap = onFilmTap,
         _films = films;
 
   final List<Film> _films;
   final void Function(Film film)? _onFilmTap;
   final void Function(Film film)? _onFilmLongPress;
+  final EdgeInsetsGeometry? _padding;
 
   @override
   Widget build(BuildContext context) {
-    final isWideScreen = MediaQuery.of(context).size.width >= 600;
     return GridView.builder(
       // todo el margen debería estar en FilmsScreen
-      padding: EdgeInsets.all(isWideScreen ? mediumMargin : compactMargin),
+      padding: _padding,
       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 600, // Ancho máximo de cada tarjeta
         childAspectRatio: 3 / 2,

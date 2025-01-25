@@ -4,11 +4,14 @@ import 'package:provider/provider.dart';
 import 'package:proyecto_flutter/core/presentation/widgets/films_grid.dart';
 import 'package:proyecto_flutter/film/presentation/view_model/film_view_model.dart';
 
+import '../../../core/presentation/style_constants.dart';
+
 class FilmsScreen extends StatelessWidget {
   const FilmsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final isWideScreen = MediaQuery.of(context).size.width >= 600;
     final films = context.watch<FilmViewModel>().films;
 
     return Scaffold(
@@ -18,6 +21,7 @@ class FilmsScreen extends StatelessWidget {
         // TODO: añadir actions (buscar...)
       ),
       body: FilmsGrid(
+        padding: EdgeInsets.all(isWideScreen ? mediumMargin : compactMargin),
         onFilmTap: (film) {
           context.pushNamed("filmDetails");
         },

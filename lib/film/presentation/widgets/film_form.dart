@@ -102,6 +102,9 @@ class FilmForm extends StatelessWidget {
           }
           try {
             parseTimeOfDay(value);
+            if (parseTimeOfDay(value).isAtSameTimeAs(TimeOfDay(hour: 0, minute: 0))) {
+              throw Exception("La duración no puede ser 0");
+            }
             return null;
           } catch (e) {
             return 'Por favor ingrese una duración válida';

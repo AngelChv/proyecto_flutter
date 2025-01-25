@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:proyecto_flutter/core/presentation/style_constants.dart';
+import 'package:proyecto_flutter/core/presentation/theme/style_constants.dart';
+import 'package:proyecto_flutter/core/presentation/widgets/selection_menu_item.dart';
 import 'package:proyecto_flutter/profile/presentation/view_model/profile_view_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -28,7 +29,6 @@ class GeneralSettingsScreen extends StatelessWidget {
           children: [
             Card(
               child: ListTile(
-                // TODO: usar recurso para el string
                 title: Text(AppLocalizations.of(context)!.darkMode),
                 trailing: Switch(
                     value: isDarkMode,
@@ -37,22 +37,20 @@ class GeneralSettingsScreen extends StatelessWidget {
                     }),
               ),
             ),
-            Card(
-              child: ListTile(
-                // TODO: usar recurso para el string
-                title: Text(AppLocalizations.of(context)!.language),
-                trailing: DropdownMenu(
-                  initialSelection: selectedLanguage,
-                  dropdownMenuEntries: languages,
-                  onSelected: (value) {
-                    context.read<ProfileViewModel>().changeLanguage(value!);
-                  },
-                ),
+            SelectionMenuItem(
+              title: Text(
+                AppLocalizations.of(context)!.language,
+                // TODO: parece que no funciona
+                style: Theme.of(context).listTileTheme.titleTextStyle,
               ),
+              selectedLanguage: selectedLanguage,
+              languages: languages,
+              onSelected: (value) {
+                context.read<ProfileViewModel>().changeLanguage(value);
+              },
             ),
             Card(
               child: ListTile(
-                // TODO: usar recurso para el string
                 title: Text(AppLocalizations.of(context)!.logout),
                 onTap: () {
                   // TODO: cerrar sesión.

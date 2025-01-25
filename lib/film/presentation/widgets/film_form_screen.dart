@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_flutter/film/presentation/widgets/film_form.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../view_model/film_view_model.dart';
 
 class FilmFormScreen extends StatefulWidget {
@@ -25,11 +25,15 @@ class _FilmFormScreenState extends State<FilmFormScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.isEditing ? "Editar película" : "Crear película"),
+        title: Text(widget.isEditing
+            ? AppLocalizations.of(context)!.editFilm
+            : AppLocalizations.of(context)!.createFilm),
       ),
       body: filmForm,
       floatingActionButton: FloatingActionButton(
-        tooltip: widget.isEditing ? "Editar Película" : "Crear Película",
+        tooltip: widget.isEditing
+            ? AppLocalizations.of(context)!.editFilm
+            : AppLocalizations.of(context)!.createFilm,
         child: Icon(Icons.check),
         onPressed: () async {
           final film = filmForm.submit(context);
@@ -42,13 +46,14 @@ class _FilmFormScreenState extends State<FilmFormScreen> {
             }
 
             if (isSuccess && context.mounted) {
-              context.pop(
-                  widget.isEditing ? "Película modificada" : "Película creada");
+              context.pop(widget.isEditing
+                  ? AppLocalizations.of(context)!.editedFilm
+                  : AppLocalizations.of(context)!.createdFilm);
             } else if (context.mounted) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(widget.isEditing
-                  ? "Error al modificar la película"
-                  : "Error al crear la película"),
+                    ? AppLocalizations.of(context)!.editingFilmError
+                    : AppLocalizations.of(context)!.creatingFilmError),
               ));
             }
             // otro forma de usar snackbar

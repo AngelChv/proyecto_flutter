@@ -11,6 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:proyecto_flutter/main.dart';
 
 void main() {
+  // TODO: realizar tests
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const App());

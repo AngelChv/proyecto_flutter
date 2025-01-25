@@ -18,9 +18,9 @@ class ProfileViewModel extends ChangeNotifier {
     "": "Predeterminado del sistema",
     "es": "Español",
     "en": "Inglés",
-    "ge": "Alemán",
+    "de": "Alemán",
     "it": "Italiano",
-    "po": "Portugués",
+    "pt": "Portugués",
   };
 
   get languages => _languages;

@@ -4,13 +4,16 @@ import 'package:proyecto_flutter/film/presentation/view_model/film_view_model.da
 import 'package:proyecto_flutter/util/conversor.dart';
 import '../../../core/presentation/style_constants.dart';
 import '../../domain/film.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FilmForm extends StatelessWidget {
+  static const int _startYear = 1895;
   final GlobalKey<FormState> _formKey;
   final bool _isEditing;
   final _titleController = TextEditingController();
   final _directorController = TextEditingController();
   final _yearController = TextEditingController();
+
   // Si no uso un controller tendría un valor no final en un stateless
   // y no puede ser el formulario stateful para poder acceder a submit()
   final _durationController = TextEditingController();
@@ -32,28 +35,28 @@ class FilmForm extends StatelessWidget {
       // TODO: añadir timePicker para la duración.
       TextFormField(
         controller: _titleController,
-        decoration: const InputDecoration(
-          hintText: "Título",
-          labelText: "Título",
-          border: OutlineInputBorder(),
+        decoration: InputDecoration(
+          hintText: AppLocalizations.of(context)!.title,
+          labelText: AppLocalizations.of(context)!.title,
+          border: const OutlineInputBorder(),
         ),
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return "Introduzca el título";
+            return AppLocalizations.of(context)!.insertTheTitle;
           }
           return null;
         },
       ),
       TextFormField(
         controller: _directorController,
-        decoration: const InputDecoration(
-          hintText: "Director",
-          labelText: "Director",
+        decoration: InputDecoration(
+          hintText: AppLocalizations.of(context)!.director,
+          labelText: AppLocalizations.of(context)!.director,
           border: OutlineInputBorder(),
         ),
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return "Introduzca el director";
+            return AppLocalizations.of(context)!.insertTheDirector;
           }
           return null;
         },
@@ -62,18 +65,21 @@ class FilmForm extends StatelessWidget {
       TextFormField(
         controller: _yearController,
         keyboardType: TextInputType.number,
-        decoration: const InputDecoration(
-          hintText: "Año del estreno",
-          labelText: "Año del estreno, ej: (2010)",
+        decoration: InputDecoration(
+          hintText: AppLocalizations.of(context)!.filmYear,
+          labelText: AppLocalizations.of(context)!.filmYear,
           border: OutlineInputBorder(),
         ),
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return "Introduzca el año de estreno";
+            return AppLocalizations.of(context)!.filmYear;
           }
           final year = int.tryParse(value);
-          if (year == null || year < 1895 || year > DateTime.now().year) {
-            return 'Por favor ingrese un año válido entre 1895 y ${DateTime.now().year}';
+          if (year == null || year < _startYear || year > DateTime.now().year) {
+            return AppLocalizations.of(context)!.insertValidYear(
+              DateTime.now().year,
+              _startYear,
+            );
           }
           return null;
         },
@@ -82,7 +88,7 @@ class FilmForm extends StatelessWidget {
         readOnly: true,
         controller: _durationController,
         decoration: InputDecoration(
-          hintText: "Haga click para introducir la duración",
+          hintText: AppLocalizations.of(context)!.clickDuration,
           border: OutlineInputBorder(),
         ),
         onTap: () async {
@@ -97,24 +103,26 @@ class FilmForm extends StatelessWidget {
         },
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return "Introduzca una duración";
+            return AppLocalizations.of(context)!.insertDuration;
           }
           try {
-            parseTimeOfDay(value);
-            if (parseTimeOfDay(value).isAtSameTimeAs(TimeOfDay(hour: 0, minute: 0))) {
-              throw Exception("La duración no puede ser 0");
+            if (parseTimeOfDay(value).isAtSameTimeAs(TimeOfDay(
+              hour: 0,
+              minute: 0,
+            ))) {
+              throw Exception();
             }
             return null;
           } catch (e) {
-            return 'Por favor ingrese una duración válida';
+            return AppLocalizations.of(context)!.insertValidDuration;
           }
         },
       ),
       TextFormField(
         controller: _descriptionController,
         decoration: InputDecoration(
-          hintText: "Ingrese una descripción",
-          labelText: 'Descripción',
+          hintText: AppLocalizations.of(context)!.description,
+          labelText: AppLocalizations.of(context)!.description,
           border: OutlineInputBorder(),
         ),
         maxLines: 5,
@@ -123,7 +131,7 @@ class FilmForm extends StatelessWidget {
         // Permite texto libre
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'Por favor ingrese una descripción';
+            return AppLocalizations.of(context)!.insertDescription;
           }
           return null;
         },
@@ -138,7 +146,8 @@ class FilmForm extends StatelessWidget {
         _titleController.text = film.title;
         _directorController.text = film.director;
         _yearController.text = "${film.year}";
-        _durationController.text = minutesToTimeOfDay(film.duration).format(context);
+        _durationController.text =
+            minutesToTimeOfDay(film.duration).format(context);
         _descriptionController.text = film.description;
       }
     }
@@ -166,7 +175,7 @@ class FilmForm extends StatelessWidget {
       if (newFilm == oldFilm) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("No se ha modificado nada"),
+            content: Text(AppLocalizations.of(context)!.nothingHasBeenChanged),
           ),
         );
         newFilm = null;

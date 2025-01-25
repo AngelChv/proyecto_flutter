@@ -90,8 +90,7 @@ class FilmForm extends StatelessWidget {
             context: context,
             initialTime: TimeOfDay(minute: 1, hour: 0),
           );
-          if (resultTime != null) {
-            // Todo: intentar hacer el widget stateful para usar context.mounted
+          if (resultTime != null && context.mounted) {
             // TODO: creo que el format puede dar fallo con el pareTimeOfDay()
             _durationController.text = resultTime.format(context);
           }

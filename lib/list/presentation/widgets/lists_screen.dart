@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ListsScreen extends StatelessWidget {
   const ListsScreen({super.key});
@@ -7,11 +8,11 @@ class ListsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Listas"),
+        title: Text(AppLocalizations.of(context)!.lists),
       ),
       body: const Placeholder(),
       floatingActionButton: FloatingActionButton(
-        tooltip: "Crear lista",
+        tooltip: AppLocalizations.of(context)!.createList,
         onPressed: () {
           // todo
         },

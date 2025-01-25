@@ -26,5 +26,6 @@
   "insertDescription": "Please enter a description",
   "nothingHasBeenChanged": "Nothing has been changed",
   "lists": "Lists",
+  "createList": "Create list",
   "profile": "Profile"
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -75,7 +77,8 @@ class FilmInfo extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
-          YearDurationText(year: film.year, duration: Duration(minutes: film.duration)),
+          YearDurationText(
+              year: film.year, duration: Duration(minutes: film.duration)),
           const Divider(),
           Flexible(
             child: Text(
@@ -125,16 +128,26 @@ class Poster extends StatelessWidget {
 
   final String imagePath;
 
+  bool _isNetworkPath(String path) {
+    return path.startsWith("https://");
+  }
+
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(12),
       // Usa el mismo borderRadius que en la tarjeta
-      child: Image.network(
-        imagePath,
-        alignment: Alignment.centerLeft,
-        fit: BoxFit.cover,
-      ),
+      child: _isNetworkPath(imagePath)
+          ? Image.network(
+              imagePath,
+              alignment: Alignment.centerLeft,
+              fit: BoxFit.cover,
+            )
+          : Image.file(
+              File(imagePath),
+              alignment: Alignment.centerLeft,
+              fit: BoxFit.cover,
+            ),
     );
   }
 }

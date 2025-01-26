@@ -46,7 +46,7 @@ class SqliteManager {
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           title TEXT NOT NULL,
           director TEXT NOT NULL,
-          year INTEGER,
+          year INTEGER NOT NULL,
           duration INTEGER NOT NULL,
           description TEXT NOT NULL,
           poster_path TEXT

@@ -45,6 +45,9 @@ dependencies:
   intl: any
   shared_preferences: ^2.4.0
   flutter_launcher_icons: ^0.14.3
+  # Necesitaría de configuración extra en ios
+  image_picker: ^1.1.2
+  file_selector: ^1.0.3
 
 flutter_launcher_icons:
   android: true

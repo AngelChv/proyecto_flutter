@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:proyecto_flutter/film/data/repository/film_repository.dart';
 import 'package:proyecto_flutter/film/domain/film.dart';
@@ -61,5 +63,22 @@ class FilmViewModel extends ChangeNotifier {
       return true;
     }
     return false;
+  }
+
+  // Poster
+  // Todo: no se si es mejor guardar el path directamente en un string
+  File? _selectedPoster;
+  File? get selectedPoster => _selectedPoster;
+
+  void selectPoster(File? image) {
+    _selectedPoster = image;
+
+    // Evita que se llame a notifyListeners() antes de que se termine de
+    // construir el widget del formulario, programando la función para el
+    // siguiente ciclo.
+    // Todo: no me parece del todo consistente, habría que ver si se puede hacer de otra manera.
+    Future.delayed(Duration.zero, () {
+      notifyListeners();
+    });
   }
 }

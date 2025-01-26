@@ -1,12 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_flutter/film/presentation/view_model/film_view_model.dart';
+import 'package:proyecto_flutter/film/presentation/widgets/poster_picker.dart';
 import 'package:proyecto_flutter/util/conversor.dart';
 import '../../../core/presentation/theme/style_constants.dart';
 import '../../domain/film.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FilmForm extends StatelessWidget {
+  // TODO: usar un viewModel;
   static const int _startYear = 1895;
   final GlobalKey<FormState> _formKey;
   final bool _isEditing;
@@ -136,6 +140,7 @@ class FilmForm extends StatelessWidget {
           return null;
         },
       ),
+      PosterPicker(),
     ];
   }
 
@@ -149,7 +154,11 @@ class FilmForm extends StatelessWidget {
         _durationController.text =
             minutesToTimeOfDay(film.duration).format(context);
         _descriptionController.text = film.description;
+        // Da error al realizar el notifyListeners mientras se ejecuta el build.
+        context.read<FilmViewModel>().selectPoster(File(film.posterPath));
       }
+    } else {
+      context.read<FilmViewModel>().selectPoster(null);
     }
   }
 
@@ -158,17 +167,20 @@ class FilmForm extends StatelessWidget {
   /// Si al editar una película no se modifica nada, devuelve null
   /// y lanza un snackbar.
   Film? submit(BuildContext context) {
+    final FilmViewModel reader = context.read<FilmViewModel>();
     Film? newFilm;
     if (_formKey.currentState!.validate()) {
-      final oldFilm = context.read<FilmViewModel>().selectedFilm;
+      final oldFilm = reader.selectedFilm;
       final duration = parseTimeOfDay(_durationController.text);
+      final String? posterPath = reader.selectedPoster?.path;
       newFilm = Film(
         title: _titleController.text,
         director: _directorController.text,
         year: int.parse(_yearController.text.toString()),
         duration: timeOfDayToMinutes(duration),
         description: _descriptionController.text,
-        posterPath: "https://placehold.co/900x1600/png",
+        // Todo: guardar las imágenes en el directorio de documentos de la app
+        posterPath: posterPath ?? "https://placehold.co/900x1600/png",
       );
 
       // Comprobar si se ha modificado algo;
@@ -179,6 +191,8 @@ class FilmForm extends StatelessWidget {
           ),
         );
         newFilm = null;
+      } else {
+        reader.selectPoster(null);
       }
     }
     return newFilm;

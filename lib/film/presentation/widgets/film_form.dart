@@ -10,7 +10,6 @@ import '../../domain/film.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FilmForm extends StatelessWidget {
-  // TODO: usar un viewModel;
   static const int _startYear = 1895;
   final GlobalKey<FormState> _formKey;
   final bool _isEditing;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:proyecto_flutter/core/presentation/go_router_config.dart';
+import 'package:proyecto_flutter/core/presentation/widgets/go_router_config.dart';
 import 'package:proyecto_flutter/core/presentation/theme/theme_constants.dart';
 import 'package:proyecto_flutter/film/presentation/view_model/film_view_model.dart';
 import 'package:proyecto_flutter/list/presentation/view_model/list_view_model.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../film/domain/film.dart';
+import '../../domain/film.dart';
 import 'film_card.dart';
 
 class FilmsGrid extends StatelessWidget {

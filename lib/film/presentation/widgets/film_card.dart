@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../film/domain/film.dart';
-import '../../../film/presentation/view_model/film_view_model.dart';
+import '../../domain/film.dart';
+import '../view_model/film_view_model.dart';
 
 class FilmCard extends StatelessWidget {
   const FilmCard({

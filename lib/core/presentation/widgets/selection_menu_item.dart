@@ -21,7 +21,7 @@ class SelectionMenuItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final bool isWideScreen = MediaQuery.of(context).size.width >= 600;
+        final isWideScreen = MediaQuery.sizeOf(context).width >= 600;
 
         if (isWideScreen) {
           return Card(

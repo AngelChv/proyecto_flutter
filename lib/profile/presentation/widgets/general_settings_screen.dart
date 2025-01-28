@@ -13,7 +13,7 @@ class GeneralSettingsScreen extends StatelessWidget {
     final reader = context.read<ProfileViewModel>();
     final bool isDarkMode =
         context.watch<ProfileViewModel>().themeMode == ThemeMode.dark;
-    final bool isWideScreen = MediaQuery.of(context).size.width >= 600;
+    final isWideScreen = MediaQuery.sizeOf(context).width >= 600;
     final List<DropdownMenuEntry<String>> languages =
         reader.languagesAsDropDownMenuEntries();
     final String selectedLanguage = reader.language;

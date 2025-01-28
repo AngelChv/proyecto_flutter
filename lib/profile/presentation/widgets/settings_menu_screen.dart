@@ -8,7 +8,7 @@ class SettingsMenuScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isWideScreen = MediaQuery.of(context).size.width >= 600;
+    final isWideScreen = MediaQuery.sizeOf(context).width >= 600;
 
     return Scaffold(
       appBar: AppBar(

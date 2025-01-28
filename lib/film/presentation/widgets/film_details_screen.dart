@@ -26,7 +26,7 @@ class FilmDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isWideScreen = MediaQuery.of(context).size.width >= 600;
+    final isWideScreen = MediaQuery.sizeOf(context).width >= 600;
 
     // Todo: comprobar si no hay error al utilizar !
     final film = context.watch<FilmViewModel>().selectedFilm!;

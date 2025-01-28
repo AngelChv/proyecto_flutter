@@ -200,7 +200,7 @@ class FilmForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isWideScreen = MediaQuery.of(context).size.width > 600;
+    final isWideScreen = MediaQuery.sizeOf(context).width >= 600;
     loadData(context);
     final fields = buildFields(context);
 

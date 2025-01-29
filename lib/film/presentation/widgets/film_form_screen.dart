@@ -6,8 +6,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../view_model/film_view_model.dart';
 
 class FilmFormScreen extends StatefulWidget {
-// Necesito que sea StateFul para poder manejar el contexto en la lambda
-// asíncrona mediante context.mounted
   const FilmFormScreen({super.key, required this.isEditing});
 
   final bool isEditing;
@@ -36,7 +34,7 @@ class _FilmFormScreenState extends State<FilmFormScreen> {
             : AppLocalizations.of(context)!.createFilm,
         child: Icon(Icons.check),
         onPressed: () async {
-          final film = filmForm.submit(context);
+          final film = context.read<FilmViewModel>().submitForm(context, filmForm, _formKey);
           if (film != null) {
             bool isSuccess;
             if (widget.isEditing) {

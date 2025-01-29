@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_flutter/film/presentation/view_model/film_view_model.dart';
@@ -9,36 +7,81 @@ import '../../../core/presentation/theme/style_constants.dart';
 import '../../domain/film.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class FilmForm extends StatelessWidget {
+class FilmForm extends StatefulWidget {
   // TODO: usar un viewModel;
   static const int _startYear = 1895;
   final GlobalKey<FormState> _formKey;
   final bool _isEditing;
+
   final _titleController = TextEditingController();
+
+  String get title => _titleController.text;
+
   final _directorController = TextEditingController();
+
+  String get director => _directorController.text;
+
   final _yearController = TextEditingController();
 
-  // Si no uso un controller tendría un valor no final en un stateless
-  // y no puede ser el formulario stateful para poder acceder a submit()
+  String get year => _yearController.text;
+
   final _durationController = TextEditingController();
+
+  String get duration => _durationController.text;
+
   final _descriptionController = TextEditingController();
 
-  get directorController => _directorController;
+  String get description => _descriptionController.text;
 
-  get yearController => _yearController;
-
-  get descriptionController => _descriptionController;
-
-  get titleController => _titleController;
-
-  FilmForm(this._formKey, {super.key, required bool isEditing})
+  FilmForm(this._formKey,
+      {super.key, required bool isEditing, Film? editingFilm})
       : _isEditing = isEditing;
+
+  @override
+  State<FilmForm> createState() => _FilmFormState();
+}
+
+class _FilmFormState extends State<FilmForm> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    loadData(context);
+  }
+
+  void loadData(BuildContext context) {
+    if (widget._isEditing) {
+      // Todo: no usar read
+      final Film? film = context.read<FilmViewModel>().selectedFilm;
+      if (film != null) {
+        widget._titleController.text = film.title;
+        widget._directorController.text = film.director;
+        widget._yearController.text = "${film.year}";
+        widget._durationController.text =
+            minutesToTimeOfDay(film.duration).format(context);
+        widget._descriptionController.text = film.description;
+        // TODO: mover el poster al formulario.
+        // Da error al realizar el notifyListeners mientras se ejecuta el build.
+        //context.read<FilmViewModel>().selectPoster(File(film.posterPath));
+      }
+    } else {
+      //context.read<FilmViewModel>().selectPoster(null);
+    }
+  }
+
+  @override
+  void dispose() {
+    widget._titleController.dispose();
+    widget._directorController.dispose();
+    widget._yearController.dispose();
+    widget._durationController.dispose();
+    widget._descriptionController.dispose();
+    super.dispose();
+  }
 
   List<Widget> buildFields(BuildContext context) {
     return [
-      // TODO: añadir timePicker para la duración.
       TextFormField(
-        controller: _titleController,
+        controller: widget._titleController,
         decoration: InputDecoration(
           hintText: AppLocalizations.of(context)!.title,
           labelText: AppLocalizations.of(context)!.title,
@@ -52,7 +95,7 @@ class FilmForm extends StatelessWidget {
         },
       ),
       TextFormField(
-        controller: _directorController,
+        controller: widget._directorController,
         decoration: InputDecoration(
           hintText: AppLocalizations.of(context)!.director,
           labelText: AppLocalizations.of(context)!.director,
@@ -67,7 +110,7 @@ class FilmForm extends StatelessWidget {
       ),
       // TODO: añadir datepicker para el año
       TextFormField(
-        controller: _yearController,
+        controller: widget._yearController,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
           hintText: AppLocalizations.of(context)!.filmYear,
@@ -79,10 +122,12 @@ class FilmForm extends StatelessWidget {
             return AppLocalizations.of(context)!.filmYear;
           }
           final year = int.tryParse(value);
-          if (year == null || year < _startYear || year > DateTime.now().year) {
+          if (year == null ||
+              year < FilmForm._startYear ||
+              year > DateTime.now().year) {
             return AppLocalizations.of(context)!.insertValidYear(
               DateTime.now().year,
-              _startYear,
+              FilmForm._startYear,
             );
           }
           return null;
@@ -90,7 +135,7 @@ class FilmForm extends StatelessWidget {
       ),
       TextFormField(
         readOnly: true,
-        controller: _durationController,
+        controller: widget._durationController,
         decoration: InputDecoration(
           hintText: AppLocalizations.of(context)!.clickDuration,
           border: OutlineInputBorder(),
@@ -102,7 +147,7 @@ class FilmForm extends StatelessWidget {
           );
           if (resultTime != null && context.mounted) {
             // TODO: creo que el format puede dar fallo con el pareTimeOfDay()
-            _durationController.text = resultTime.format(context);
+            widget._durationController.text = resultTime.format(context);
           }
         },
         validator: (value) {
@@ -123,7 +168,7 @@ class FilmForm extends StatelessWidget {
         },
       ),
       TextFormField(
-        controller: _descriptionController,
+        controller: widget._descriptionController,
         decoration: InputDecoration(
           hintText: AppLocalizations.of(context)!.description,
           labelText: AppLocalizations.of(context)!.description,
@@ -144,68 +189,13 @@ class FilmForm extends StatelessWidget {
     ];
   }
 
-  void loadData(BuildContext context) {
-    if (_isEditing) {
-      final Film? film = context.watch<FilmViewModel>().selectedFilm;
-      if (film != null) {
-        _titleController.text = film.title;
-        _directorController.text = film.director;
-        _yearController.text = "${film.year}";
-        _durationController.text =
-            minutesToTimeOfDay(film.duration).format(context);
-        _descriptionController.text = film.description;
-        // Da error al realizar el notifyListeners mientras se ejecuta el build.
-        context.read<FilmViewModel>().selectPoster(File(film.posterPath));
-      }
-    } else {
-      context.read<FilmViewModel>().selectPoster(null);
-    }
-  }
-
-  /// Valida el formulario y devuelve la nueva película.
-  /// Si el formulario no se valida devuelve null.
-  /// Si al editar una película no se modifica nada, devuelve null
-  /// y lanza un snackbar.
-  Film? submit(BuildContext context) {
-    final FilmViewModel reader = context.read<FilmViewModel>();
-    Film? newFilm;
-    if (_formKey.currentState!.validate()) {
-      final oldFilm = reader.selectedFilm;
-      final duration = parseTimeOfDay(_durationController.text);
-      final String? posterPath = reader.selectedPoster?.path;
-      newFilm = Film(
-        title: _titleController.text,
-        director: _directorController.text,
-        year: int.parse(_yearController.text.toString()),
-        duration: timeOfDayToMinutes(duration),
-        description: _descriptionController.text,
-        // Todo: guardar las imágenes en el directorio de documentos de la app
-        posterPath: posterPath ?? "https://placehold.co/900x1600/png",
-      );
-
-      // Comprobar si se ha modificado algo;
-      if (newFilm == oldFilm) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(AppLocalizations.of(context)!.nothingHasBeenChanged),
-          ),
-        );
-        newFilm = null;
-      } else {
-        reader.selectPoster(null);
-      }
-    }
-    return newFilm;
-  }
-
   @override
   Widget build(BuildContext context) {
     final isWideScreen = MediaQuery.sizeOf(context).width >= 600;
-    loadData(context);
     final fields = buildFields(context);
 
     return Form(
-      key: _formKey,
+      key: widget._formKey,
       child: ListView.separated(
         padding: EdgeInsets.all(isWideScreen ? mediumMargin : compactMargin),
         itemCount: fields.length,

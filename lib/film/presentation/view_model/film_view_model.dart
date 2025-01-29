@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:proyecto_flutter/film/data/repository/film_repository.dart';
 import 'package:proyecto_flutter/film/domain/film.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../util/conversor.dart';
+import '../widgets/film_form.dart';
 
 class FilmViewModel extends ChangeNotifier {
   final FilmRepository filmRepository = FilmRepository();
@@ -65,7 +68,44 @@ class FilmViewModel extends ChangeNotifier {
     return false;
   }
 
+  // Form
+  /// Valida el formulario y devuelve la nueva película.
+  /// Si el formulario no se valida devuelve null.
+  /// Si al editar una película no se modifica nada, devuelve null
+  /// y lanza un snackbar.
+  Film? submitForm(BuildContext context, FilmForm filmForm, GlobalKey<FormState> formKey) {
+    Film? newFilm;
+    if (formKey.currentState!.validate()) {
+      final oldFilm = _selectedFilm;
+      final duration = parseTimeOfDay(filmForm.duration);
+      final String? posterPath = selectedPoster?.path;
+      newFilm = Film(
+        title: filmForm.title,
+        director: filmForm.director,
+        year: int.parse(filmForm.year),
+        duration: timeOfDayToMinutes(duration),
+        description: filmForm.director,
+        // Todo: guardar las imágenes en el directorio de documentos de la app
+        posterPath: posterPath ?? "https://placehold.co/900x1600/png",
+      );
+
+      // Comprobar si se ha modificado algo;
+      if (newFilm == oldFilm) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.nothingHasBeenChanged),
+          ),
+        );
+        newFilm = null;
+      } else {
+        selectPoster(null);
+      }
+    }
+    return newFilm;
+  }
+
   // Poster
+  // Todo: moverlo al formulario.
   // Todo: no se si es mejor guardar el path directamente en un string
   File? _selectedPoster;
   File? get selectedPoster => _selectedPoster;

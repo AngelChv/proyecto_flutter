@@ -1,3 +1,4 @@
+/// Define los datos que se necesitan para una película y como se trabaja con ellos.
 class Film {
   int? id; // el id será asignado por la base de datos cuando se recupere el objeto.
   final String title;
@@ -17,6 +18,10 @@ class Film {
     required this.posterPath,
   });
 
+  /// Transforma la película a un mapa.
+  ///
+  /// El id se excluye para poder usarlo al insertar en sqlite y se
+  /// genere un id auto incremental.
   Map<String, Object?> toMap() {
     return {
       'title': title,
@@ -28,6 +33,16 @@ class Film {
     };
   }
 
+  /// Devuelve una película del mapa recibido como parámetro.
+  ///
+  /// Se necesitan los siguiéntes valores del mapa:
+  /// 1. `int id`
+  /// 2. `String title`
+  /// 3. `String director`
+  /// 4. `int year`
+  /// 5. `int duration`
+  /// 6. `String description`
+  /// 7. `String posterPath`
   static Film fromMap(Map<String, dynamic> map) {
     return Film(
       id: map['id'],
@@ -42,6 +57,10 @@ class Film {
   }
 
 
+  /// Compara si dos películas son iguales.
+  ///
+  /// Compara por sus atributos no por la dirección de memoria.
+  /// No se comprueba por id.
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||

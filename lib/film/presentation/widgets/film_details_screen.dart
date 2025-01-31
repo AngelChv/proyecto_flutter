@@ -7,6 +7,11 @@ import 'package:proyecto_flutter/film/presentation/view_model/film_view_model.da
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../domain/film.dart';
 
+/// Pantalla de detalles de la película
+///
+/// Muestra de manera extensa la información relevante.
+/// Si el dispositivo tiene una pantalla compacta la información se muestra en
+/// vertical, si es un dispositivo grande, se muestra en horizontal.
 class FilmDetailsScreen extends StatelessWidget {
   const FilmDetailsScreen({super.key});
 
@@ -90,6 +95,7 @@ class FilmDetailsScreen extends StatelessWidget {
   }
 }
 
+/// Detalles de la película para pantallas compactas.
 class FilmDetailsCompact extends StatelessWidget {
   const FilmDetailsCompact({super.key});
 
@@ -112,6 +118,7 @@ class FilmDetailsCompact extends StatelessWidget {
   }
 }
 
+/// Detalles de la película para pantallas anchas.
 class FilmDetailsExpanded extends StatelessWidget {
   const FilmDetailsExpanded({super.key});
 

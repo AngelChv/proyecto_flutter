@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../domain/film.dart';
 import 'film_card.dart';
 
+/// Cuadrícula para mostrar las tarjetas de las películas.
 class FilmsGrid extends StatelessWidget {
   const FilmsGrid({
     super.key,

@@ -1,6 +1,7 @@
 import 'package:proyecto_flutter/film/data/service/film_service.dart';
 import 'package:proyecto_flutter/film/domain/film.dart';
 
+/// De momento no esta implementado
 class FilmApiService implements FilmService {
   @override
   Future<bool> delete(int id) async {

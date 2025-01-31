@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+
+/// Gestiona el estado del perfíl y la configuración.
+///
+/// Gestiona el estado y permanencia de:
+/// * El tema.
+/// * Idioma.
 class ProfileViewModel extends ChangeNotifier {
   ProfileViewModel() {
     SharedPreferences.getInstance().then((prefs) {

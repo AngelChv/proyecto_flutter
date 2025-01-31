@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
+/// Tarjeta responsiva que contiene un LisTile o un column con un DropDownMenu
+///
+/// Si la pantalla es ancha se usa un ListTile.
+/// Si la pantalla es compacta se usa un Column.
+/// Esto evita que el DropdownButton se superponga al texto en la vista compacta
+/// al estar en vertical en lugar de horizontal.
 class SelectionMenuItem extends StatelessWidget {
   const SelectionMenuItem({
     super.key,
@@ -19,12 +25,9 @@ class SelectionMenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final isWideScreen = MediaQuery.sizeOf(context).width >= 600;
-
-        if (isWideScreen) {
-          return Card(
+    final isWideScreen = MediaQuery.sizeOf(context).width >= 600;
+    return isWideScreen
+        ? Card(
             child: ListTile(
               title: _title,
               trailing: DropdownMenu(
@@ -35,9 +38,8 @@ class SelectionMenuItem extends StatelessWidget {
                 },
               ),
             ),
-          );
-        } else {
-          return Card(
+          )
+        : Card(
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Align(
@@ -58,8 +60,5 @@ class SelectionMenuItem extends StatelessWidget {
               ),
             ),
           );
-        }
-      },
-    );
   }
 }

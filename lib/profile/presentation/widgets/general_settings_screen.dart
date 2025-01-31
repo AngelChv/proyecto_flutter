@@ -5,6 +5,7 @@ import 'package:proyecto_flutter/core/presentation/widgets/selection_menu_item.d
 import 'package:proyecto_flutter/profile/presentation/view_model/profile_view_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+/// Pantalla de la configuración general
 class GeneralSettingsScreen extends StatelessWidget {
   const GeneralSettingsScreen({super.key});
 
@@ -40,7 +41,7 @@ class GeneralSettingsScreen extends StatelessWidget {
             SelectionMenuItem(
               title: Text(
                 AppLocalizations.of(context)!.language,
-                // TODO: parece que no funciona
+                // TODO: parece que no funciona en modo compacto.
                 style: Theme.of(context).listTileTheme.titleTextStyle,
               ),
               selectedLanguage: selectedLanguage,

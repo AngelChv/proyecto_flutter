@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:proyecto_flutter/core/presentation/theme/style_constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+/// Pantalla que muestra el menú de la configuración.
 class SettingsMenuScreen extends StatelessWidget {
   const SettingsMenuScreen({super.key});
 

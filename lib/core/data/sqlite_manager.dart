@@ -6,14 +6,25 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import '../../film/domain/film.dart';
 import '../../film/data/repository/film_repository.dart';
 
+/// Gestiona la conexión a la base de datos.
+///
+/// Sirve para:
+/// * Android.
+/// * IOS.
+/// * Windows.
 class SqliteManager {
   static Database? _db;
 
+  /// Devuelve la conexión a la base de datos.
+  ///
+  /// Si ya hay una creada, se devuelve la misma, si no hay ninguna, se
+  /// crea una nueva.
   static Future<Database?> get db async {
     if (_db == null || !_db!.isOpen) return await startDb();
     return _db;
   }
 
+  /// Crea una nueva conexión a la base de datos.
   static Future<Database?> startDb() async {
     // Configuración de FFI
     sqfliteFfiInit();
@@ -37,7 +48,6 @@ class SqliteManager {
     return _db;
   }
 
-
   /// Crea las tablas si no existen
   static Future<void> _dataDefinition() async {
     final Database? db = await SqliteManager.db;
@@ -52,22 +62,5 @@ class SqliteManager {
           poster_path TEXT
         )
       ''');
-  }
-
-  static Future<void> _sampleData() async {
-    final films = List<Film>.generate(1000, (int index) {
-      return Film(
-          title: "Film-$index",
-          director: "Director",
-          year: 1990,
-          duration: 120,
-          description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tristique vel felis nec dictum. Duis ligula lacus, pellentesque in quam nec, varius dignissim ex. Sed venenatis euismod facilisis. Donec placerat dolor sit amet diam dapibus vulputate. Sed cursus leo ipsum, nec malesuada augue accumsan aliquam. Integer faucibus diam ac magna ornare scelerisque vitae consectetur quam. Vivamus feugiat metus ultricies risus condimentum fermentum. Morbi massa sapien, malesuada nec hendrerit ac, dapibus id mauris. Phasellus scelerisque ex in odio suscipit pulvinar. Aliquam vitae felis sit amet nunc finibus facilisis. Duis viverra orci eget aliquam aliquet. Vestibulum ut auctor lacus. Curabitur vitae lacinia nisl. Proin eget rutrum lacus, id viverra eros. Curabitur et venenatis risus. Mauris lacus turpis, imperdiet a egestas bibendum, tincidunt in lacus.",
-          posterPath: "https://placehold.co/900x1600/png");
-    });
-
-    for (var film in films) {
-      FilmRepository().insert(film);
-    }
   }
 }

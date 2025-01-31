@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 
+/// Transforma minutos de `int` a `TimeOfDay`
 TimeOfDay minutesToTimeOfDay(int minutes) {
   final int hours = minutes ~/ 60;
   final int remainingMinutes = minutes % 60;
   return TimeOfDay(hour: hours, minute: remainingMinutes);
 }
 
+/// Transforma minutos de `TimeOfDay` a `int`
 int timeOfDayToMinutes(TimeOfDay time) {
   return (time.hour * 60) + time.minute;
 }
 
+/// Transforma minutos de `String` a `TimeOfDay`
+///
+/// *throw* `FormatException`
 TimeOfDay parseTimeOfDay(String timeString) {
   try {
     final parts = timeString.split(':');

@@ -5,6 +5,7 @@ import 'package:proyecto_flutter/film/presentation/widgets/film_form.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../view_model/film_view_model.dart';
 
+/// Pantalla que muestra el formulario para editar o crear una película.
 class FilmFormScreen extends StatefulWidget {
   const FilmFormScreen({super.key, required this.isEditing});
 

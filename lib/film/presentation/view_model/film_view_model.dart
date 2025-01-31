@@ -7,14 +7,32 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../util/conversor.dart';
 import '../widgets/film_form.dart';
 
+/// Gestiona el estado de las películas.
+///
+/// * Guarda una lista de todas las películas con las que se trabaja.
+/// * Guarda la película seleccionada.
+/// * Guarda el estado del poster de las películas.
+///
+/// **Contiene la lógica de creación, actualización y eliminado de las películas**
+///
+///   Medíante funciones que se encargan de llamar a los repositorios y
+///   realizar los cambios de estado consecuentes a las transacciones realizadas.
+///
+///   También incluye la función de envío del formulario.
 class FilmViewModel extends ChangeNotifier {
   final FilmRepository filmRepository = FilmRepository();
 
   List<Film> _films = [];
+
+  /// Lista de todás las películas.
   List<Film> get films => List.unmodifiable(_films);
 
   Film? _selectedFilm;
+
+  /// Película seleccionada.
   Film? get selectedFilm => _selectedFilm;
+
+  /// Selecciona la película.
   selectFilm(Film filmToSelect) {
     _selectedFilm = filmToSelect;
     notifyListeners();
@@ -27,6 +45,10 @@ class FilmViewModel extends ChangeNotifier {
     });
   }
 
+  /// Crea una película nueva y devuelve un `bool` con el resultado.
+  ///
+  /// Si la operación se ha realizado con éxito, la película se añade a la lista
+  /// y se procede a realizar una actualización de la interfáz.
   Future<bool> createFilm(Film newFilm) async {
     final int? id = await filmRepository.insert(newFilm);
     // todo realizar comprobaciones
@@ -40,6 +62,11 @@ class FilmViewModel extends ChangeNotifier {
     return isSuccess;
   }
 
+  /// Edita una película y devuelve un `bool` con el resultado.
+  ///
+  /// Si la película se modifica con éxito, la misma película seleccionada
+  /// se actualiza de la lista y se actualiza la interfáz para mostrar el
+  /// cambio.
   Future<bool> editFilm(Film newFilm) async {
     bool isSuccess = false;
     if (selectedFilm != null) {
@@ -59,6 +86,10 @@ class FilmViewModel extends ChangeNotifier {
     return isSuccess;
   }
 
+  /// Elimina una película y devuelve un `bool` con el resultado.
+  ///
+  /// Si la operación se realiza con éxito, también se elimina la película
+  /// de la lista en memoria, y se actualiza la interfáz.
   Future<bool> deleteFilm(Film film) async {
     if (await filmRepository.delete(film.id!)) {
       _films.remove(film);
@@ -107,9 +138,13 @@ class FilmViewModel extends ChangeNotifier {
   // Poster
   // Todo: moverlo al formulario.
   // Todo: no se si es mejor guardar el path directamente en un string
+  // TODO: encapsular el poster en una clase para que pueda ser final y estar en el stateless del form.
   File? _selectedPoster;
+
+  /// Devuelve un File con el poster seleccionado.
   File? get selectedPoster => _selectedPoster;
 
+  /// Selecciona un poster.
   void selectPoster(File? image) {
     _selectedPoster = image;
 

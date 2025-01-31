@@ -7,6 +7,7 @@ import 'package:proyecto_flutter/film/presentation/widgets/film_card.dart';
 
 import '../view_model/film_view_model.dart';
 
+/// Permite visualizar y elegir el poster para una película.
 class PosterPicker extends StatelessWidget {
   const PosterPicker({super.key});
 

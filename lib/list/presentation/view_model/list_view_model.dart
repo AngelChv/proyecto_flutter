@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// Gestiona el estado de las listas.
+///
+/// **En desarrollo.**
 class ListViewModel extends ChangeNotifier {
   // Código provisional.
   final Map<String, List<String>> _lists = {}; // Nombre de lista -> Películas

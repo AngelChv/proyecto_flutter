@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+/// Pantalla para mostrar las listas.
+///
+/// **En desarrollo.**
 class ListsScreen extends StatelessWidget {
   const ListsScreen({super.key});
 

@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../domain/film.dart';
 import '../view_model/film_view_model.dart';
 
+/// Tarjeta que muestra la información de una película de una manera abreviada.
 class FilmCard extends StatelessWidget {
   const FilmCard({
     super.key,
@@ -49,6 +50,13 @@ class FilmCard extends StatelessWidget {
   }
 }
 
+/// Muestra de manera visual la información de una película.
+///
+/// Muestra:
+/// 1. El título.
+/// 2. El director.
+/// 3. El año de estreno y la duración.
+/// 4. La descripción.
 class FilmInfo extends StatelessWidget {
   const FilmInfo({
     super.key,
@@ -92,6 +100,7 @@ class FilmInfo extends StatelessWidget {
   }
 }
 
+/// Muestra el año de estreno y la duración de una película en horizontal.
 class YearDurationText extends StatelessWidget {
   const YearDurationText({
     super.key,
@@ -123,6 +132,9 @@ class YearDurationText extends StatelessWidget {
   }
 }
 
+/// Poster de una película con los bodes redondeados.
+///
+/// Se obtiene de la red o de un fichero en función de su protocolo.
 class Poster extends StatelessWidget {
   const Poster({super.key, required this.imagePath});
 

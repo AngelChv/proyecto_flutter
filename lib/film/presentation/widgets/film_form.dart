@@ -7,6 +7,7 @@ import '../../../core/presentation/theme/style_constants.dart';
 import '../../domain/film.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+/// Formulario para crear o editar una película.
 class FilmForm extends StatefulWidget {
   // TODO: usar un viewModel;
   static const int _startYear = 1895;

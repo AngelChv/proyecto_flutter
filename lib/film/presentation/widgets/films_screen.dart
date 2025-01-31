@@ -6,6 +6,7 @@ import 'package:proyecto_flutter/film/presentation/view_model/film_view_model.da
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../core/presentation/theme/style_constants.dart';
 
+/// Pantalla para visualizar las películas guardadas.
 class FilmsScreen extends StatelessWidget {
   const FilmsScreen({super.key});
 

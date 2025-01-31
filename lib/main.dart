@@ -10,6 +10,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 // Si se quieren manejar los snackbar de manera global
 //final scaffoldKey = GlobalKey<ScaffoldMessengerState>();
 
+/// Punto de entrada de la APP
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -23,6 +24,9 @@ void main() {
   ));
 }
 
+/// Widget principal, en el está el MaterialApp.
+///
+/// Configura las localizaciones, el tema y las rutas.
 class App extends StatefulWidget {
   const App({super.key});
 

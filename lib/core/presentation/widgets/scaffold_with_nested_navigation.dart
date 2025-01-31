@@ -34,8 +34,9 @@ class ScaffoldWithNestedNavigation extends StatelessWidget {
         },
       ];
 
-  /// Navega a la rama con el indicie indicado, si es la rama actual, se va
-  /// a la raíz de todas las sub-ramas de la rama.
+  /// Navega a la rama con el indicie indicado.
+  ///
+  /// Si es la rama actual, se va a la raíz de la rama.
   void _goBranch(int index) {
     _navigationShell.goBranch(
       index,

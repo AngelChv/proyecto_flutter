@@ -4,7 +4,13 @@ import '../../domain/film.dart';
 import 'film_service.dart';
 import '../../../core/data/sqlite_manager.dart';
 
+/// A través de una conexión a la base de datos realiza las operaciones indicadas.
+///
+/// Implementa la clase [FilmService] para asegurar tener los métodos crud
+/// y que el repositorio pueda usar la interfáz para abstraerse del uso de
+/// un servicio concreto.
 class FilmSqliteService implements FilmService {
+  /// Obtiene una lista con todas las películas.
   @override
   Future<List<Film>> getAll() async {
     List<Film> films = [];
@@ -19,6 +25,7 @@ class FilmSqliteService implements FilmService {
     return films;
   }
 
+  /// Inserta una película y devuelve su id generádo.
   @override
   Future<int?> insert(Film film) async {
     // todo manejar excepciones, en concreto id unique.
@@ -26,6 +33,7 @@ class FilmSqliteService implements FilmService {
     return await db?.insert('films', film.toMap());
   }
 
+  /// Actualiza una película y devuelve un `bool` con el resultado.
   @override
   Future<bool> update(Film film) async {
     final Database? db = await SqliteManager.db;
@@ -39,6 +47,7 @@ class FilmSqliteService implements FilmService {
     return count == 1;
   }
 
+  /// Elimina una película y devuelve un `bool` con el resultado.
   @override
   Future<bool> delete(int id) async {
     final Database? db = await SqliteManager.db;

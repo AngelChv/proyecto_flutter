@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-/// Tarjeta responsiva que contiene un LisTile o un column con un DropDownMenu
+/// Tarjeta responsiva que contiene un [LisTile] o un [Column] con un [DropDownMenu]
 ///
-/// Si la pantalla es ancha se usa un ListTile.
-/// Si la pantalla es compacta se usa un Column.
-/// Esto evita que el DropdownButton se superponga al texto en la vista compacta
+/// Si la pantalla es ancha se usa un [ListTile].
+/// Si la pantalla es compacta se usa un [Column].
+/// Esto evita que el [DropdownMenu] se superponga al texto en la vista compacta
 /// al estar en vertical en lugar de horizontal.
 class SelectionMenuItem extends StatelessWidget {
   const SelectionMenuItem({

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-/// Scaffold que implementa la navegación de go_router
-/// mediante StatefulNavigationShell _navigatorShell
+/// [Scaffold] que implementa la navegación de [go_router]
+/// mediante [StatefulNavigationShell] _navigatorShell
 ///
 /// Se adapta en función del tamaño del ancho de la pantalla para usar
-/// NavigationBar si la pantalla es compacta
-/// o NavigationRail si es grande.
+/// [NavigationBar] si la pantalla es compacta
+/// o [NavigationRail] si es grande.
 class ScaffoldWithNestedNavigation extends StatelessWidget {
   const ScaffoldWithNestedNavigation({
     super.key,

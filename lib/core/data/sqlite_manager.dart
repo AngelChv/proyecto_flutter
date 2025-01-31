@@ -12,6 +12,8 @@ import '../../film/data/repository/film_repository.dart';
 /// * Android.
 /// * IOS.
 /// * Windows.
+///
+/// A través de [db] se obtiene la conexión.
 class SqliteManager {
   static Database? _db;
 

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_flutter/film/presentation/view_model/film_view_model.dart';
@@ -9,7 +11,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// Formulario para crear o editar una película.
 class FilmForm extends StatefulWidget {
-  // TODO: usar un viewModel;
   static const int _startYear = 1895;
   final GlobalKey<FormState> _formKey;
   final bool _isEditing;
@@ -51,7 +52,6 @@ class _FilmFormState extends State<FilmForm> {
 
   void loadData(BuildContext context) {
     if (widget._isEditing) {
-      // Todo: no usar read
       final Film? film = context.read<FilmViewModel>().selectedFilm;
       if (film != null) {
         widget._titleController.text = film.title;
@@ -60,12 +60,10 @@ class _FilmFormState extends State<FilmForm> {
         widget._durationController.text =
             minutesToTimeOfDay(film.duration).format(context);
         widget._descriptionController.text = film.description;
-        // TODO: mover el poster al formulario.
-        // Da error al realizar el notifyListeners mientras se ejecuta el build.
-        //context.read<FilmViewModel>().selectPoster(File(film.posterPath));
+        context.read<FilmViewModel>().selectPoster(File(film.posterPath));
       }
     } else {
-      //context.read<FilmViewModel>().selectPoster(null);
+      context.read<FilmViewModel>().selectPoster(null);
     }
   }
 

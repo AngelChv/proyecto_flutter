@@ -96,9 +96,14 @@ class ResponsiveFilmDetails extends StatelessWidget {
     final height = MediaQuery.sizeOf(context).height;
     return Stack(
       children: [
-        SizedBox(
-          width: double.infinity,
-          child: Poster(imagePath: film.posterPath),
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          child: SizedBox(
+            width: double.infinity,
+            child: Poster(imagePath: film.posterPath),
+          ),
         ),
         SingleChildScrollView(
           child: Container(

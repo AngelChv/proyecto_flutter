@@ -30,9 +30,9 @@ class FilmsGrid extends StatelessWidget {
         crossAxisSpacing: 16, // Espacio horizontal entre tarjetas
         mainAxisSpacing: 16, // Espacio vertical entre tarjetas
       ),
-      itemCount: _films.length,
+      itemCount: _films.length + 1,
       itemBuilder: (context, index) {
-        if (index == _films.length -1) return bottomSeparator;
+        if (index == _films.length) return bottomSeparator;
         return FilmCard(
           onTap: _onFilmTap,
           onLongPress: _onFilmLongPress,

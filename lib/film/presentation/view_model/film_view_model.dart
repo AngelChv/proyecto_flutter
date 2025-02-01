@@ -115,7 +115,7 @@ class FilmViewModel extends ChangeNotifier {
         director: filmForm.director,
         year: int.parse(filmForm.year),
         duration: timeOfDayToMinutes(duration),
-        description: filmForm.director,
+        description: filmForm.description,
         // Todo: guardar las imágenes en el directorio de documentos de la app
         posterPath: posterPath ?? "https://placehold.co/900x1600/png",
       );

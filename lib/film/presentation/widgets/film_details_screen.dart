@@ -18,21 +18,16 @@ class FilmDetailsScreen extends StatelessWidget {
   _deleteFilm(BuildContext context, Film film) async {
     final isSuccess = await context.read<FilmViewModel>().deleteFilm(film);
     if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(isSuccess
               ? AppLocalizations.of(context)!.deletedFilm
-              : AppLocalizations.of(context)!.deletingFilmError)
-        )
-      );
+              : AppLocalizations.of(context)!.deletingFilmError)));
       isSuccess ? context.pop() : null;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final isWideScreen = MediaQuery.sizeOf(context).width >= 600;
-
     // Todo: comprobar si no hay error al utilizar !
     final film = context.watch<FilmViewModel>().selectedFilm!;
     return Scaffold(
@@ -86,70 +81,88 @@ class FilmDetailsScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          return isWideScreen ? FilmDetailsExpanded() : FilmDetailsCompact();
-        },
-      ),
+      body: ResponsiveFilmDetails(),
     );
   }
 }
 
-/// Detalles de la película para pantallas compactas.
-class FilmDetailsCompact extends StatelessWidget {
-  const FilmDetailsCompact({super.key});
+class ResponsiveFilmDetails extends StatelessWidget {
+  const ResponsiveFilmDetails({super.key});
 
   @override
   Widget build(BuildContext context) {
     // Todo: comprobar si no hay error al utilizar !
     final film = context.watch<FilmViewModel>().selectedFilm!;
-
-    return ListView(
-      padding: EdgeInsets.all(compactMargin),
+    final height = MediaQuery.sizeOf(context).height;
+    return Stack(
       children: [
-        // todo: separar los hijos (ListView.Separated).
-        Poster(imagePath: film.posterPath),
-        Text(film.title),
-        Text(film.director),
-        YearDurationText(year: film.year, duration: Duration(minutes: film.duration)),
-        Text(film.description),
-      ],
-    );
-  }
-}
-
-/// Detalles de la película para pantallas anchas.
-class FilmDetailsExpanded extends StatelessWidget {
-  const FilmDetailsExpanded({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // Todo: comprobar si no hay error al utilizar !
-    final film = context.watch<FilmViewModel>().selectedFilm!;
-
-    return Row(
-      children: [
-        Expanded(
-          child: AspectRatio(
-            aspectRatio: 9 / 16,
-            child: Poster(imagePath: film.posterPath),
-          ),
+        SizedBox(
+          width: double.infinity,
+          child: Poster(imagePath: film.posterPath),
         ),
-        Expanded(
-          flex: 2,
-          child: Card(
-            margin: EdgeInsets.all(mediumMargin),
-            child: ListView(
-              children: [
-                Text(film.title),
-                Text(film.director),
-                YearDurationText(year: film.year, duration: Duration(minutes: film.duration)),
-                Text(film.description),
-              ],
+        SingleChildScrollView(
+          child: Container(
+            constraints: BoxConstraints(
+              minHeight: height,
+            ),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: [0.1, 0.3, 0.6],
+                colors: [
+                  Colors.transparent,
+                  Theme.of(context).scaffoldBackgroundColor.withValues(
+                        alpha: 0.6,
+                      ),
+                  Theme.of(context).scaffoldBackgroundColor,
+                ],
+              ),
+            ),
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: height / 2,
+              ),
+              child: FilmDetailsInfo(),
             ),
           ),
         ),
       ],
+    );
+  }
+}
+
+class FilmDetailsInfo extends StatelessWidget {
+  const FilmDetailsInfo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // Todo: comprobar si no hay error al utilizar !
+    final film = context.watch<FilmViewModel>().selectedFilm!;
+    return Center(
+      child: Container(
+        constraints: BoxConstraints(
+          maxWidth: 1200,
+        ),
+        padding: const EdgeInsets.all(compactMargin),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          spacing: 8,
+          children: [
+            Text(
+              film.title,
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            Text(
+              film.director,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            YearDurationText(
+                year: film.year, duration: Duration(minutes: film.duration)),
+            Text(film.description),
+          ],
+        ),
+      ),
     );
   }
 }

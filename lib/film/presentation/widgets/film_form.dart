@@ -185,6 +185,7 @@ class _FilmFormState extends State<FilmForm> {
         },
       ),
       PosterPicker(),
+      bottomSeparator,
     ];
   }
 

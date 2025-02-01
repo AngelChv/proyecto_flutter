@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_flutter/core/presentation/theme/style_constants.dart';
 
 import '../../domain/film.dart';
 import 'film_card.dart';
@@ -31,6 +32,7 @@ class FilmsGrid extends StatelessWidget {
       ),
       itemCount: _films.length,
       itemBuilder: (context, index) {
+        if (index == _films.length -1) return bottomSeparator;
         return FilmCard(
           onTap: _onFilmTap,
           onLongPress: _onFilmLongPress,

@@ -1,0 +1,43 @@
+import 'package:proyecto_flutter/list/data/service/list_api_service.dart';
+import 'package:proyecto_flutter/list/data/service/list_service.dart';
+import 'package:flutter/foundation.dart';
+import 'package:proyecto_flutter/list/data/service/list_sqlite_service.dart';
+import 'package:proyecto_flutter/list/domain/list.dart';
+
+class ListRepository {
+  late final ListService _listService;
+
+  ListRepository() {
+    if (kIsWeb) {
+      _listService = ListApiService();
+    } else {
+      _listService = ListSqliteService();
+    }
+  }
+
+  /// Se conecta al servicio para obtener todas las listas.
+  Future<List<FilmsList>> getAll() {
+    return _listService.getAll();
+  }
+
+  /// Se conecta al servicio para insertar una lista.
+  ///
+  /// Devuelve el `int` id generado para la lista
+  Future<int?> insert(FilmsList list) {
+    return _listService.insert(list);
+  }
+
+  /// Se conecta al servicio para actualizar una lista.
+  ///
+  /// Devuelve un `bool` con el resultado.
+  Future<bool> update(FilmsList list) {
+    return _listService.update(list);
+  }
+
+  /// Se conecta al servicio para eliminar una lista.
+  ///
+  /// Devuelve un `bool` con el resultado.
+  Future<bool> delete(int id) {
+    return _listService.delete(id);
+  }
+}

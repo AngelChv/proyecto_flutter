@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_flutter/list/presentation/view_model/list_view_model.dart';
 import 'package:proyecto_flutter/list/presentation/widgets/lists_grid.dart';
@@ -33,8 +34,15 @@ class ListsScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: AppLocalizations.of(context)!.createList,
-        onPressed: () {
-          // todo
+        onPressed: () async {
+          final String? message = await context.pushNamed<String>("listForm",
+              pathParameters: {"isEditing": "false"});
+
+          if (context.mounted && message != null) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(message),
+            ));
+          }
         },
         child: Icon(Icons.add),
       ),

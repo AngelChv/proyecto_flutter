@@ -1,10 +1,9 @@
 import 'dart:io' show Platform;
 
 import 'package:path/path.dart';
+import 'package:proyecto_flutter/film/data/service/film_sqlite_service.dart';
+import 'package:proyecto_flutter/list/data/service/list_sqlite_service.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-
-import '../../film/domain/film.dart';
-import '../../film/data/repository/film_repository.dart';
 
 /// Gestiona la conexión a la base de datos.
 ///
@@ -43,26 +42,19 @@ class SqliteManager {
 
     // Abrir o crear una base de datos
     final dbPath = join(await factory.getDatabasesPath(), 'film.db');
-    _db = await factory.openDatabase(dbPath);
-    // Crear tablas si no existen:
-    await _dataDefinition();
-    //await _sampleData();
+    _db = await factory.openDatabase(dbPath,
+        options: OpenDatabaseOptions(
+          version: 1,
+          onCreate: (db, version) {
+            _dataDefinition(db);
+          },
+        ));
     return _db;
   }
 
   /// Crea las tablas si no existen
-  static Future<void> _dataDefinition() async {
-    final Database? db = await SqliteManager.db;
-    db?.execute('''
-        CREATE TABLE IF NOT EXISTS films (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
-          title TEXT NOT NULL,
-          director TEXT NOT NULL,
-          year INTEGER NOT NULL,
-          duration INTEGER NOT NULL,
-          description TEXT NOT NULL,
-          poster_path TEXT
-        )
-      ''');
+  static Future<void> _dataDefinition(Database db) async {
+    FilmSqliteService.createDDL(db);
+    ListSqliteService.createDDL(db);
   }
 }

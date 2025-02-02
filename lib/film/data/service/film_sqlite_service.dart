@@ -10,13 +10,30 @@ import '../../../core/data/sqlite_manager.dart';
 /// y que el repositorio pueda usar la interfáz para abstraerse del uso de
 /// un servicio concreto.
 class FilmSqliteService implements FilmService {
+  static const String table = "films";
+
+  static createDDL(Database db) async {
+    db.execute("""
+      CREATE TABLE IF NOT EXISTS $table (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          title TEXT NOT NULL,
+          director TEXT NOT NULL,
+          year INTEGER NOT NULL,
+          duration INTEGER NOT NULL,
+          description TEXT NOT NULL,
+          poster_path TEXT
+        );
+      """
+    );
+  }
+
   /// Obtiene una lista con todas las películas.
   @override
   Future<List<Film>> getAll() async {
     List<Film> films = [];
     final Database? db = await SqliteManager.db;
 
-    List<Map<String, Object?>>? resultList = await db?.query("films");
+    List<Map<String, Object?>>? resultList = await db?.query(table);
     if (resultList != null) {
       for (var result in resultList) {
         films.add(Film.fromMap(result));
@@ -30,7 +47,7 @@ class FilmSqliteService implements FilmService {
   Future<int?> insert(Film film) async {
     // todo manejar excepciones, en concreto id unique.
     final Database? db = await SqliteManager.db;
-    return await db?.insert('films', film.toMap());
+    return await db?.insert(table, film.toMap());
   }
 
   /// Actualiza una película y devuelve un `bool` con el resultado.
@@ -38,7 +55,7 @@ class FilmSqliteService implements FilmService {
   Future<bool> update(Film film) async {
     final Database? db = await SqliteManager.db;
     final int? count = await db?.update(
-        "films",
+        table,
         film.toMap(),
         where: "id = ?",
         whereArgs: [film.id]
@@ -52,7 +69,7 @@ class FilmSqliteService implements FilmService {
   Future<bool> delete(int id) async {
     final Database? db = await SqliteManager.db;
     final int count = await db?.delete(
-        "films",
+        table,
         where: "id = ?",
         whereArgs: [id]
     ) ?? 0;

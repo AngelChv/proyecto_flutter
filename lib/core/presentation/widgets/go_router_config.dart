@@ -4,6 +4,7 @@ import 'package:proyecto_flutter/core/presentation/widgets/scaffold_with_nested_
 import 'package:proyecto_flutter/film/presentation/widgets/film_details_screen.dart';
 import 'package:proyecto_flutter/film/presentation/widgets/film_form_screen.dart';
 import 'package:proyecto_flutter/film/presentation/widgets/films_screen.dart';
+import 'package:proyecto_flutter/list/presentation/widgets/list_form_screen.dart';
 import 'package:proyecto_flutter/list/presentation/widgets/lists_screen.dart';
 import 'package:proyecto_flutter/profile/presentation/widgets/general_settings_screen.dart';
 import 'package:proyecto_flutter/profile/presentation/widgets/profile_screen.dart';
@@ -67,7 +68,8 @@ final GoRouter routerConfig = GoRouter(
                   // Importante las subpáginas se deben construir
                   // con builder no Pagebuilder
                   builder: (context, state) {
-                    final isEditing = state.pathParameters["isEditing"] == "true";
+                    final isEditing =
+                        state.pathParameters["isEditing"] == "true";
                     return FilmFormScreen(isEditing: isEditing);
                   },
                 ),
@@ -91,6 +93,18 @@ final GoRouter routerConfig = GoRouter(
               pageBuilder: (context, state) => const NoTransitionPage(
                 child: ListsScreen(),
               ),
+              routes: [
+                // ListForm
+                GoRoute(
+                  name: "listForm",
+                  path: "form/:isEditing",
+                  builder: (context, state) {
+                    final isEditing =
+                        state.pathParameters["isEditing"] == "true";
+                    return ListFormScreen(isEditing: isEditing);
+                  },
+                ),
+              ],
             ),
           ],
         ),
@@ -105,20 +119,25 @@ final GoRouter routerConfig = GoRouter(
                 child: ProfileScreen(),
               ),
               routes: [
-                GoRoute( // Settings
+                GoRoute(
+                  // Settings
                   name: "settings",
                   path: "settings",
                   builder: (context, state) => const SettingsMenuScreen(),
                   routes: [
-                    GoRoute( // General
+                    GoRoute(
+                      // General
                       name: "generalSettings",
                       path: "general",
-                      builder: (context, state) => const GeneralSettingsScreen(),
+                      builder: (context, state) =>
+                          const GeneralSettingsScreen(),
                     ),
-                    GoRoute( // Usuario
+                    GoRoute(
+                      // Usuario
                       name: "userSettings",
                       path: "user",
-                      builder: (context, state) => const ProfileSettingsScreen(),
+                      builder: (context, state) =>
+                          const ProfileSettingsScreen(),
                     ),
                   ],
                 ),

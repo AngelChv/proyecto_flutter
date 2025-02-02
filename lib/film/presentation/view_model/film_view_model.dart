@@ -51,7 +51,6 @@ class FilmViewModel extends ChangeNotifier {
   /// y se procede a realizar una actualización de la interfáz.
   Future<bool> createFilm(Film newFilm) async {
     final int? id = await filmRepository.insert(newFilm);
-    // todo realizar comprobaciones
     bool isSuccess = false;
     if (id != null) {
       newFilm.id = id;

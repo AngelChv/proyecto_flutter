@@ -27,10 +27,14 @@ class FilmCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         context.read<FilmViewModel>().selectFilm(_film);
-        _onTap!(_film);
+        if (_onTap != null) {
+          _onTap(_film);
+        }
       },
       onLongPress: () {
-        _onLongPress!(_film);
+        if (_onLongPress != null) {
+          _onLongPress(_film);
+        }
       },
       child: Card(
         child: Row(

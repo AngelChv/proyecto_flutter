@@ -1,31 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_flutter/list/domain/list.dart';
 
 /// Gestiona el estado de las listas.
 ///
 /// **En desarrollo.**
 class ListViewModel extends ChangeNotifier {
-  // Código provisional.
-  final Map<String, List<String>> _lists = {}; // Nombre de lista -> Películas
-  Map<String, List<String>> get lists => Map.unmodifiable(_lists);
+  final List<FilmsList> _lists = List.generate(100, (index) {
+    return FilmsList(
+        name: "Prueba",
+        createDateTime: DateTime.now(),
+        editDateTime: DateTime.now());
+  });
 
-  void createList(String listName) {
-    if (!_lists.containsKey(listName)) {
-      _lists[listName] = [];
-      notifyListeners();
-    }
+  List<FilmsList> get lists => List.unmodifiable(_lists);
+
+  FilmsList? _selectedList;
+
+  FilmsList? get selectedList => _selectedList;
+
+  ListViewModel() {
+    // TODO: cargar listas de la db
   }
 
-  void addFilmToList(String listName, String film) {
-    if (_lists.containsKey(listName)) {
-      _lists[listName]?.add(film);
-      notifyListeners();
-    }
+  selectList(FilmsList list) {
+    _selectedList = list;
+    notifyListeners();
   }
 
-  void removeFilmFromList(String listName, String film) {
-    if (_lists.containsKey(listName)) {
-      _lists[listName]?.remove(film);
-      notifyListeners();
-    }
+  getFilms() {
+    // TODO: coger según el set de ids de la lista seleccionada, las correspondientes películas de la bd
   }
 }

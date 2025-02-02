@@ -10,18 +10,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ListViewModel extends ChangeNotifier {
   final ListRepository _listRepository = ListRepository();
 
-  List<FilmsList> _lists = List.generate(100, (index) {
-    return FilmsList(
-        name: "Prueba",
-        createDateTime: DateTime.now(),
-        editDateTime: DateTime.now());
-  });
+  List<FilmsList> _lists = [];
 
   List<FilmsList> get lists => List.unmodifiable(_lists);
-
-  FilmsList? _selectedList;
-
-  FilmsList? get selectedList => _selectedList;
 
   ListViewModel() {
     loadLists();
@@ -34,16 +25,11 @@ class ListViewModel extends ChangeNotifier {
     });
   }
 
-  void selectList(FilmsList list) {
-    _selectedList = list;
-    notifyListeners();
-  }
-
   getFilms() {
     // TODO: coger según el set de ids de la lista seleccionada, las correspondientes películas de la bd
   }
 
-  createList(FilmsList newList) async {
+  Future<bool> createList(FilmsList newList) async {
     final int? id = await _listRepository.insert(newList);
     bool isSuccess = false;
     if (id != null) {
@@ -55,14 +41,22 @@ class ListViewModel extends ChangeNotifier {
     return isSuccess;
   }
 
+  Future<bool> deleteList(FilmsList list) async {
+    if (list.id != null && await _listRepository.delete(list.id!)) {
+    _lists.remove(list);
+    notifyListeners();
+    return true;
+    }
+    return false;
+  }
+
   /// Valida el formulario y devuelve la nueva lista.
   /// Si el formulario no se valida devuelve null.
   /// Si al editar una lista no se modifica nada, devuelve null
   /// y lanza un snackbar.
-  FilmsList? submitForm(BuildContext context, ListForm listForm, GlobalKey<FormState> formKey) {
+  FilmsList? submitForm(BuildContext context, ListForm listForm, FilmsList? oldList) {
     FilmsList? newList;
-    if (formKey.currentState!.validate()) {
-      final oldList = _selectedList;
+    if (listForm.formKey.currentState!.validate()) {
       newList = FilmsList(
         name: listForm.name,
         createDateTime: DateTime.now(),

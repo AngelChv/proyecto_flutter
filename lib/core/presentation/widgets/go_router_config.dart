@@ -4,6 +4,8 @@ import 'package:proyecto_flutter/core/presentation/widgets/scaffold_with_nested_
 import 'package:proyecto_flutter/film/presentation/widgets/film_details_screen.dart';
 import 'package:proyecto_flutter/film/presentation/widgets/film_form_screen.dart';
 import 'package:proyecto_flutter/film/presentation/widgets/films_screen.dart';
+import 'package:proyecto_flutter/list/domain/list.dart';
+import 'package:proyecto_flutter/list/presentation/widgets/list_details_screen.dart';
 import 'package:proyecto_flutter/list/presentation/widgets/list_form_screen.dart';
 import 'package:proyecto_flutter/list/presentation/widgets/lists_screen.dart';
 import 'package:proyecto_flutter/profile/presentation/widgets/general_settings_screen.dart';
@@ -102,6 +104,14 @@ final GoRouter routerConfig = GoRouter(
                     final isEditing =
                         state.pathParameters["isEditing"] == "true";
                     return ListFormScreen(isEditing: isEditing);
+                  },
+                ),
+                // ListDetails
+                GoRoute(
+                  name: "listDetails",
+                  path: "details",
+                  builder: (context, state) {
+                    return ListDetailsScreen(list: state.extra as FilmsList);
                   },
                 ),
               ],

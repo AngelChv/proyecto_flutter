@@ -41,14 +41,26 @@ class ListSqliteService implements ListService {
   }
 
   @override
-  Future<bool> update(FilmsList list) {
-    // TODO: implement update
-    throw UnimplementedError();
+  Future<bool> update(FilmsList list) async {
+    final Database? db = await SqliteManager.db;
+    final int? count = await db?.update(
+        table,
+        list.toMap(),
+        where: "id = ?",
+        whereArgs: [list.id]
+    );
+
+    return count == 1;
   }
 
   @override
-  Future<bool> delete(int id) {
-    // TODO: implement delete
-    throw UnimplementedError();
+  Future<bool> delete(int id) async {
+    final Database? db = await SqliteManager.db;
+    final int count = await db?.delete(
+        table,
+        where: "id = ?",
+        whereArgs: [id]
+    ) ?? 0;
+    return count == 1;
   }
 }

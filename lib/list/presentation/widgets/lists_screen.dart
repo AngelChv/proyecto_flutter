@@ -6,6 +6,7 @@ import 'package:proyecto_flutter/list/presentation/view_model/list_view_model.da
 import 'package:proyecto_flutter/list/presentation/widgets/lists_grid.dart';
 
 import '../../../core/presentation/theme/style_constants.dart';
+import '../../domain/list.dart';
 
 /// Pantalla para mostrar las listas.
 ///
@@ -24,8 +25,8 @@ class ListsScreen extends StatelessWidget {
       ),
       body: ListsGrid(
         padding: EdgeInsets.all(isWideScreen ? mediumMargin : compactMargin),
-        onListTap: (film) {
-          // TODO: tap
+        onListTap: (list) {
+          context.pushNamed<FilmsList>("listDetails", extra: list);
         },
         onListLongPress: (film) {
           // TODO: long press

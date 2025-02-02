@@ -8,6 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ListFormScreen extends StatelessWidget {
   ListFormScreen({super.key, required bool isEditing}) : _isEditing = isEditing;
 
+  // todo: en lugar de un bool recibir la lista directamente y luego pasarla al submit como oldList
   final bool _isEditing;
   final _formKey = GlobalKey<FormState>();
 
@@ -29,7 +30,8 @@ class ListFormScreen extends StatelessWidget {
             : AppLocalizations.of(context)!.createFilm,
         child: Icon(Icons.check),
         onPressed: () async {
-          final film = context.read<ListViewModel>().submitForm(context, listForm, _formKey);
+          // todo: en lugar de null pasar la lista recibida.
+          final film = context.read<ListViewModel>().submitForm(context, listForm, null);
           if (film != null) {
             bool isSuccess;
             if (_isEditing) {

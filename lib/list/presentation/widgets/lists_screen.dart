@@ -26,6 +26,7 @@ class ListsScreen extends StatelessWidget {
       body: ListsGrid(
         padding: EdgeInsets.all(isWideScreen ? mediumMargin : compactMargin),
         onListTap: (list) {
+          context.read<ListViewModel>().selectList(list);
           context.pushNamed<FilmsList>("listDetails", extra: list);
         },
         onListLongPress: (film) {
@@ -36,8 +37,7 @@ class ListsScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         tooltip: AppLocalizations.of(context)!.createList,
         onPressed: () async {
-          final String? message = await context.pushNamed<String>("listForm",
-              pathParameters: {"isEditing": "false"});
+          final String? message = await context.pushNamed<String>("listForm");
 
           if (context.mounted && message != null) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(

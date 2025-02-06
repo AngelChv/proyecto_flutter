@@ -11,4 +11,5 @@ abstract class FilmService {
   Future<int?> insert(Film film);
   Future<bool> update(Film film);
   Future<bool> delete(int id);
+  Future<List<Film>> getFilmsByListId(int id);
 }

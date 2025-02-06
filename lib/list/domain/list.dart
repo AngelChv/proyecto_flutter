@@ -5,18 +5,15 @@ class FilmsList {
   final String name;
   final DateTime createDateTime;
   final DateTime editDateTime;
-  // todo: ver como gestionar el añadir y eliminar las relaciones.
-  final Set<int>? films;
 
   FilmsList({
     this.id,
     required this.name,
     required this.createDateTime,
     required this.editDateTime,
-    this.films,
   });
 
-  /// Transforma la lista a un mapa.
+  /// Transforma la lista de películas a un mapa.
   ///
   /// El id se excluye para poder usarlo al insertar en sqlite y se
   /// genere un id auto incremental.
@@ -28,7 +25,7 @@ class FilmsList {
     };
   }
 
-  /// Devuelve una película del mapa recibido como parámetro.
+  /// Devuelve una lista de películas del mapa recibido como parámetro.
   ///
   /// Se necesitan los siguiéntes valores del mapa:
   /// 1. `int id`
@@ -47,13 +44,13 @@ class FilmsList {
   ///
   /// Compara por sus atributos no por la dirección de memoria.
   /// No se comprueba por id.
+  // todo no funciona
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is FilmsList &&
           runtimeType == other.runtimeType &&
-          name == other.name &&
-          createDateTime == other.createDateTime;
+          name == other.name;
 
   @override
   int get hashCode => name.hashCode ^ createDateTime.hashCode;

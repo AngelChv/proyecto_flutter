@@ -8,13 +8,10 @@ class ListForm extends StatelessWidget {
   ListForm({
     super.key,
     required GlobalKey<FormState> formKey,
-    required bool idEditing,
-  })  : _idEditing = idEditing,
-        _formKey = formKey;
+  })  : _formKey = formKey;
 
   final GlobalKey<FormState> _formKey;
   GlobalKey<FormState> get formKey => _formKey;
-  final bool _idEditing;
 
   final _nameController = TextEditingController();
   String get name => _nameController.text;

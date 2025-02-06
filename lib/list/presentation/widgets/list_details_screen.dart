@@ -6,13 +6,10 @@ import 'package:proyecto_flutter/list/domain/list.dart';
 import 'package:proyecto_flutter/list/presentation/view_model/list_view_model.dart';
 
 import '../../../core/presentation/theme/style_constants.dart';
-import '../../../film/presentation/view_model/film_view_model.dart';
 import '../../../film/presentation/widgets/films_grid.dart';
 
 class ListDetailsScreen extends StatelessWidget {
-  const ListDetailsScreen({super.key, required FilmsList list}) : _list = list;
-
-  final FilmsList _list;
+  const ListDetailsScreen({super.key});
 
   _deleteFilm(BuildContext context, FilmsList list) async {
     final isSuccess = await context.read<ListViewModel>().deleteList(list);
@@ -29,18 +26,21 @@ class ListDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isWideScreen = MediaQuery.sizeOf(context).width >= 600;
-    final films = context.watch<FilmViewModel>().films;
+    final filteredFilms = context.watch<ListViewModel>().filmsOfList;
+    // todo: comprobar si hay problemas al usar !
+    final list = context.watch<ListViewModel>().selectedList!;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(_list.name),
+        // todo: al editar la lista no se esta modificando porque no depende del viewmodel
+        title: Text(list.name),
         actions: [
           IconButton(
             tooltip: AppLocalizations.of(context)!.editFilm,
             onPressed: () async {
-              final String? message = await context.pushNamed<String>(
+              final String? message = await context.pushNamed(
                   "listForm",
-                  pathParameters: {"isEditing": "true"});
+                  extra: list);
 
               if (context.mounted && message != null) {
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -67,7 +67,7 @@ class ListDetailsScreen extends StatelessWidget {
                     TextButton(
                       onPressed: () {
                         context.pop();
-                        _deleteFilm(context, _list);
+                        _deleteFilm(context, list);
                       },
                       child: Text(AppLocalizations.of(context)!.yes),
                     ),
@@ -88,7 +88,7 @@ class ListDetailsScreen extends StatelessWidget {
         onFilmLongPress: (film) {
           // TODO: long press
         },
-        films: films,
+        films: filteredFilms,
       ),
       floatingActionButton: FloatingActionButton.extended(
         // Todo: usar localización adecuada (Añadir película)

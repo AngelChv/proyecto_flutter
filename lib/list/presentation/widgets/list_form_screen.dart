@@ -1,55 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:proyecto_flutter/list/domain/list.dart';
 import 'package:proyecto_flutter/list/presentation/view_model/list_view_model.dart';
 import 'package:proyecto_flutter/list/presentation/widgets/list_form.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ListFormScreen extends StatelessWidget {
-  ListFormScreen({super.key, required bool isEditing}) : _isEditing = isEditing;
+  ListFormScreen({
+    super.key,
+    FilmsList? oldList,
+  }) : _oldList = oldList;
 
-  // todo: en lugar de un bool recibir la lista directamente y luego pasarla al submit como oldList
-  final bool _isEditing;
   final _formKey = GlobalKey<FormState>();
+  final FilmsList? _oldList;
 
   @override
   Widget build(BuildContext context) {
-    final listForm = ListForm(formKey: _formKey, idEditing: _isEditing);
+    final listForm = ListForm(formKey: _formKey);
+    final isEditing = _oldList != null;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(_isEditing
-        // TODO: crear localizaciones para las listas.
+        title: Text(isEditing
+            // TODO: crear localizaciones para las listas.
             ? AppLocalizations.of(context)!.editFilm
             : AppLocalizations.of(context)!.createFilm),
       ),
       body: listForm,
       floatingActionButton: FloatingActionButton(
-        tooltip: _isEditing
+        tooltip: isEditing
             ? AppLocalizations.of(context)!.editFilm
             : AppLocalizations.of(context)!.createFilm,
         child: Icon(Icons.check),
         onPressed: () async {
-          // todo: en lugar de null pasar la lista recibida.
-          final film = context.read<ListViewModel>().submitForm(context, listForm, null);
-          if (film != null) {
+          final newList = context.read<ListViewModel>().submitForm(
+                context,
+                listForm,
+              );
+          if (newList != null) {
             bool isSuccess;
-            if (_isEditing) {
-              // TODO: editar lista.
-              //isSuccess = await context.read<ListViewModel>().editFilm(film);
-              isSuccess = false;
+            if (isEditing) {
+              // Editing
+              isSuccess = await context.read<ListViewModel>().editList(
+                    newList,
+                    _oldList,
+                  );
             } else {
-              isSuccess = await context.read<ListViewModel>().createList(film);
+              // Creating
+              isSuccess =
+                  await context.read<ListViewModel>().createList(newList);
             }
 
             if (isSuccess && context.mounted) {
               // TODO: cambiar localizaciones.
-              context.pop(_isEditing
+              context.pop<String>(isEditing
                   ? AppLocalizations.of(context)!.editedFilm
                   : AppLocalizations.of(context)!.createdFilm);
             } else if (context.mounted) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(_isEditing
+                content: Text(isEditing
                     ? AppLocalizations.of(context)!.editingFilmError
                     : AppLocalizations.of(context)!.creatingFilmError),
               ));

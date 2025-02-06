@@ -99,11 +99,11 @@ final GoRouter routerConfig = GoRouter(
                 // ListForm
                 GoRoute(
                   name: "listForm",
-                  path: "form/:isEditing",
+                  path: "form",
                   builder: (context, state) {
-                    final isEditing =
-                        state.pathParameters["isEditing"] == "true";
-                    return ListFormScreen(isEditing: isEditing);
+                    final list =
+                        state.extra != null ? state.extra as FilmsList : null;
+                    return ListFormScreen(oldList: list);
                   },
                 ),
                 // ListDetails
@@ -111,7 +111,7 @@ final GoRouter routerConfig = GoRouter(
                   name: "listDetails",
                   path: "details",
                   builder: (context, state) {
-                    return ListDetailsScreen(list: state.extra as FilmsList);
+                    return ListDetailsScreen();
                   },
                 ),
               ],

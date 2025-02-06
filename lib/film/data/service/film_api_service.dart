@@ -26,4 +26,9 @@ class FilmApiService implements FilmService {
     // TODO: implement update
     return await false;
   }
+
+  @override
+  Future<List<Film>> getFilmsByListId(int id) async {
+    return await [];
+  }
 }

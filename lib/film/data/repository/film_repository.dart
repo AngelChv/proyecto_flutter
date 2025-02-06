@@ -51,4 +51,8 @@ class FilmRepository {
   Future<bool> delete(int id) {
     return _filmService.delete(id);
   }
+
+  Future<List<Film>> getFilmsByListId(int id) {
+    return _filmService.getFilmsByListId(id);
+  }
 }

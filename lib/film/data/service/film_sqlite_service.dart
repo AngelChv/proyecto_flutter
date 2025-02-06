@@ -23,8 +23,7 @@ class FilmSqliteService implements FilmService {
           description TEXT NOT NULL,
           poster_path TEXT
         );
-      """
-    );
+      """);
   }
 
   /// Obtiene una lista con todas las películas.
@@ -54,12 +53,8 @@ class FilmSqliteService implements FilmService {
   @override
   Future<bool> update(Film film) async {
     final Database? db = await SqliteManager.db;
-    final int? count = await db?.update(
-        table,
-        film.toMap(),
-        where: "id = ?",
-        whereArgs: [film.id]
-    );
+    final int? count = await db
+        ?.update(table, film.toMap(), where: "id = ?", whereArgs: [film.id]);
 
     return count == 1;
   }
@@ -68,11 +63,27 @@ class FilmSqliteService implements FilmService {
   @override
   Future<bool> delete(int id) async {
     final Database? db = await SqliteManager.db;
-    final int count = await db?.delete(
-        table,
-        where: "id = ?",
-        whereArgs: [id]
-    ) ?? 0;
+    final int count =
+        await db?.delete(table, where: "id = ?", whereArgs: [id]) ?? 0;
     return count == 1;
+  }
+
+  @override
+  Future<List<Film>> getFilmsByListId(int listId) async {
+    final Database? db = await SqliteManager.db;
+
+    final List<Map<String, Object?>>? resultList = await db?.rawQuery("""
+    SELECT films.* FROM films
+    JOIN list_films ON films.id = list_films.film_id
+    WHERE list_films.list_id = ?
+    """, [listId]);
+
+    List<Film> films = [];
+    if (resultList != null) {
+      for (var result in resultList) {
+        films.add(Film.fromMap(result));
+      }
+    }
+    return films;
   }
 }

@@ -41,6 +41,22 @@ class FilmSqliteService implements FilmService {
     return films;
   }
 
+  /// Obtiene una película por su id.
+  ///
+  /// Si no se encuentra devuelve null.
+  @override
+  Future<Film?> findById(int id) async {
+    final Database? db = await SqliteManager.db;
+    final result = await db?.query(
+      table,
+      where: "id = ?",
+      whereArgs: [id],
+      limit: 1
+    );
+    if (result == null) return null;
+    return Film.fromMap(result.first);
+  }
+
   /// Inserta una película y devuelve su id generádo.
   @override
   Future<int?> insert(Film film) async {

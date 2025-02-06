@@ -63,4 +63,13 @@ class ListSqliteService implements ListService {
     ) ?? 0;
     return count == 1;
   }
+
+  @override
+  Future<int?> addFilmToList(int listId, int filmId) async {
+    final Database? db = await SqliteManager.db;
+    return await db?.insert("list_films", {
+    "list_id": listId,
+    "film_id": filmId,
+    });
+  }
 }

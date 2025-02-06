@@ -31,4 +31,9 @@ class FilmApiService implements FilmService {
   Future<List<Film>> getFilmsByListId(int id) async {
     return await [];
   }
+
+  @override
+  Future<Film?> findById(int id) async {
+    return await null;
+  }
 }

@@ -8,6 +8,7 @@ import '../../domain/film.dart';
 /// interno.
 abstract class FilmService {
   Future<List<Film>> getAll();
+  Future<Film?> findById(int id);
   Future<int?> insert(Film film);
   Future<bool> update(Film film);
   Future<bool> delete(int id);

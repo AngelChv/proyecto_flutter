@@ -26,4 +26,9 @@ class ListApiService implements ListService {
     // TODO: implement update
     return await false;
   }
+
+  @override
+  Future<int?> addFilmToList(int listId, int filmId) async {
+    return await 0;
+  }
 }

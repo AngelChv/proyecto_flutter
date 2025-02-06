@@ -55,4 +55,8 @@ class FilmRepository {
   Future<List<Film>> getFilmsByListId(int id) {
     return _filmService.getFilmsByListId(id);
   }
+
+  Future<Film?> findById(int id) {
+    return _filmService.findById(id);
+  }
 }

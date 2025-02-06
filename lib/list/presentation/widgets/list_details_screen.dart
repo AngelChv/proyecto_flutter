@@ -94,16 +94,7 @@ class ListDetailsScreen extends StatelessWidget {
         // Todo: usar localización adecuada (Añadir película)
         tooltip: AppLocalizations.of(context)!.createList,
         onPressed: () async {
-/*
-          final String? message = await context.pushNamed<String>("listForm",
-              pathParameters: {"isEditing": "false"});
-
-          if (context.mounted && message != null) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(message),
-            ));
-          }
-*/
+          context.pushNamed<FilmsList>("addFilmToList", extra: list);
         },
         icon: Icon(Icons.add_box),
         // Todo: usar localización adecuada (Añadir película)

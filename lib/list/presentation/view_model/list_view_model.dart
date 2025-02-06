@@ -95,6 +95,20 @@ class ListViewModel extends ChangeNotifier {
     return false;
   }
 
+  Future<bool> addFilmToList(int listId, int filmId) async {
+    final int? id = await _listRepository.addFilmToList(listId, filmId);
+    bool isSuccess = false;
+    if (id != null && _selectedList?.id == listId) {
+      final film = await _filmRepository.findById(filmId);
+      if (film != null) {
+        _filmsOfList.add(film);
+        isSuccess = true;
+      }
+    }
+    notifyListeners();
+    return isSuccess;
+  }
+
   /// Valida el formulario y devuelve la nueva lista.
   /// Si el formulario no se valida devuelve null.
   /// Si al editar una lista no se modifica nada, devuelve null

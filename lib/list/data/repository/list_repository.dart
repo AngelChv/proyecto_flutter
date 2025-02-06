@@ -40,4 +40,11 @@ class ListRepository {
   Future<bool> delete(int id) {
     return _listService.delete(id);
   }
+
+  /// Se conecta al servicio para insertar una película a una lista.
+  ///
+  /// Devuelve el `int` id generado para la relación.
+  Future<int?> addFilmToList(int listId, int filmId) {
+    return _listService.addFilmToList(listId, filmId);
+  }
 }

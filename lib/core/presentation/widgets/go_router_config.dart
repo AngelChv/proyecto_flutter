@@ -5,6 +5,7 @@ import 'package:proyecto_flutter/film/presentation/widgets/film_details_screen.d
 import 'package:proyecto_flutter/film/presentation/widgets/film_form_screen.dart';
 import 'package:proyecto_flutter/film/presentation/widgets/films_screen.dart';
 import 'package:proyecto_flutter/list/domain/list.dart';
+import 'package:proyecto_flutter/list/presentation/widgets/add_films_to_list_screen.dart';
 import 'package:proyecto_flutter/list/presentation/widgets/list_details_screen.dart';
 import 'package:proyecto_flutter/list/presentation/widgets/list_form_screen.dart';
 import 'package:proyecto_flutter/list/presentation/widgets/lists_screen.dart';
@@ -113,6 +114,18 @@ final GoRouter routerConfig = GoRouter(
                   builder: (context, state) {
                     return ListDetailsScreen();
                   },
+                  routes: [
+                    // AddFilmToList
+                    GoRoute(
+                      name: "addFilmToList",
+                      path: "addFilmToList",
+                      builder: (context, state) {
+                        final list =
+                        state.extra != null ? state.extra as FilmsList : null;
+                        return AddFilmsToListScreen(selectedList: list);
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),

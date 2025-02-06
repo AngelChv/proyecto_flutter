@@ -11,4 +11,5 @@ abstract class ListService {
   Future<int?> insert(FilmsList list);
   Future<bool> update(FilmsList list);
   Future<bool> delete(int id);
+  Future<int?> addFilmToList(int listId, int filmId);
 }

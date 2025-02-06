@@ -1,5 +1,6 @@
 import 'package:proyecto_flutter/list/data/service/list_service.dart';
 import 'package:proyecto_flutter/list/domain/list.dart';
+import 'package:proyecto_flutter/list/domain/list_sqlite_result.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../../../core/data/sqlite_manager.dart';
@@ -65,11 +66,17 @@ class ListSqliteService implements ListService {
   }
 
   @override
-  Future<int?> addFilmToList(int listId, int filmId) async {
+  Future<ListSqliteResult<bool>> addFilmToList(int listId, int filmId) async {
     final Database? db = await SqliteManager.db;
-    return await db?.insert("list_films", {
-    "list_id": listId,
-    "film_id": filmId,
-    });
+    try {
+      final id = await db?.insert("list_films", {
+        "list_id": listId,
+        "film_id": filmId,
+      }) ?? -1;
+
+      return ListSqliteResult(id > 0, null);
+    } on DatabaseException catch (e) {
+      return ListSqliteResult(false, e);
+    }
   }
 }

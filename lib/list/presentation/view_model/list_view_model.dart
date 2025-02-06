@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:proyecto_flutter/film/data/repository/film_repository.dart';
 import 'package:proyecto_flutter/list/data/repository/list_repository.dart';
 import 'package:proyecto_flutter/list/domain/list.dart';
+import 'package:proyecto_flutter/list/domain/list_result.dart';
 import 'package:proyecto_flutter/list/presentation/widgets/list_form.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -95,18 +96,18 @@ class ListViewModel extends ChangeNotifier {
     return false;
   }
 
-  Future<bool> addFilmToList(int listId, int filmId) async {
-    final int? id = await _listRepository.addFilmToList(listId, filmId);
-    bool isSuccess = false;
-    if (id != null && _selectedList?.id == listId) {
+  Future<ListResult<bool>> addFilmToList(int listId, int filmId) async {
+    final ListResult<bool> result = await _listRepository.addFilmToList(listId, filmId);
+
+    // Añadir película a la lista en memoria.
+    if (result.result && _selectedList?.id == listId) {
       final film = await _filmRepository.findById(filmId);
       if (film != null) {
         _filmsOfList.add(film);
-        isSuccess = true;
       }
     }
     notifyListeners();
-    return isSuccess;
+    return result;
   }
 
   /// Valida el formulario y devuelve la nueva lista.

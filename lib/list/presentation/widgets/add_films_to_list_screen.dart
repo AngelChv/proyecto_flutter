@@ -3,7 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:proyecto_flutter/list/domain/list.dart';
+import 'package:proyecto_flutter/list/domain/list_result.dart';
 import 'package:proyecto_flutter/list/presentation/view_model/list_view_model.dart';
+import 'package:sqflite/sqflite.dart';
 
 import '../../../core/presentation/theme/style_constants.dart';
 import '../../../film/presentation/view_model/film_view_model.dart';
@@ -15,22 +17,39 @@ class AddFilmsToListScreen extends StatelessWidget {
   final FilmsList? _selectedList;
 
   _addFilmToList(BuildContext context, int? filmId) async {
-    bool isSuccess = false;
+    late ListResult? result;
     final listId = _selectedList?.id;
     if (filmId != null && listId != null) {
-      isSuccess = await context.read<ListViewModel>().addFilmToList(
+      result = await context.read<ListViewModel>().addFilmToList(
             listId,
             filmId,
           );
     }
 
     if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          // Todo: cambiar texto
-          content: Text(isSuccess
-              ? AppLocalizations.of(context)!.createFilm
-              : AppLocalizations.of(context)!.creatingFilmError)));
-      isSuccess ? context.pop() : null;
+      late String message;
+      // Crear mensaje en función del resultado.
+      // todo personalizar mensajes
+      if (result == null) {
+        message = AppLocalizations.of(context)!.creatingFilmError;
+      } else if (result.e is DatabaseException &&
+          (result.e as DatabaseException).isUniqueConstraintError()) {
+        // todo: mensaje: La película ya está en la lista.
+        message = AppLocalizations.of(context)!.creatingFilmError;
+      } else if (result.result is bool && result.result) {
+        message = AppLocalizations.of(context)!.createFilm;
+      } else {
+        message = AppLocalizations.of(context)!.creatingFilmError;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(message)),
+      );
+
+      // Volver si sale bien.
+      if (result?.result is bool && result?.result) {
+        context.pop();
+      }
     }
   }
 

@@ -1,4 +1,5 @@
 import 'package:proyecto_flutter/list/domain/list.dart';
+import 'package:proyecto_flutter/list/domain/list_result.dart';
 
 /// Permite definir servicios para las listas.
 ///
@@ -11,5 +12,5 @@ abstract class ListService {
   Future<int?> insert(FilmsList list);
   Future<bool> update(FilmsList list);
   Future<bool> delete(int id);
-  Future<int?> addFilmToList(int listId, int filmId);
+  Future<ListResult<bool>> addFilmToList(int listId, int filmId);
 }

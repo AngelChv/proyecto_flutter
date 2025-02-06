@@ -1,5 +1,7 @@
 import 'package:proyecto_flutter/list/data/service/list_service.dart';
 import 'package:proyecto_flutter/list/domain/list.dart';
+import 'package:proyecto_flutter/list/domain/list_result.dart';
+import 'package:proyecto_flutter/list/domain/list_sqlite_result.dart';
 
 /// De momento no esta implementado
 class ListApiService implements ListService {
@@ -28,7 +30,7 @@ class ListApiService implements ListService {
   }
 
   @override
-  Future<int?> addFilmToList(int listId, int filmId) async {
-    return await 0;
+  Future<ListResult<bool>> addFilmToList(int listId, int filmId) async {
+    return await ListSqliteResult<bool>(true, null);
   }
 }

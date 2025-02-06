@@ -3,6 +3,7 @@ import 'package:proyecto_flutter/list/data/service/list_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:proyecto_flutter/list/data/service/list_sqlite_service.dart';
 import 'package:proyecto_flutter/list/domain/list.dart';
+import 'package:proyecto_flutter/list/domain/list_result.dart';
 
 class ListRepository {
   late final ListService _listService;
@@ -44,7 +45,7 @@ class ListRepository {
   /// Se conecta al servicio para insertar una película a una lista.
   ///
   /// Devuelve el `int` id generado para la relación.
-  Future<int?> addFilmToList(int listId, int filmId) {
+  Future<ListResult<bool>> addFilmToList(int listId, int filmId) {
     return _listService.addFilmToList(listId, filmId);
   }
 }

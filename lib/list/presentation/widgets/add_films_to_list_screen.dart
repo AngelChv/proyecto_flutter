@@ -61,8 +61,8 @@ class AddFilmsToListScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        // todo: cambiar titulo
         title: Text(AppLocalizations.of(context)!.films),
-        // TODO: añadir actions (buscar...)
       ),
       body: FilmsGrid(
         padding: EdgeInsets.all(isWideScreen ? mediumMargin : compactMargin),
@@ -70,7 +70,6 @@ class AddFilmsToListScreen extends StatelessWidget {
           _addFilmToList(context, film.id);
         },
         onFilmLongPress: (film) {
-          // TODO: long press
         },
         films: films,
       ),

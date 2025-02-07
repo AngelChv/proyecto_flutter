@@ -29,3 +29,12 @@ TimeOfDay parseTimeOfDay(String timeString) {
     throw FormatException("The string haven't the valid format: $timeString");
   }
 }
+
+/// Transforma TameOfDay a string
+///
+/// Existe una función format de TimeOfDay, pero los locales hacen que en función
+/// del idioma devuelva una respuesta distinta, por lo que no me sirve.
+String timeOfDayToString(TimeOfDay time) {
+  return "${time.hour.toString().padLeft(2, '0')}:"
+      "${time.minute.toString().padLeft(2, '0')}";
+}

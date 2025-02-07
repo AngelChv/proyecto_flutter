@@ -145,8 +145,7 @@ class _FilmFormState extends State<FilmForm> {
             initialTime: TimeOfDay(minute: 1, hour: 0),
           );
           if (resultTime != null && context.mounted) {
-            // TODO: creo que el format puede dar fallo con el pareTimeOfDay()
-            widget._durationController.text = resultTime.format(context);
+            widget._durationController.text = timeOfDayToString(resultTime);
           }
         },
         validator: (value) {

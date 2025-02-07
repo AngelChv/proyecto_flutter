@@ -20,6 +20,7 @@ class ListsScreen extends StatelessWidget {
     return ListsGrid(
       padding: EdgeInsets.all(isWideScreen ? mediumMargin : compactMargin),
       onListTap: (list) {
+        print('click en: ${list.id}');
         context.read<ListViewModel>().selectList(list);
         context.pushNamed<FilmsList>("listDetails", extra: list);
       },

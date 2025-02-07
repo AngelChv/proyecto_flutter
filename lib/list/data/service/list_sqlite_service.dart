@@ -62,9 +62,11 @@ class ListSqliteService implements ListService {
 
   @override
   Future<bool> delete(int id) async {
+    print('eliminar en db: $id}');
     final Database? db = await SqliteManager.db;
     final int count =
         await db?.delete(table, where: "id = ?", whereArgs: [id]) ?? 0;
+    print("resultado eliminar: $count");
     return count == 1;
   }
 

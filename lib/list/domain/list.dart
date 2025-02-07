@@ -51,10 +51,14 @@ class FilmsList {
       identical(this, other) ||
       other is FilmsList &&
           runtimeType == other.runtimeType &&
+          // Importante!! si no pongo el id el gridLayout me devuelve el
+          // mismo objeto a pesar de tener distintos, porque el nombre es igual.
+          id == other.id &&
           name == other.name;
 
   @override
-  int get hashCode => name.hashCode ^ createDateTime.hashCode;
+  int get hashCode => id.hashCode ^ name.hashCode;
+
 
   @override
   String toString() {

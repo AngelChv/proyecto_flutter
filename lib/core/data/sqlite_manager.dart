@@ -2,6 +2,7 @@ import 'dart:io' show Platform;
 
 import 'package:path/path.dart';
 import 'package:proyecto_flutter/core/data/service/list_films_sqlite_service.dart';
+import 'package:proyecto_flutter/core/data/service/user_sqlite_service.dart';
 import 'package:proyecto_flutter/film/data/service/film_sqlite_service.dart';
 import 'package:proyecto_flutter/list/data/service/list_sqlite_service.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -55,6 +56,7 @@ class SqliteManager {
 
   /// Crea las tablas si no existen
   static Future<void> _dataDefinition(Database db) async {
+    UserSqliteService.createDDL(db);
     FilmSqliteService.createDDL(db);
     ListSqliteService.createDDL(db);
     ListFilmsSqliteService.createDDL(db);

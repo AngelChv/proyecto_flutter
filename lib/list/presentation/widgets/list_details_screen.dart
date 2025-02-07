@@ -12,7 +12,7 @@ import '../../../film/presentation/widgets/films_grid.dart';
 class ListDetailsScreen extends StatelessWidget {
   const ListDetailsScreen({super.key});
 
-  _deleteFilm(BuildContext context, FilmsList list) async {
+  _deleteList(BuildContext context, FilmsList list) async {
     final isSuccess = await context.read<ListViewModel>().deleteList(list);
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -107,7 +107,7 @@ class ListDetailsScreen extends StatelessWidget {
                     TextButton(
                       onPressed: () {
                         context.pop();
-                        _deleteFilm(context, list);
+                        _deleteList(context, list);
                       },
                       child: Text(AppLocalizations.of(context)!.yes),
                     ),

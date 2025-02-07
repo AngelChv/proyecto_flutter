@@ -8,7 +8,7 @@ import '../../../core/presentation/theme/style_constants.dart';
 class ListsGrid extends StatelessWidget {
   const ListsGrid({
     super.key,
-    required lists,
+    required List<FilmsList> lists,
     void Function(FilmsList list)? onListTap,
     void Function(FilmsList list)? onListLongPress,
     EdgeInsetsGeometry? padding,

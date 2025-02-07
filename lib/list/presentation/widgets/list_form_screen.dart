@@ -5,6 +5,7 @@ import 'package:proyecto_flutter/list/domain/list.dart';
 import 'package:proyecto_flutter/list/presentation/view_model/list_view_model.dart';
 import 'package:proyecto_flutter/list/presentation/widgets/list_form.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:proyecto_flutter/login/presentation/view_model/user_view_model.dart';
 
 class ListFormScreen extends StatelessWidget {
   ListFormScreen({
@@ -19,6 +20,7 @@ class ListFormScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final listForm = ListForm(formKey: _formKey);
     final isEditing = _oldList != null;
+    final userId = context.watch<UserViewModel>().currentUserId;
 
     return Scaffold(
       appBar: AppBar(
@@ -45,11 +47,12 @@ class ListFormScreen extends StatelessWidget {
               isSuccess = await context.read<ListViewModel>().editList(
                     newList,
                     _oldList,
+                    userId,
                   );
             } else {
               // Creating
               isSuccess =
-                  await context.read<ListViewModel>().createList(newList);
+                  await context.read<ListViewModel>().createList(newList, userId);
             }
 
             if (isSuccess && context.mounted) {

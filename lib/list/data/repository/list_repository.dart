@@ -17,22 +17,22 @@ class ListRepository {
   }
 
   /// Se conecta al servicio para obtener todas las listas.
-  Future<List<FilmsList>> getAll() {
-    return _listService.getAll();
+  Future<List<FilmsList>> findAllByUserId(int userId) {
+    return _listService.findAllByUserId(userId);
   }
 
   /// Se conecta al servicio para insertar una lista.
   ///
   /// Devuelve el `int` id generado para la lista
-  Future<int?> insert(FilmsList list) {
-    return _listService.insert(list);
+  Future<int?> insert(FilmsList list, int userId) {
+    return _listService.insert(list, userId);
   }
 
   /// Se conecta al servicio para actualizar una lista.
   ///
   /// Devuelve un `bool` con el resultado.
-  Future<bool> update(FilmsList list) {
-    return _listService.update(list);
+  Future<bool> update(FilmsList list, int userId) {
+    return _listService.update(list, userId);
   }
 
   /// Se conecta al servicio para eliminar una lista.

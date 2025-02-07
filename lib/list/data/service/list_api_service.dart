@@ -12,19 +12,19 @@ class ListApiService implements ListService {
   }
 
   @override
-  Future<List<FilmsList>> getAll() async {
+  Future<List<FilmsList>> findAllByUserId(int userId) async {
     // TODO: implement getAll
     return await [];
   }
 
   @override
-  Future<int?> insert(FilmsList list) async {
+  Future<int?> insert(FilmsList list, int userId) async {
     // TODO: implement insert
     return await 0;
   }
 
   @override
-  Future<bool> update(FilmsList list) async {
+  Future<bool> update(FilmsList list, intUserId) async {
     // TODO: implement update
     return await false;
   }

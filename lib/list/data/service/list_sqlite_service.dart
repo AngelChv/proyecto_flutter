@@ -1,3 +1,4 @@
+import 'package:proyecto_flutter/core/data/service/user_sqlite_service.dart';
 import 'package:proyecto_flutter/list/data/service/list_service.dart';
 import 'package:proyecto_flutter/list/domain/list.dart';
 import 'package:proyecto_flutter/list/domain/list_sqlite_result.dart';
@@ -14,17 +15,23 @@ class ListSqliteService implements ListService {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT,
         create_date_time TEXT,
-        edit_date_time TEXT
+        edit_date_time TEXT,
+        user_id INTEGER NOT NULL,
+        FOREIGN KEY (user_id) REFERENCES ${UserSqliteService.table}(id) ON DELETE CASCADE
       );
       """);
   }
 
   @override
-  Future<List<FilmsList>> getAll() async {
+  Future<List<FilmsList>> findAllByUserId(int userId) async {
     List<FilmsList> lists = [];
     final Database? db = await SqliteManager.db;
 
-    List<Map<String, Object?>>? resultList = await db?.query(table);
+    List<Map<String, Object?>>? resultList = await db?.query(
+      table,
+      where: "user_id == ?",
+      whereArgs: [userId],
+    );
     if (resultList != null) {
       for (var result in resultList) {
         lists.add(FilmsList.fromMap(result));
@@ -34,17 +41,21 @@ class ListSqliteService implements ListService {
   }
 
   @override
-  Future<int?> insert(FilmsList list) async {
+  Future<int?> insert(FilmsList list, int userId) async {
     // todo manejar excepciones, en concreto id unique.
     final Database? db = await SqliteManager.db;
-    return await db?.insert(table, list.toMap());
+    return await db?.insert(table, list.toMap(userId));
   }
 
   @override
-  Future<bool> update(FilmsList list) async {
+  Future<bool> update(FilmsList list, int userId) async {
     final Database? db = await SqliteManager.db;
-    final int? count = await db
-        ?.update(table, list.toMap(), where: "id = ?", whereArgs: [list.id]);
+    final int? count = await db?.update(
+      table,
+      list.toMap(userId),
+      where: "id = ?",
+      whereArgs: [list.id],
+    );
 
     return count == 1;
   }
@@ -80,7 +91,8 @@ class ListSqliteService implements ListService {
           "list_films",
           where: "list_id = ? AND film_id = ?",
           whereArgs: [listId, filmId],
-        ) ?? 0;
+        ) ??
+        0;
     return count > 0;
   }
 }

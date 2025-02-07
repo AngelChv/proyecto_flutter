@@ -97,7 +97,8 @@ class ListViewModel extends ChangeNotifier {
   }
 
   Future<ListResult<bool>> addFilmToList(int listId, int filmId) async {
-    final ListResult<bool> result = await _listRepository.addFilmToList(listId, filmId);
+    final ListResult<bool> result = await _listRepository.addFilmToList(
+        listId, filmId);
 
     // Añadir película a la lista en memoria.
     if (result.result && _selectedList?.id == listId) {
@@ -110,7 +111,17 @@ class ListViewModel extends ChangeNotifier {
     return result;
   }
 
-  //todo removeFilmFromList
+  Future<bool> removeFilmFromList(int listId, Film film) async {
+    if (film.id == null) return false;
+    final isSuccess = await _listRepository.removeFilmFromList(
+        listId, film.id!);
+    if (isSuccess && _selectedList?.id == listId) {
+      _filmsOfList.remove(film);
+      notifyListeners();
+      return true;
+    }
+    return false;
+  }
 
   /// Valida el formulario y devuelve la nueva lista.
   /// Si el formulario no se valida devuelve null.

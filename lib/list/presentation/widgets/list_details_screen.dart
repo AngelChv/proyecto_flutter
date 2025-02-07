@@ -6,6 +6,7 @@ import 'package:proyecto_flutter/list/domain/list.dart';
 import 'package:proyecto_flutter/list/presentation/view_model/list_view_model.dart';
 
 import '../../../core/presentation/theme/style_constants.dart';
+import '../../../film/domain/film.dart';
 import '../../../film/presentation/widgets/films_grid.dart';
 
 class ListDetailsScreen extends StatelessWidget {
@@ -15,11 +16,52 @@ class ListDetailsScreen extends StatelessWidget {
     final isSuccess = await context.read<ListViewModel>().deleteList(list);
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        // todo: cambiar localizaciones.
+          // todo: cambiar localizaciones.
           content: Text(isSuccess
               ? AppLocalizations.of(context)!.deletedFilm
               : AppLocalizations.of(context)!.deletingFilmError)));
       isSuccess ? context.pop() : null;
+    }
+  }
+
+  _showRemoveFilmFromListDialog(BuildContext context, int listId, Film film) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(AppLocalizations.of(context)!.askDeletingFilm),
+        actions: [
+          TextButton(
+            onPressed: () {
+              context.pop();
+            },
+            child: Text(AppLocalizations.of(context)!.no),
+          ),
+          TextButton(
+            onPressed: () {
+              context.pop();
+              _removeFilmFromList(context, listId, film);
+            },
+            child: Text(AppLocalizations.of(context)!.yes),
+          ),
+        ],
+      ),
+      barrierDismissible: false,
+    );
+  }
+
+  _removeFilmFromList(BuildContext context, int listId, Film film) async {
+    final isSuccess = await context.read<ListViewModel>().removeFilmFromList(
+          listId,
+          film,
+        );
+
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        // todo: cambiar localizaciones.
+        content: Text(isSuccess
+            ? AppLocalizations.of(context)!.deletedFilm
+            : AppLocalizations.of(context)!.deletingFilmError),
+      ));
     }
   }
 
@@ -37,9 +79,8 @@ class ListDetailsScreen extends StatelessWidget {
           IconButton(
             tooltip: AppLocalizations.of(context)!.editFilm,
             onPressed: () async {
-              final String? message = await context.pushNamed(
-                  "listForm",
-                  extra: list);
+              final String? message =
+                  await context.pushNamed("listForm", extra: list);
 
               if (context.mounted && message != null) {
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -90,7 +131,9 @@ class ListDetailsScreen extends StatelessWidget {
         films: filteredFilms,
         showDeleteButton: true,
         onDeleteClick: (film) {
-
+          if (list.id != null) {
+            _showRemoveFilmFromListDialog(context, list.id!, film);
+          }
         },
       ),
       floatingActionButton: FloatingActionButton.extended(

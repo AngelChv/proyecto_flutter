@@ -48,4 +48,8 @@ class ListRepository {
   Future<ListResult<bool>> addFilmToList(int listId, int filmId) {
     return _listService.addFilmToList(listId, filmId);
   }
+
+  Future<bool> removeFilmFromList(int listId, int filmId) {
+    return _listService.removeFilmFromList(listId, filmId);
+  }
 }

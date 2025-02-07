@@ -110,6 +110,8 @@ class ListViewModel extends ChangeNotifier {
     return result;
   }
 
+  //todo removeFilmFromList
+
   /// Valida el formulario y devuelve la nueva lista.
   /// Si el formulario no se valida devuelve null.
   /// Si al editar una lista no se modifica nada, devuelve null

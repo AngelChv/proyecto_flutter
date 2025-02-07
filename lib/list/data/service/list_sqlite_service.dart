@@ -16,8 +16,7 @@ class ListSqliteService implements ListService {
         create_date_time TEXT,
         edit_date_time TEXT
       );
-      """
-    );
+      """);
   }
 
   @override
@@ -44,12 +43,8 @@ class ListSqliteService implements ListService {
   @override
   Future<bool> update(FilmsList list) async {
     final Database? db = await SqliteManager.db;
-    final int? count = await db?.update(
-        table,
-        list.toMap(),
-        where: "id = ?",
-        whereArgs: [list.id]
-    );
+    final int? count = await db
+        ?.update(table, list.toMap(), where: "id = ?", whereArgs: [list.id]);
 
     return count == 1;
   }
@@ -57,11 +52,8 @@ class ListSqliteService implements ListService {
   @override
   Future<bool> delete(int id) async {
     final Database? db = await SqliteManager.db;
-    final int count = await db?.delete(
-        table,
-        where: "id = ?",
-        whereArgs: [id]
-    ) ?? 0;
+    final int count =
+        await db?.delete(table, where: "id = ?", whereArgs: [id]) ?? 0;
     return count == 1;
   }
 
@@ -70,13 +62,25 @@ class ListSqliteService implements ListService {
     final Database? db = await SqliteManager.db;
     try {
       final id = await db?.insert("list_films", {
-        "list_id": listId,
-        "film_id": filmId,
-      }) ?? -1;
+            "list_id": listId,
+            "film_id": filmId,
+          }) ??
+          -1;
 
       return ListSqliteResult(id > 0, null);
     } on DatabaseException catch (e) {
       return ListSqliteResult(false, e);
     }
+  }
+
+  @override
+  Future<bool> removeFilmFromList(int listId, int filmId) async {
+    final Database? db = await SqliteManager.db;
+    final int count = await db?.delete(
+          "list_films",
+          where: "list_id = ? AND film_id = ?",
+          whereArgs: [listId, filmId],
+        ) ?? 0;
+    return count > 0;
   }
 }

@@ -10,8 +10,14 @@ class FilmsGrid extends StatelessWidget {
     super.key,
     required films,
     void Function(Film film)? onFilmTap,
-    void Function(Film film)? onFilmLongPress, EdgeInsetsGeometry? padding,
-  })  : _padding = padding, _onFilmLongPress = onFilmLongPress,
+    void Function(Film film)? onFilmLongPress,
+    EdgeInsetsGeometry? padding,
+    bool showDeleteButton = false,
+    void Function(Film)? onDeleteClick,
+  })  : _onDeleteClick = onDeleteClick,
+        _showDeleteButton = showDeleteButton,
+        _padding = padding,
+        _onFilmLongPress = onFilmLongPress,
         _onFilmTap = onFilmTap,
         _films = films;
 
@@ -19,6 +25,8 @@ class FilmsGrid extends StatelessWidget {
   final void Function(Film film)? _onFilmTap;
   final void Function(Film film)? _onFilmLongPress;
   final EdgeInsetsGeometry? _padding;
+  final bool _showDeleteButton;
+  final void Function(Film film)? _onDeleteClick;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +45,8 @@ class FilmsGrid extends StatelessWidget {
           onTap: _onFilmTap,
           onLongPress: _onFilmLongPress,
           film: _films[index],
+          showDeleteButton: _showDeleteButton,
+          onDeleteClick: _onDeleteClick,
         );
       },
     );

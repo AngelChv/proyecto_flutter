@@ -33,4 +33,9 @@ class ListApiService implements ListService {
   Future<ListResult<bool>> addFilmToList(int listId, int filmId) async {
     return await ListSqliteResult<bool>(true, null);
   }
+
+  @override
+  Future<bool> removeFilmFromList(int listId, int filmId) async {
+    return await true;
+  }
 }

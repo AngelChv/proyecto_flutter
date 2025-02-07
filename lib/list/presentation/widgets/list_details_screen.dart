@@ -32,7 +32,6 @@ class ListDetailsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        // todo: al editar la lista no se esta modificando porque no depende del viewmodel
         title: Text(list.name),
         actions: [
           IconButton(
@@ -89,6 +88,10 @@ class ListDetailsScreen extends StatelessWidget {
           // TODO: long press
         },
         films: filteredFilms,
+        showDeleteButton: true,
+        onDeleteClick: (film) {
+
+        },
       ),
       floatingActionButton: FloatingActionButton.extended(
         // Todo: usar localización adecuada (Añadir película)

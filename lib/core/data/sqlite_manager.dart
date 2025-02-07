@@ -1,7 +1,7 @@
 import 'dart:io' show Platform;
 
 import 'package:path/path.dart';
-import 'package:proyecto_flutter/core/data/list_films_sqlite_service.dart';
+import 'package:proyecto_flutter/core/data/service/list_films_sqlite_service.dart';
 import 'package:proyecto_flutter/film/data/service/film_sqlite_service.dart';
 import 'package:proyecto_flutter/list/data/service/list_sqlite_service.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';

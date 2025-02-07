@@ -45,6 +45,7 @@ final GlobalKey<NavigatorState> _shellNavigatorProfileKey =
 /// Funciona en base a rutas, permite redirección, protección, pasar parámetros
 /// y rutas anidadas.
 final GoRouter routerConfig = GoRouter(
+  // todo hacer que la ruta raíz "/" sea el login y la initialLocation
   initialLocation: "/films",
   navigatorKey: _rootNavigatorKey,
   routes: [

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:proyecto_flutter/core/presentation/widgets/scaffold_with_nested_navigation.dart';
 import 'package:proyecto_flutter/film/presentation/widgets/film_details_screen.dart';
 import 'package:proyecto_flutter/film/presentation/widgets/film_form_screen.dart';
@@ -13,6 +14,9 @@ import 'package:proyecto_flutter/profile/presentation/widgets/general_settings_s
 import 'package:proyecto_flutter/profile/presentation/widgets/profile_screen.dart';
 import 'package:proyecto_flutter/profile/presentation/widgets/profile_settings_screen.dart';
 import 'package:proyecto_flutter/profile/presentation/widgets/settings_menu_screen.dart';
+
+import '../../../login/presentation/view_model/user_view_model.dart';
+import '../../../login/presentation/widgets/login_screen.dart';
 
 /// Clave única del Gestor de rutas raíz de la app.
 ///
@@ -46,9 +50,29 @@ final GlobalKey<NavigatorState> _shellNavigatorProfileKey =
 /// y rutas anidadas.
 final GoRouter routerConfig = GoRouter(
   // todo hacer que la ruta raíz "/" sea el login y la initialLocation
-  initialLocation: "/films",
+  initialLocation: "/login",
   navigatorKey: _rootNavigatorKey,
+  redirect: (context, state) {
+    // Verificar si el usuario está autenticado:
+    final isAuthenticated =
+        Provider.of<UserViewModel>(context, listen: false).isAuthenticated;
+
+    // Si no está autenticado, se redirige al login.
+    if (!isAuthenticated && state.path != "/login") {
+      return '/login';
+    }
+    return null; // Si está autenticado, continúa con la navegación normal.
+  },
   routes: [
+    // Ruta para el login:
+    GoRoute(
+      name: "login",
+      path: '/login',
+      builder: (context, state) {
+        return const LoginScreen();
+      },
+    ),
+    // Rutas protegidas:
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
         return ScaffoldWithNestedNavigation(navigationShell: navigationShell);
@@ -121,8 +145,9 @@ final GoRouter routerConfig = GoRouter(
                       name: "addFilmToList",
                       path: "addFilmToList",
                       builder: (context, state) {
-                        final list =
-                        state.extra != null ? state.extra as FilmsList : null;
+                        final list = state.extra != null
+                            ? state.extra as FilmsList
+                            : null;
                         return AddFilmsToListScreen(selectedList: list);
                       },
                     ),

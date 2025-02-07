@@ -4,6 +4,7 @@ import 'package:proyecto_flutter/core/presentation/widgets/go_router_config.dart
 import 'package:proyecto_flutter/core/presentation/theme/theme_constants.dart';
 import 'package:proyecto_flutter/film/presentation/view_model/film_view_model.dart';
 import 'package:proyecto_flutter/list/presentation/view_model/list_view_model.dart';
+import 'package:proyecto_flutter/login/presentation/view_model/user_view_model.dart';
 import 'package:proyecto_flutter/profile/presentation/view_model/profile_view_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -16,6 +17,7 @@ void main() {
 
   runApp(MultiProvider(
     providers: [
+      ChangeNotifierProvider(create: (_) => UserViewModel()),
       ChangeNotifierProvider(create: (_) => FilmViewModel()),
       ChangeNotifierProvider(create: (_) => ListViewModel()),
       ChangeNotifierProvider(create: (_) => ProfileViewModel()),

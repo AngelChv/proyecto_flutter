@@ -189,17 +189,8 @@ final _routes = [
 /// GoRoute proporciona una forma más declarativa de gestionar la navegación.
 /// Funciona en base a rutas, permite redirección, protección, pasar parámetros
 /// y rutas anidadas.
-GoRouter routerConfig(bool isAuthenticated) => GoRouter(
-  initialLocation: isAuthenticated ? "/films" : "/login",
+GoRouter routerConfig = GoRouter(
+  initialLocation: "/login",
   navigatorKey: _rootNavigatorKey,
-  redirect: (context, state) {
-    // Si no está autenticado, se redirige al login.
-    if (isAuthenticated ||
-        state.matchedLocation == "/login" ||
-        state.matchedLocation == "/register") {
-      return null;
-    }
-    return "/login";
-  },
   routes: _routes,
 );

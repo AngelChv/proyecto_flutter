@@ -11,10 +11,6 @@ class UserViewModel extends ChangeNotifier {
 
   bool get isAuthenticated => _currentUser != null;
 
-  UserViewModel() {
-    _loadSession();
-  }
-
   Future<bool> register(User user) async {
     final int? id = await _repository.insert(user);
     if (id == null) return false;
@@ -35,6 +31,16 @@ class UserViewModel extends ChangeNotifier {
     return false;
   }
 
+  Future<bool?> loadSession() async {
+    final preferences = await SharedPreferences.getInstance();
+    final username = preferences.getString("username");
+    final password = preferences.getString("password");
+    if (username != null && password != null) {
+      return await login(username, password);
+    }
+    return null;
+  }
+
   void logout() {
     _currentUser = null;
     notifyListeners();
@@ -49,15 +55,6 @@ class UserViewModel extends ChangeNotifier {
     final preferences = await SharedPreferences.getInstance();
     preferences.setString("username", username);
     preferences.setString("password", password);
-  }
-
-  void _loadSession() async {
-    final preferences = await SharedPreferences.getInstance();
-    final username = preferences.getString("username");
-    final password = preferences.getString("password");
-    if (username != null && password != null) {
-      login(username, password);
-    }
   }
 
   Future<void> _removeSession() async {

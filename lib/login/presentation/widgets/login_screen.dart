@@ -20,6 +20,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool _isObscurePassword = true;
 
+  @override
+  void initState() {
+    context.read<UserViewModel>().loadSession().then((isAuthenticated) {
+      if ((isAuthenticated ?? false) && context.mounted) {
+        context.goNamed("films");
+      }
+    });
+    super.initState();
+  }
+
   _login(BuildContext context) async {
     final userVM = context.read<UserViewModel>();
     final hashedPassword = User.hashPassword(_passwordController.text);
@@ -35,6 +45,8 @@ class _LoginScreenState extends State<LoginScreen> {
               Text(AppLocalizations.of(context)!.usernameAndPasswordDontMatch),
         ),
       );
+    } else if (context.mounted) {
+      context.goNamed("films");
     }
   }
 

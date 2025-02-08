@@ -35,20 +35,13 @@ void main() {
 /// Widget principal, en el está el MaterialApp.
 ///
 /// Configura las localizaciones, el tema y las rutas.
-class App extends StatefulWidget {
+class App extends StatelessWidget {
   const App({super.key});
 
-  @override
-  State<App> createState() => _AppState();
-}
-
-class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     final themeMode = context.watch<ProfileViewModel>().themeMode;
     final String localeKey = context.watch<ProfileViewModel>().language;
-    // Escuchar cambios de usuario para que si se cierra sesión se actualice.
-    final isAuthenticated = context.watch<UserViewModel>().isAuthenticated;
 
     return MaterialApp.router(
       //scaffoldMessengerKey: scaffoldKey,
@@ -59,7 +52,7 @@ class _AppState extends State<App> {
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: themeMode,
-      routerConfig: routerConfig(isAuthenticated),
+      routerConfig: routerConfig,
       debugShowCheckedModeBanner: false,
     );
   }

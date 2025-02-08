@@ -39,10 +39,12 @@ class FilmViewModel extends ChangeNotifier {
   }
 
   FilmViewModel() {
-    filmRepository.getAll().then((result) {
-      _films = result;
-      notifyListeners();
-    });
+    loadFilms();
+  }
+
+  Future<void> loadFilms() async {
+    _films = await filmRepository.getAll();
+    notifyListeners();
   }
 
   /// Crea una película nueva y devuelve un `bool` con el resultado.

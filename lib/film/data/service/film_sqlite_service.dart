@@ -54,7 +54,7 @@ class FilmSqliteService implements FilmService {
       whereArgs: [id],
       limit: 1
     );
-    if (result == null) return null;
+    if (result == null || result.isEmpty) return null;
     return Film.fromMap(result.first);
   }
 

@@ -93,7 +93,6 @@ class ListViewModel extends ChangeNotifier {
   }
 
   Future<bool> deleteList(FilmsList list) async {
-    print('eliminar lista desde viewmodel: ${list.id}');
     if (list.id != null && await _listRepository.delete(list.id!) && _lists != null) {
       _lists?.remove(list);
       notifyListeners();

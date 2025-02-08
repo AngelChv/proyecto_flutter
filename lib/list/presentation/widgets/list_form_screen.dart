@@ -20,7 +20,8 @@ class ListFormScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final listForm = ListForm(formKey: _formKey);
     final isEditing = _oldList != null;
-    final userId = context.watch<UserViewModel>().currentUserId;
+    final userVM = context.watch<UserViewModel>();
+    final userId = userVM.currentUserId;
 
     return Scaffold(
       appBar: AppBar(
@@ -31,6 +32,7 @@ class ListFormScreen extends StatelessWidget {
       ),
       body: listForm,
       floatingActionButton: FloatingActionButton(
+        heroTag: "listFormScreenFab",
         tooltip: isEditing
             ? AppLocalizations.of(context)!.editFilm
             : AppLocalizations.of(context)!.createFilm,

@@ -27,9 +27,8 @@ class _LoginScreenState extends State<LoginScreen> {
       _usernameController.text,
       hashedPassword,
     );
-    if (isAuthenticated && context.mounted) {
-      context.pushNamed("films");
-    } else if (context.mounted) {
+
+    if (!isAuthenticated && context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content:
@@ -56,6 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       TextFormField(
         controller: _passwordController,
+        obscureText: _isObscurePassword,
         decoration: InputDecoration(
           hintText: AppLocalizations.of(context)!.password,
           label: Text(AppLocalizations.of(context)!.password),

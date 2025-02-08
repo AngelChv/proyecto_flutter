@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:proyecto_flutter/core/presentation/widgets/scaffold_with_nested_navigation.dart';
 import 'package:proyecto_flutter/film/presentation/widgets/film_details_screen.dart';
 import 'package:proyecto_flutter/film/presentation/widgets/film_form_screen.dart';
@@ -16,7 +15,6 @@ import 'package:proyecto_flutter/profile/presentation/widgets/profile_screen.dar
 import 'package:proyecto_flutter/profile/presentation/widgets/profile_settings_screen.dart';
 import 'package:proyecto_flutter/profile/presentation/widgets/settings_menu_screen.dart';
 
-import '../../login/presentation/view_model/user_view_model.dart';
 import '../../login/presentation/widgets/login_screen.dart';
 
 /// Clave única del Gestor de rutas raíz de la app.
@@ -49,15 +47,10 @@ final GlobalKey<NavigatorState> _shellNavigatorProfileKey =
 /// GoRoute proporciona una forma más declarativa de gestionar la navegación.
 /// Funciona en base a rutas, permite redirección, protección, pasar parámetros
 /// y rutas anidadas.
-final GoRouter routerConfig = GoRouter(
-  // todo hacer que la ruta raíz "/" sea el login y la initialLocation
-  initialLocation: "/login",
+GoRouter routerConfig(bool isAuthenticated) => GoRouter(
+  initialLocation: isAuthenticated ? "/films" : "/login",
   navigatorKey: _rootNavigatorKey,
   redirect: (context, state) {
-    // Verificar si el usuario está autenticado:
-    final isAuthenticated =
-        Provider.of<UserViewModel>(context, listen: false).isAuthenticated;
-
     // Si no está autenticado, se redirige al login.
     if (isAuthenticated ||
         state.matchedLocation == "/login" ||

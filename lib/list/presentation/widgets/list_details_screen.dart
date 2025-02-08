@@ -137,6 +137,7 @@ class ListDetailsScreen extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: "listDetailsScreenFab",
         // Todo: usar localización adecuada (Añadir película)
         tooltip: AppLocalizations.of(context)!.createList,
         onPressed: () async {

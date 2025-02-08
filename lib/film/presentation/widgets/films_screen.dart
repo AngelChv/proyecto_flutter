@@ -31,6 +31,7 @@ class FilmsScreen extends StatelessWidget {
         films: films,
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: "filmsScreenFab",
         tooltip: AppLocalizations.of(context)!.createFilm,
         onPressed: () async {
           final String? message = await context.pushNamed<String>("filmForm",

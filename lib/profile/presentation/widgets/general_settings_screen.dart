@@ -12,13 +12,13 @@ class GeneralSettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final reader = context.read<ProfileViewModel>();
-    final bool isDarkMode =
-        context.watch<ProfileViewModel>().themeMode == ThemeMode.dark;
     final isWideScreen = MediaQuery.sizeOf(context).width >= 600;
+
+    final profileVM = context.watch<ProfileViewModel>();
+    final bool isDarkMode = profileVM.themeMode == ThemeMode.dark;
     final List<DropdownMenuEntry<String>> languages =
-        reader.languagesAsDropDownMenuEntries();
-    final String selectedLanguage = reader.language;
+        profileVM.languagesAsDropDownMenuEntries();
+    final String selectedLanguage = profileVM.language;
 
     return Scaffold(
       appBar: AppBar(
@@ -50,14 +50,6 @@ class GeneralSettingsScreen extends StatelessWidget {
               onSelected: (value) {
                 context.read<ProfileViewModel>().changeLanguage(value);
               },
-            ),
-            Card(
-              child: ListTile(
-                title: Text(AppLocalizations.of(context)!.logout),
-                onTap: () {
-                  context.read<UserViewModel>().logout();
-                },
-              ),
             ),
           ],
         ),

@@ -42,7 +42,6 @@ class ListSqliteService implements ListService {
 
   @override
   Future<int?> insert(FilmsList list, int userId) async {
-    // todo manejar excepciones, en concreto id unique.
     final Database? db = await SqliteManager.db;
     return await db?.insert(table, list.toMap(userId));
   }

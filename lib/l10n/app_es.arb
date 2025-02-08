@@ -34,5 +34,20 @@
   "profileSettings": "Ajustes - Perfil",
   "darkMode": "Modo oscuro",
   "language": "Idioma",
-  "logout": "Cerrar sesión"
+  "logout": "Cerrar sesión",
+  "login": "Iniciar sesión",
+  "register": "Registrarse",
+  "username": "Nombre de usuario",
+  "insertUsername": "Complete el nombre de usuario",
+  "usernameExists": "El nombre de usuario ya existe",
+  "email": "E-mail",
+  "insertEmail": "Por favor introduzca un email",
+  "invalidEmail": "El email no es válido. (ejemplo@gmail.com)",
+  "password": "Contraseña",
+  "insertPassword": "Introduzca una contraseña",
+  "shortPassword": "La contraseña es demasiado corta, debe tener al menos 8 caracteres.",
+  "repeatPassword": "Repetir contraseña",
+  "insertRepeatPassword": "Introduzca otra vez la contraseña",
+  "passwordsDontMatch": "Las contraseñas no coinciden",
+  "registerError": "Error al registrarse"
 }

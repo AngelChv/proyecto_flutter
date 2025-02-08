@@ -10,13 +10,14 @@ import 'package:proyecto_flutter/list/presentation/widgets/add_films_to_list_scr
 import 'package:proyecto_flutter/list/presentation/widgets/list_details_screen.dart';
 import 'package:proyecto_flutter/list/presentation/widgets/list_form_screen.dart';
 import 'package:proyecto_flutter/list/presentation/widgets/lists_screen.dart';
+import 'package:proyecto_flutter/login/presentation/widgets/register_screen.dart';
 import 'package:proyecto_flutter/profile/presentation/widgets/general_settings_screen.dart';
 import 'package:proyecto_flutter/profile/presentation/widgets/profile_screen.dart';
 import 'package:proyecto_flutter/profile/presentation/widgets/profile_settings_screen.dart';
 import 'package:proyecto_flutter/profile/presentation/widgets/settings_menu_screen.dart';
 
-import '../../../login/presentation/view_model/user_view_model.dart';
-import '../../../login/presentation/widgets/login_screen.dart';
+import '../../login/presentation/view_model/user_view_model.dart';
+import '../../login/presentation/widgets/login_screen.dart';
 
 /// Clave única del Gestor de rutas raíz de la app.
 ///
@@ -58,10 +59,12 @@ final GoRouter routerConfig = GoRouter(
         Provider.of<UserViewModel>(context, listen: false).isAuthenticated;
 
     // Si no está autenticado, se redirige al login.
-    if (!isAuthenticated && state.path != "/login") {
-      return '/login';
+    if (isAuthenticated ||
+        state.matchedLocation == "/login" ||
+        state.matchedLocation == "/register") {
+      return null;
     }
-    return null; // Si está autenticado, continúa con la navegación normal.
+    return "/login";
   },
   routes: [
     // Ruta para el login:
@@ -69,7 +72,14 @@ final GoRouter routerConfig = GoRouter(
       name: "login",
       path: '/login',
       builder: (context, state) {
-        return const LoginScreen();
+        return Scaffold(body: LoginScreen());
+      },
+    ),
+    GoRoute(
+      name: "register",
+      path: '/register',
+      builder: (context, state) {
+        return Scaffold(body: RegisterScreen());
       },
     ),
     // Rutas protegidas:

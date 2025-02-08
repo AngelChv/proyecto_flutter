@@ -16,19 +16,15 @@ class UserRepository {
     }
   }
 
-  Future<bool> delete(int id) {
-    return _userService.delete(id);
-  }
-
-  Future<List<User>> getAll() {
-    return _userService.getAll();
+  Future<User?> login(String username, String password) {
+    return _userService.login(username, password);
   }
 
   Future<int?> insert(User user) {
     return _userService.insert(user);
   }
 
-  Future<bool> update(User user) {
-    return _userService.update(user);
+  Future<bool> existUsername(String username) async {
+    return await _userService.findByUsername(username) != null;
   }
 }

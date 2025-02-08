@@ -2,6 +2,8 @@ import 'package:proyecto_flutter/core/data/service/user_service.dart';
 import 'package:proyecto_flutter/core/domain/user.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../sqlite_manager.dart';
+
 class UserSqliteService implements UserService {
   static const String table = "user";
 
@@ -17,26 +19,40 @@ class UserSqliteService implements UserService {
   }
 
   @override
-  Future<bool> delete(int id) {
-    // TODO: implement delete
-    throw UnimplementedError();
+  Future<User?> login(String username, String password) async {
+    final Database? db = await SqliteManager.db;
+    User? user;
+
+    final List<Map<String, Object?>>? result = await db?.query(
+      table,
+      where: "username = ? AND password = ?",
+      whereArgs: [username, password],
+      limit: 1,
+    );
+    if (result != null && result.isNotEmpty) {
+      user = User.fromMap(result.first);
+    }
+
+    return user;
   }
 
   @override
-  Future<List<User>> getAll() {
-    // TODO: implement getAll
-    throw UnimplementedError();
+  Future<int?> insert(User user) async {
+    final Database? db = await SqliteManager.db;
+    return await db?.insert(table, user.toMap());
   }
 
   @override
-  Future<int?> insert(User user) {
-    // TODO: implement insert
-    throw UnimplementedError();
-  }
+  Future<User?> findByUsername(String userName) async {
+    final Database? db = await SqliteManager.db;
+    User? user;
+    final List<Map<String, Object?>>? result = await db?.query(table,
+    where: "username = ?",
+    whereArgs: [userName]);
+    if (result != null && result.isNotEmpty) {
+      user = User.fromMap(result.first);
+    }
 
-  @override
-  Future<bool> update(User user) {
-    // TODO: implement update
-    throw UnimplementedError();
+    return user;
   }
 }

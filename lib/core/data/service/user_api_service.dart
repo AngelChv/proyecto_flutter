@@ -3,26 +3,17 @@ import 'package:proyecto_flutter/core/domain/user.dart';
 
 class UserApiService implements UserService {
   @override
-  Future<bool> delete(int id) {
-    // TODO: implement delete
-    throw UnimplementedError();
+  Future<int?> insert(User user) async {
+    return await 0;
   }
 
   @override
-  Future<List<User>> getAll() {
-    // TODO: implement getAll
-    throw UnimplementedError();
+  Future<User?> login(String username, String password) async {
+    return await User(id: 0, username: "angel", email: "angel@gmail.com");
   }
 
   @override
-  Future<int?> insert(User user) {
-    // TODO: implement insert
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> update(User user) {
-    // TODO: implement update
-    throw UnimplementedError();
+  Future<User?> findByUsername(String userName) async {
+    return await User(id: 0, username: "angel", email: "angel@gmail.com");
   }
 }

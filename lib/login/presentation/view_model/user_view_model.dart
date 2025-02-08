@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_flutter/core/data/repository/user_repository.dart';
 import 'package:proyecto_flutter/core/domain/user.dart';
 
 class UserViewModel extends ChangeNotifier {
+  final UserRepository _repository = UserRepository();
   User? _currentUser;
 
   // todo hacer que si el userId es nulo se haga logout
@@ -9,14 +11,33 @@ class UserViewModel extends ChangeNotifier {
 
   bool get isAuthenticated => _currentUser != null;
 
-  login(String username, String password) {
-    // todo conectarse con el repositorio
-    // todo: usar shared preferences para guardar la sesión.
-    final user = User(id: 0, username: "angel", email: "angel@gmail.com");
+  Future<bool> register(User user) async {
+    final int? id = await _repository.insert(user);
+    if (id == null) return false;
+    user.id = id;
     _currentUser = user;
     notifyListeners();
+    return true;
   }
 
-  logout() {
+  Future<bool> login(String username, String password) async {
+    // todo: usar shared preferences para guardar la sesión.
+    final user = await _repository.login(username, password);
+    if (user != null) {
+      _currentUser = user;
+      notifyListeners();
+      return true;
+    }
+    return false;
+  }
+
+  int logout() {
+    _currentUser = null;
+    notifyListeners();
+    return -1;
+  }
+
+  Future<bool> existUserName(String username) {
+    return _repository.existUsername(username);
   }
 }

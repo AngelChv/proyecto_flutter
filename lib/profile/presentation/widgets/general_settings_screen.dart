@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_flutter/core/presentation/theme/style_constants.dart';
 import 'package:proyecto_flutter/core/presentation/widgets/selection_menu_item.dart';
+import 'package:proyecto_flutter/login/presentation/view_model/user_view_model.dart';
 import 'package:proyecto_flutter/profile/presentation/view_model/profile_view_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -54,7 +55,7 @@ class GeneralSettingsScreen extends StatelessWidget {
               child: ListTile(
                 title: Text(AppLocalizations.of(context)!.logout),
                 onTap: () {
-                  // TODO: cerrar sesión.
+                  context.read<UserViewModel>().logout();
                 },
               ),
             ),

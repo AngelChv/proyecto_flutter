@@ -20,7 +20,6 @@ class ListsScreen extends StatelessWidget {
     return ListsGrid(
       padding: EdgeInsets.all(isWideScreen ? mediumMargin : compactMargin),
       onListTap: (list) {
-        print('click en: ${list.id}');
         context.read<ListViewModel>().selectList(list);
         context.pushNamed<FilmsList>("listDetails", extra: list);
       },
@@ -37,8 +36,9 @@ class ListsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userVM = context.watch<UserViewModel>();
+    final userId = userVM.currentUserId;
     final isWideScreen = MediaQuery.sizeOf(context).width >= 600;
-    final userId = context.watch<UserViewModel>().currentUserId;
     final lists = context.watch<ListViewModel>().getLists(userId);
 
     return Scaffold(
@@ -48,6 +48,7 @@ class ListsScreen extends StatelessWidget {
       body:
           lists == null ? _loading() : _listsGrid(context, isWideScreen, lists),
       floatingActionButton: FloatingActionButton(
+        heroTag: "listsScreenFab",
         tooltip: AppLocalizations.of(context)!.createList,
         onPressed: () async {
           final String? message = await context.pushNamed<String>("listForm");

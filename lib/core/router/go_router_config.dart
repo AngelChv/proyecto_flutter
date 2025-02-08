@@ -49,15 +49,10 @@ final GlobalKey<NavigatorState> _shellNavigatorProfileKey =
 /// GoRoute proporciona una forma más declarativa de gestionar la navegación.
 /// Funciona en base a rutas, permite redirección, protección, pasar parámetros
 /// y rutas anidadas.
-final GoRouter routerConfig = GoRouter(
-  // todo hacer que la ruta raíz "/" sea el login y la initialLocation
-  initialLocation: "/login",
+GoRouter routerConfig(bool isAuthenticated) => GoRouter(
+  initialLocation: isAuthenticated ? "/films" : "/login",
   navigatorKey: _rootNavigatorKey,
   redirect: (context, state) {
-    // Verificar si el usuario está autenticado:
-    final isAuthenticated =
-        Provider.of<UserViewModel>(context, listen: false).isAuthenticated;
-
     // Si no está autenticado, se redirige al login.
     if (isAuthenticated ||
         state.matchedLocation == "/login" ||

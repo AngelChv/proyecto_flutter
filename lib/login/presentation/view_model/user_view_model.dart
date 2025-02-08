@@ -7,7 +7,7 @@ class UserViewModel extends ChangeNotifier {
   User? _currentUser;
 
   // todo hacer que si el userId es nulo se haga logout
-  int get currentUserId => _currentUser?.id ?? logout();
+  int get currentUserId => _currentUser?.id ?? -1;
 
   bool get isAuthenticated => _currentUser != null;
 
@@ -31,10 +31,9 @@ class UserViewModel extends ChangeNotifier {
     return false;
   }
 
-  int logout() {
+  void logout() {
     _currentUser = null;
     notifyListeners();
-    return -1;
   }
 
   Future<bool> existUserName(String username) {

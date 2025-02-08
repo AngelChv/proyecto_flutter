@@ -30,6 +30,7 @@ class _FilmFormScreenState extends State<FilmFormScreen> {
       ),
       body: filmForm,
       floatingActionButton: FloatingActionButton(
+        heroTag: "filmFormFab",
         tooltip: widget.isEditing
             ? AppLocalizations.of(context)!.editFilm
             : AppLocalizations.of(context)!.createFilm,

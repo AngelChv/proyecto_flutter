@@ -41,6 +41,8 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     final themeMode = context.watch<ProfileViewModel>().themeMode;
     final String localeKey = context.watch<ProfileViewModel>().language;
+    // Escuchar cambios de usuario para que si se cierra sesión se actualice.
+    final isAuthenticated = context.watch<UserViewModel>().isAuthenticated;
 
     return MaterialApp.router(
       //scaffoldMessengerKey: scaffoldKey,
@@ -51,7 +53,7 @@ class _AppState extends State<App> {
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: themeMode,
-      routerConfig: routerConfig,
+      routerConfig: routerConfig(isAuthenticated),
       debugShowCheckedModeBanner: false,
     );
   }

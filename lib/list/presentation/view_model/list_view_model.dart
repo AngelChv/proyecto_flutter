@@ -15,11 +15,18 @@ class ListViewModel extends ChangeNotifier {
   final ListRepository _listRepository = ListRepository();
   final FilmRepository _filmRepository = FilmRepository();
 
+  late int _currentUserId;
+
+  set currentUserId(int value) {
+    _currentUserId = value;
+    loadLists();
+  }
+
   List<FilmsList>? _lists;
 
-  List<FilmsList>? getLists(int userId) {
+  List<FilmsList>? getLists() {
     if (_lists != null) return _lists!;
-    return loadLists(userId);
+    return loadLists();
   }
 
   FilmsList? _selectedList;
@@ -36,13 +43,8 @@ class ListViewModel extends ChangeNotifier {
     loadFilmsOfCurrentList();
   }
 
-  ListViewModel() {
-    // todo llamar en otro sitio
-    //loadLists();
-  }
-
-  List<FilmsList>? loadLists(int userId) {
-    _listRepository.findAllByUserId(userId).then((result) {
+  List<FilmsList>? loadLists() {
+    _listRepository.findAllByUserId(_currentUserId).then((result) {
       _lists = result;
       notifyListeners();
     });
@@ -58,8 +60,8 @@ class ListViewModel extends ChangeNotifier {
     }
   }
 
-  Future<bool> createList(FilmsList newList, int userId) async {
-    final int? id = await _listRepository.insert(newList, userId);
+  Future<bool> createList(FilmsList newList) async {
+    final int? id = await _listRepository.insert(newList, _currentUserId);
     bool isSuccess = false;
     if (id != null) {
       newList.id = id;
@@ -75,10 +77,10 @@ class ListViewModel extends ChangeNotifier {
   /// Si la lista se modifica con éxito, la misma lista seleccionada
   /// se actualiza de la lista total y se actualiza la interfáz para mostrar el
   /// cambio.
-  Future<bool> editList(FilmsList newList, FilmsList oldList, int userId) async {
+  Future<bool> editList(FilmsList newList, FilmsList oldList) async {
     bool isSuccess = false;
     newList.id = oldList.id;
-    isSuccess = await _listRepository.update(newList, userId);
+    isSuccess = await _listRepository.update(newList, _currentUserId);
     if (isSuccess && _lists != null) {
       final int filmIndex = _lists?.indexOf(oldList) ?? -1;
       if (filmIndex >= 0) {

@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_flutter/list/presentation/view_model/list_view_model.dart';
 import 'package:proyecto_flutter/list/presentation/widgets/lists_grid.dart';
-import 'package:proyecto_flutter/login/presentation/view_model/user_view_model.dart';
 
 import '../../../core/presentation/theme/style_constants.dart';
 import '../../domain/list.dart';
@@ -36,10 +35,8 @@ class ListsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userVM = context.watch<UserViewModel>();
-    final userId = userVM.currentUserId;
     final isWideScreen = MediaQuery.sizeOf(context).width >= 600;
-    final lists = context.watch<ListViewModel>().getLists(userId);
+    final lists = context.watch<ListViewModel>().getLists();
 
     return Scaffold(
       appBar: AppBar(

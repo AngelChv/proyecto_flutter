@@ -16,6 +16,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 ///
 /// A través de [db] se obtiene la conexión.
 class SqliteManager {
+  static const String databaseName = "film.db";
   static Database? _db;
 
   /// Devuelve la conexión a la base de datos.
@@ -43,7 +44,7 @@ class SqliteManager {
     }
 
     // Abrir o crear una base de datos
-    final dbPath = join(await factory.getDatabasesPath(), 'film.db');
+    final dbPath = join(await factory.getDatabasesPath(), databaseName);
     _db = await factory.openDatabase(dbPath,
         options: OpenDatabaseOptions(
           version: 1,

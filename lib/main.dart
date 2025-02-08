@@ -19,7 +19,13 @@ void main() {
     providers: [
       ChangeNotifierProvider(create: (_) => UserViewModel()),
       ChangeNotifierProvider(create: (_) => FilmViewModel()),
-      ChangeNotifierProvider(create: (_) => ListViewModel()),
+      ChangeNotifierProxyProvider<UserViewModel, ListViewModel>(
+        create: (_) => ListViewModel(),
+        update: (_, userVM, listVM) {
+          listVM!.currentUserId = userVM.currentUserId;
+          return listVM;
+        },
+      ),
       ChangeNotifierProvider(create: (_) => ProfileViewModel()),
     ],
     child: const App(),

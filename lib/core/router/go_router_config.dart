@@ -44,6 +44,148 @@ final GlobalKey<NavigatorState> _shellNavigatorListKey =
 final GlobalKey<NavigatorState> _shellNavigatorProfileKey =
     GlobalKey<NavigatorState>();
 
+final _routes = [
+  // Ruta para el login:
+  GoRoute(
+    name: "login",
+    path: '/login',
+    builder: (context, state) {
+      return Scaffold(body: LoginScreen());
+    },
+  ),
+  GoRoute(
+    name: "register",
+    path: '/register',
+    builder: (context, state) {
+      return Scaffold(body: RegisterScreen());
+    },
+  ),
+  // Rutas protegidas:
+  StatefulShellRoute.indexedStack(
+    builder: (context, state, navigationShell) {
+      return ScaffoldWithNestedNavigation(navigationShell: navigationShell);
+    },
+    branches: [
+      // Películas
+      StatefulShellBranch(
+        navigatorKey: _shellNavigatorFilmKey,
+        routes: [
+          GoRoute(
+            name: "films",
+            path: "/films",
+            pageBuilder: (context, state) => const NoTransitionPage(
+              child: FilmsScreen(),
+            ),
+            routes: [
+              // FilmForm
+              GoRoute(
+                name: "filmForm",
+                path: "form/:isEditing",
+                // Importante las subpáginas se deben construir
+                // con builder no Pagebuilder
+                builder: (context, state) {
+                  final isEditing =
+                      state.pathParameters["isEditing"] == "true";
+                  return FilmFormScreen(isEditing: isEditing);
+                },
+              ),
+              // FilmDetails
+              GoRoute(
+                name: "filmDetails",
+                path: "details",
+                builder: (context, state) => const FilmDetailsScreen(),
+              ),
+            ],
+          ),
+        ],
+      ),
+      // Listas
+      StatefulShellBranch(
+        navigatorKey: _shellNavigatorListKey,
+        routes: [
+          GoRoute(
+            name: "lists",
+            path: "/lists",
+            pageBuilder: (context, state) => const NoTransitionPage(
+              child: ListsScreen(),
+            ),
+            routes: [
+              // ListForm
+              GoRoute(
+                name: "listForm",
+                path: "form",
+                builder: (context, state) {
+                  final list =
+                  state.extra != null ? state.extra as FilmsList : null;
+                  return ListFormScreen(oldList: list);
+                },
+              ),
+              // ListDetails
+              GoRoute(
+                name: "listDetails",
+                path: "details",
+                builder: (context, state) {
+                  return ListDetailsScreen();
+                },
+                routes: [
+                  // AddFilmToList
+                  GoRoute(
+                    name: "addFilmToList",
+                    path: "addFilmToList",
+                    builder: (context, state) {
+                      final list = state.extra != null
+                          ? state.extra as FilmsList
+                          : null;
+                      return AddFilmsToListScreen(selectedList: list);
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+      // Perfil
+      StatefulShellBranch(
+        navigatorKey: _shellNavigatorProfileKey,
+        routes: [
+          GoRoute(
+            name: "profile",
+            path: "/profile",
+            pageBuilder: (context, state) => const NoTransitionPage(
+              child: ProfileScreen(),
+            ),
+            routes: [
+              GoRoute(
+                // Settings
+                name: "settings",
+                path: "settings",
+                builder: (context, state) => const SettingsMenuScreen(),
+                routes: [
+                  GoRoute(
+                    // General
+                    name: "generalSettings",
+                    path: "general",
+                    builder: (context, state) =>
+                    const GeneralSettingsScreen(),
+                  ),
+                  GoRoute(
+                    // Usuario
+                    name: "userSettings",
+                    path: "user",
+                    builder: (context, state) =>
+                    const ProfileSettingsScreen(),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+    ],
+  )
+];
+
 /// GoRoute proporciona una forma más declarativa de gestionar la navegación.
 /// Funciona en base a rutas, permite redirección, protección, pasar parámetros
 /// y rutas anidadas.
@@ -59,145 +201,5 @@ GoRouter routerConfig(bool isAuthenticated) => GoRouter(
     }
     return "/login";
   },
-  routes: [
-    // Ruta para el login:
-    GoRoute(
-      name: "login",
-      path: '/login',
-      builder: (context, state) {
-        return Scaffold(body: LoginScreen());
-      },
-    ),
-    GoRoute(
-      name: "register",
-      path: '/register',
-      builder: (context, state) {
-        return Scaffold(body: RegisterScreen());
-      },
-    ),
-    // Rutas protegidas:
-    StatefulShellRoute.indexedStack(
-      builder: (context, state, navigationShell) {
-        return ScaffoldWithNestedNavigation(navigationShell: navigationShell);
-      },
-      branches: [
-        // Películas
-        StatefulShellBranch(
-          navigatorKey: _shellNavigatorFilmKey,
-          routes: [
-            GoRoute(
-              name: "films",
-              path: "/films",
-              pageBuilder: (context, state) => const NoTransitionPage(
-                child: FilmsScreen(),
-              ),
-              routes: [
-                // FilmForm
-                GoRoute(
-                  name: "filmForm",
-                  path: "form/:isEditing",
-                  // Importante las subpáginas se deben construir
-                  // con builder no Pagebuilder
-                  builder: (context, state) {
-                    final isEditing =
-                        state.pathParameters["isEditing"] == "true";
-                    return FilmFormScreen(isEditing: isEditing);
-                  },
-                ),
-                // FilmDetails
-                GoRoute(
-                  name: "filmDetails",
-                  path: "details",
-                  builder: (context, state) => const FilmDetailsScreen(),
-                ),
-              ],
-            ),
-          ],
-        ),
-        // Listas
-        StatefulShellBranch(
-          navigatorKey: _shellNavigatorListKey,
-          routes: [
-            GoRoute(
-              name: "lists",
-              path: "/lists",
-              pageBuilder: (context, state) => const NoTransitionPage(
-                child: ListsScreen(),
-              ),
-              routes: [
-                // ListForm
-                GoRoute(
-                  name: "listForm",
-                  path: "form",
-                  builder: (context, state) {
-                    final list =
-                        state.extra != null ? state.extra as FilmsList : null;
-                    return ListFormScreen(oldList: list);
-                  },
-                ),
-                // ListDetails
-                GoRoute(
-                  name: "listDetails",
-                  path: "details",
-                  builder: (context, state) {
-                    return ListDetailsScreen();
-                  },
-                  routes: [
-                    // AddFilmToList
-                    GoRoute(
-                      name: "addFilmToList",
-                      path: "addFilmToList",
-                      builder: (context, state) {
-                        final list = state.extra != null
-                            ? state.extra as FilmsList
-                            : null;
-                        return AddFilmsToListScreen(selectedList: list);
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
-        // Perfil
-        StatefulShellBranch(
-          navigatorKey: _shellNavigatorProfileKey,
-          routes: [
-            GoRoute(
-              name: "profile",
-              path: "/profile",
-              pageBuilder: (context, state) => const NoTransitionPage(
-                child: ProfileScreen(),
-              ),
-              routes: [
-                GoRoute(
-                  // Settings
-                  name: "settings",
-                  path: "settings",
-                  builder: (context, state) => const SettingsMenuScreen(),
-                  routes: [
-                    GoRoute(
-                      // General
-                      name: "generalSettings",
-                      path: "general",
-                      builder: (context, state) =>
-                          const GeneralSettingsScreen(),
-                    ),
-                    GoRoute(
-                      // Usuario
-                      name: "userSettings",
-                      path: "user",
-                      builder: (context, state) =>
-                          const ProfileSettingsScreen(),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
-      ],
-    )
-  ],
+  routes: _routes,
 );

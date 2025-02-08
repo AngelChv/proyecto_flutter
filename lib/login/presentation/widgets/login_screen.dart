@@ -6,11 +6,19 @@ import 'package:proyecto_flutter/core/presentation/theme/style_constants.dart';
 import 'package:proyecto_flutter/login/presentation/view_model/user_view_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final _usernameController = TextEditingController();
+
   final _passwordController = TextEditingController();
+
+  bool _isObscurePassword = true;
 
   _login(BuildContext context) async {
     final userVM = context.read<UserViewModel>();
@@ -22,10 +30,10 @@ class LoginScreen extends StatelessWidget {
     if (isAuthenticated && context.mounted) {
       context.pushNamed("films");
     } else if (context.mounted) {
-      // todo: cambiar localización.
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(AppLocalizations.of(context)!.creatingFilmError),
+          content:
+              Text(AppLocalizations.of(context)!.usernameAndPasswordDontMatch),
         ),
       );
     }
@@ -39,7 +47,6 @@ class LoginScreen extends StatelessWidget {
         textAlign: TextAlign.center,
       ),
       TextFormField(
-        // Todo: cambiar localizaciones.
         controller: _usernameController,
         decoration: InputDecoration(
           hintText: AppLocalizations.of(context)!.username,
@@ -53,6 +60,16 @@ class LoginScreen extends StatelessWidget {
           hintText: AppLocalizations.of(context)!.password,
           label: Text(AppLocalizations.of(context)!.password),
           border: const OutlineInputBorder(),
+          suffixIcon: IconButton(
+            icon: Icon(
+              _isObscurePassword ? Icons.visibility : Icons.visibility_off,
+            ),
+            onPressed: () {
+              setState(() {
+                _isObscurePassword = !_isObscurePassword;
+              });
+            },
+          ),
         ),
       ),
       FilledButton(

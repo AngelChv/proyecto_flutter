@@ -186,6 +186,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         padding: EdgeInsets.all(compactMargin),
         constraints: const BoxConstraints(
           maxWidth: 400,
+          maxHeight: 500
         ),
         child: Form(
           key: widget._formKey,

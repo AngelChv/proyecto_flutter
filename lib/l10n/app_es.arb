@@ -49,5 +49,6 @@
   "repeatPassword": "Repetir contraseña",
   "insertRepeatPassword": "Introduzca otra vez la contraseña",
   "passwordsDontMatch": "Las contraseñas no coinciden",
-  "registerError": "Error al registrarse"
+  "registerError": "Error al registrarse",
+  "usernameAndPasswordDontMatch": "Nombre de usuario o contraseña incorrectos"
 }

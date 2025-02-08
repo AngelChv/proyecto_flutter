@@ -67,21 +67,22 @@ void main() {
     await tester.tap(lastFilm);
     await tester.pumpAndSettle();
 
-    // Verificar que se cargó la pantalla de detalles
+    // Verificar que se cargó la pantalla de detalles:
     expect(find.textContaining('Test Integración'), findsAtLeastNWidgets(1));
 
-    // Tocar el botón de eliminar
+    // Tocar el botón de eliminar.
     final Finder deleteButton = find.byIcon(Icons.delete);
     await tester.tap(deleteButton);
     await tester.pumpAndSettle();
 
-    // Confirmar la eliminación en el diálogo
+    // Confirmar la eliminación en el diálogo.
     // Hay que tener cuidado con la localización. Tiene que estar en español.
     final Finder confirmButton = find.text('SI');
     await tester.tap(confirmButton);
     await tester.pumpAndSettle();
 
     // Verificar que el SnackBar aparece con el mensaje de eliminación exitosa
+    // En español!
     expect(find.textContaining('Película eliminada'), findsOneWidget);
   });
 }

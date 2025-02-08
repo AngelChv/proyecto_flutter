@@ -113,8 +113,7 @@ class FilmInfo extends StatelessWidget {
               ),
               if (_showDeleteButton)
                 IconButton(
-                  // Todo cambiar texto
-                  tooltip: AppLocalizations.of(context)!.deleteFilm,
+                  tooltip: AppLocalizations.of(context)!.deleteFilmFromList,
                   onPressed: () {
                     if (_onDeleteClick != null) {
                       _onDeleteClick(_film);

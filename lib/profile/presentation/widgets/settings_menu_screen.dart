@@ -21,7 +21,6 @@ class SettingsMenuScreen extends StatelessWidget {
           children: [
             Card(
               child: ListTile(
-                // TODO: usar recurso para el string
                 leading: Icon(Icons.edit),
                 title: Text(AppLocalizations.of(context)!.general),
                 trailing: Icon(Icons.arrow_right),
@@ -32,7 +31,6 @@ class SettingsMenuScreen extends StatelessWidget {
             ),
             Card(
               child: ListTile(
-                // TODO: usar recurso para el string
                 leading: Icon(Icons.person),
                 title: Text(AppLocalizations.of(context)!.profile),
                 trailing: Icon(Icons.arrow_right),

@@ -23,16 +23,15 @@ class ListFormScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(isEditing
-            // TODO: crear localizaciones para las listas.
-            ? AppLocalizations.of(context)!.editFilm
-            : AppLocalizations.of(context)!.createFilm),
+            ? AppLocalizations.of(context)!.editList
+            : AppLocalizations.of(context)!.createList),
       ),
       body: listForm,
       floatingActionButton: FloatingActionButton(
         heroTag: "listFormScreenFab",
         tooltip: isEditing
-            ? AppLocalizations.of(context)!.editFilm
-            : AppLocalizations.of(context)!.createFilm,
+            ? AppLocalizations.of(context)!.editList
+            : AppLocalizations.of(context)!.createList,
         child: Icon(Icons.check),
         onPressed: () async {
           final newList = context.read<ListViewModel>().submitForm(
@@ -54,15 +53,14 @@ class ListFormScreen extends StatelessWidget {
             }
 
             if (isSuccess && context.mounted) {
-              // TODO: cambiar localizaciones.
               context.pop<String>(isEditing
-                  ? AppLocalizations.of(context)!.editedFilm
-                  : AppLocalizations.of(context)!.createdFilm);
+                  ? AppLocalizations.of(context)!.editedList
+                  : AppLocalizations.of(context)!.createdList);
             } else if (context.mounted) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(isEditing
-                    ? AppLocalizations.of(context)!.editingFilmError
-                    : AppLocalizations.of(context)!.creatingFilmError),
+                    ? AppLocalizations.of(context)!.editingListError
+                    : AppLocalizations.of(context)!.creatingListError),
               ));
             }
           }

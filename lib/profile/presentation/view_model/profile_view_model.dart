@@ -25,8 +25,6 @@ class ProfileViewModel extends ChangeNotifier {
     });
   }
 
-  // TODO: info usuario
-
   // Tema
   ThemeMode _themeMode = ThemeMode.light;
 

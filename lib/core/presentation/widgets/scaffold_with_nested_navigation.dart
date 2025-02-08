@@ -17,8 +17,6 @@ class ScaffoldWithNestedNavigation extends StatelessWidget {
   /// Encapsula el resto del body, permite gestionar la navegación.
   final StatefulNavigationShell _navigationShell;
 
-  // TODO: usar recurso para el string
-  // TODO: destinations en una lista, aunque son distintos tipos.
   List<Map<String, Widget>> _destinations(BuildContext context) => [
         {
           "icon": Icon(Icons.movie),

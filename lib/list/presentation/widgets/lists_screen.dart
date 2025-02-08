@@ -22,9 +22,6 @@ class ListsScreen extends StatelessWidget {
         context.read<ListViewModel>().selectList(list);
         context.pushNamed<FilmsList>("listDetails", extra: list);
       },
-      onListLongPress: (film) {
-        // TODO: long press
-      },
       lists: lists,
     );
   }

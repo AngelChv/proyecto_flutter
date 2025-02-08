@@ -25,9 +25,6 @@ class FilmsScreen extends StatelessWidget {
         onFilmTap: (film) {
           context.pushNamed("filmDetails");
         },
-        onFilmLongPress: (film) {
-          // TODO: long press
-        },
         films: films,
       ),
       floatingActionButton: FloatingActionButton(

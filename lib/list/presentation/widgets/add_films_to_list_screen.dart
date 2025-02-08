@@ -29,17 +29,15 @@ class AddFilmsToListScreen extends StatelessWidget {
     if (context.mounted) {
       late String message;
       // Crear mensaje en función del resultado.
-      // todo personalizar mensajes
       if (result == null) {
-        message = AppLocalizations.of(context)!.creatingFilmError;
+        message = AppLocalizations.of(context)!.addFilmToListError;
       } else if (result.e is DatabaseException &&
           (result.e as DatabaseException).isUniqueConstraintError()) {
-        // todo: mensaje: La película ya está en la lista.
-        message = AppLocalizations.of(context)!.creatingFilmError;
+        message = AppLocalizations.of(context)!.filmAlreadyIsInList;
       } else if (result.result is bool && result.result) {
-        message = AppLocalizations.of(context)!.createFilm;
+        message = AppLocalizations.of(context)!.addedFilmToList;
       } else {
-        message = AppLocalizations.of(context)!.creatingFilmError;
+        message = AppLocalizations.of(context)!.addFilmToListError;
       }
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -61,8 +59,7 @@ class AddFilmsToListScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        // todo: cambiar titulo
-        title: Text(AppLocalizations.of(context)!.films),
+        title: Text(AppLocalizations.of(context)!.addFilmToList),
       ),
       body: FilmsGrid(
         padding: EdgeInsets.all(isWideScreen ? mediumMargin : compactMargin),

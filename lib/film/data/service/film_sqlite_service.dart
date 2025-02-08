@@ -61,7 +61,6 @@ class FilmSqliteService implements FilmService {
   /// Inserta una película y devuelve su id generádo.
   @override
   Future<int?> insert(Film film) async {
-    // todo manejar excepciones, en concreto id unique.
     final Database? db = await SqliteManager.db;
     return await db?.insert(table, film.toMap());
   }

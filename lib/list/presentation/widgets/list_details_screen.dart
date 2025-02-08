@@ -16,10 +16,9 @@ class ListDetailsScreen extends StatelessWidget {
     final isSuccess = await context.read<ListViewModel>().deleteList(list);
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          // todo: cambiar localizaciones.
           content: Text(isSuccess
-              ? AppLocalizations.of(context)!.deletedFilm
-              : AppLocalizations.of(context)!.deletingFilmError)));
+              ? AppLocalizations.of(context)!.deletedList
+              : AppLocalizations.of(context)!.deletingListError)));
       isSuccess ? context.pop() : null;
     }
   }
@@ -28,7 +27,7 @@ class ListDetailsScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(AppLocalizations.of(context)!.askDeletingFilm),
+        title: Text(AppLocalizations.of(context)!.askDeletingFilmFromList),
         actions: [
           TextButton(
             onPressed: () {
@@ -57,10 +56,9 @@ class ListDetailsScreen extends StatelessWidget {
 
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        // todo: cambiar localizaciones.
         content: Text(isSuccess
-            ? AppLocalizations.of(context)!.deletedFilm
-            : AppLocalizations.of(context)!.deletingFilmError),
+            ? AppLocalizations.of(context)!.deletedFilmFromList
+            : AppLocalizations.of(context)!.deletingFilmFromListError),
       ));
     }
   }
@@ -69,7 +67,6 @@ class ListDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final isWideScreen = MediaQuery.sizeOf(context).width >= 600;
     final filteredFilms = context.watch<ListViewModel>().filmsOfList;
-    // todo: comprobar si hay problemas al usar !
     final list = context.watch<ListViewModel>().selectedList!;
 
     return Scaffold(
@@ -77,7 +74,7 @@ class ListDetailsScreen extends StatelessWidget {
         title: Text(list.name),
         actions: [
           IconButton(
-            tooltip: AppLocalizations.of(context)!.editFilm,
+            tooltip: AppLocalizations.of(context)!.editList,
             onPressed: () async {
               final String? message =
                   await context.pushNamed("listForm", extra: list);
@@ -91,12 +88,12 @@ class ListDetailsScreen extends StatelessWidget {
             icon: Icon(Icons.edit),
           ),
           IconButton(
-            tooltip: AppLocalizations.of(context)!.deleteFilm,
+            tooltip: AppLocalizations.of(context)!.deleteList,
             onPressed: () async {
               showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
-                  title: Text(AppLocalizations.of(context)!.askDeletingFilm),
+                  title: Text(AppLocalizations.of(context)!.askDeletingList),
                   actions: [
                     TextButton(
                       onPressed: () {
@@ -125,9 +122,6 @@ class ListDetailsScreen extends StatelessWidget {
         onFilmTap: (film) {
           context.pushNamed("filmDetails");
         },
-        onFilmLongPress: (film) {
-          // TODO: long press
-        },
         films: filteredFilms,
         showDeleteButton: true,
         onDeleteClick: (film) {
@@ -138,14 +132,12 @@ class ListDetailsScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         heroTag: "listDetailsScreenFab",
-        // Todo: usar localización adecuada (Añadir película)
-        tooltip: AppLocalizations.of(context)!.createList,
+        tooltip: AppLocalizations.of(context)!.addFilmToList,
         onPressed: () async {
           context.pushNamed<FilmsList>("addFilmToList", extra: list);
         },
         icon: Icon(Icons.add_box),
-        // Todo: usar localización adecuada (Añadir película)
-        label: Text(AppLocalizations.of(context)!.createList),
+        label: Text(AppLocalizations.of(context)!.addFilmToList),
       ),
     );
   }

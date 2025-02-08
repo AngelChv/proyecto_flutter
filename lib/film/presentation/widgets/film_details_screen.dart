@@ -28,7 +28,6 @@ class FilmDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Todo: comprobar si no hay error al utilizar !
     final film = context.watch<FilmViewModel>().selectedFilm!;
     return Scaffold(
       appBar: AppBar(
@@ -91,7 +90,6 @@ class ResponsiveFilmDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Todo: comprobar si no hay error al utilizar !
     final film = context.watch<FilmViewModel>().selectedFilm!;
     final height = MediaQuery.sizeOf(context).height;
     return Stack(
@@ -142,7 +140,6 @@ class FilmDetailsInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Todo: comprobar si no hay error al utilizar !
     final film = context.watch<FilmViewModel>().selectedFilm!;
     return Center(
       child: Container(

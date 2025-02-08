@@ -18,7 +18,6 @@ class ListCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // TODO: seleccionar lista en el viewmodel.
         if (_onTap != null) {
           _onTap(_list);
         }

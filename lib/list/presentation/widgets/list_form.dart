@@ -21,15 +21,13 @@ class ListForm extends StatelessWidget {
       TextFormField(
         controller: _nameController,
         decoration: InputDecoration(
-          // TODO: crear localización para nombre
-          hintText: AppLocalizations.of(context)!.title,
-          labelText: AppLocalizations.of(context)!.title,
+          hintText: AppLocalizations.of(context)!.name,
+          labelText: AppLocalizations.of(context)!.name,
           border: const OutlineInputBorder(),
         ),
         validator: (value) {
           if (value == null || value.isEmpty) {
-            // TODO: cambiar localización.
-            return AppLocalizations.of(context)!.insertTheTitle;
+            return AppLocalizations.of(context)!.insertTheName;
           }
           return null;
         },

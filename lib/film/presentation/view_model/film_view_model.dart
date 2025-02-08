@@ -135,9 +135,6 @@ class FilmViewModel extends ChangeNotifier {
   }
 
   // Poster
-  // Todo: moverlo al formulario.
-  // Todo: no se si es mejor guardar el path directamente en un string
-  // TODO: encapsular el poster en una clase para que pueda ser final y estar en el stateless del form.
   File? _selectedPoster;
 
   /// Devuelve un File con el poster seleccionado.

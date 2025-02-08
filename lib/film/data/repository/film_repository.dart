@@ -59,4 +59,8 @@ class FilmRepository {
   Future<Film?> findById(int id) {
     return _filmService.findById(id);
   }
+
+  Future<int> countAllFilms() {
+    return _filmService.countAllFilms();
+  }
 }

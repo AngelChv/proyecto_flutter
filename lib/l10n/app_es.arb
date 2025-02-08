@@ -50,5 +50,7 @@
   "insertRepeatPassword": "Introduzca otra vez la contraseña",
   "passwordsDontMatch": "Las contraseñas no coinciden",
   "registerError": "Error al registrarse",
-  "usernameAndPasswordDontMatch": "Nombre de usuario o contraseña incorrectos"
+  "usernameAndPasswordDontMatch": "Nombre de usuario o contraseña incorrectos",
+  "savedFilms": "Películas guardadas",
+  "createdLists": "Listas creadas"
 }

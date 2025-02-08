@@ -12,6 +12,7 @@ import '../../../core/data/sqlite_manager.dart';
 class FilmSqliteService implements FilmService {
   static const String table = "films";
 
+  /// Crea la definición de la tabla.
   static createDDL(Database db) async {
     db.execute("""
       CREATE TABLE IF NOT EXISTS $table (
@@ -101,5 +102,13 @@ class FilmSqliteService implements FilmService {
       }
     }
     return films;
+  }
+
+  /// Obtiene el número total de películas guardadas.
+  @override
+  Future<int> countAllFilms() async {
+    final Database? db = await SqliteManager.db;
+    final result = await db?.rawQuery("SELECT COUNT(*) as count FROM $table");
+    return result != null && result.isNotEmpty ? result.first['count'] as int : 0;
   }
 }

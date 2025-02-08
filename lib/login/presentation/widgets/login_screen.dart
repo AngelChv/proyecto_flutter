@@ -20,14 +20,18 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool _isObscurePassword = true;
 
-  @override
-  void initState() {
+  _loadSession(BuildContext context) {
     context.read<UserViewModel>().loadSession().then((isAuthenticated) {
       if ((isAuthenticated ?? false) && context.mounted) {
         context.goNamed("films");
       }
     });
+  }
+
+  @override
+  void initState() {
     super.initState();
+    _loadSession(context);
   }
 
   _login(BuildContext context) async {

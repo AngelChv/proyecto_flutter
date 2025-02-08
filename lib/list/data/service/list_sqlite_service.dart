@@ -94,4 +94,16 @@ class ListSqliteService implements ListService {
         0;
     return count > 0;
   }
+
+  /// Obtiene el número total de películas guardadas.
+  @override
+  Future<int> countAllListsByUserId(int userId) async {
+    final Database? db = await SqliteManager.db;
+    final result = await db?.rawQuery(
+      "SELECT COUNT(*) as count FROM $table WHERE user_id = $userId",
+    );
+    return result != null && result.isNotEmpty
+        ? result.first['count'] as int
+        : 0;
+  }
 }

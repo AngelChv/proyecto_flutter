@@ -36,4 +36,9 @@ class FilmApiService implements FilmService {
   Future<Film?> findById(int id) async {
     return await null;
   }
+
+  @override
+  Future<int> countAllFilms() async {
+    return await 10;
+  }
 }

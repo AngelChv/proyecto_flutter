@@ -7,6 +7,8 @@ class UserViewModel extends ChangeNotifier {
   final UserRepository _repository = UserRepository();
   User? _currentUser;
 
+  User get currentUser => _currentUser!;
+
   int get currentUserId => _currentUser?.id ?? -1;
 
   bool get isAuthenticated => _currentUser != null;

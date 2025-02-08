@@ -52,4 +52,8 @@ class ListRepository {
   Future<bool> removeFilmFromList(int listId, int filmId) {
     return _listService.removeFilmFromList(listId, filmId);
   }
+
+  Future<int> countAllListsByUserId(int userId) {
+    return _listService.countAllListsByUserId(userId);
+  }
 }

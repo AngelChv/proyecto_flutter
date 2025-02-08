@@ -38,4 +38,11 @@ class ListApiService implements ListService {
   Future<bool> removeFilmFromList(int listId, int filmId) async {
     return await true;
   }
+
+  @override
+  Future<int> countAllListsByUserId(int userId) async {
+    return await 10;
+  }
+
+
 }

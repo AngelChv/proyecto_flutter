@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_flutter/film/data/repository/film_repository.dart';
+import 'package:proyecto_flutter/list/data/repository/list_repository.dart';
+import 'package:proyecto_flutter/profile/domain/profile_stats.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -59,7 +62,6 @@ class ProfileViewModel extends ChangeNotifier {
     }).toList();
   }
 
-  // TODO: usar sharedPreferences
   String _language = _languages.keys.first;
   get language => _language;
 
@@ -69,5 +71,12 @@ class ProfileViewModel extends ChangeNotifier {
       prefs.setString("language", _language);
     });
     notifyListeners();
+  }
+
+  // Estadísticas:
+  Future<ProfileStats> getStats(int userId) async {
+    final totalFilms = await FilmRepository().countAllFilms();
+    final totalLists = await ListRepository().countAllListsByUserId(userId);
+    return ProfileStats(totalFilms: totalFilms, totalLists: totalLists);
   }
 }

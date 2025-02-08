@@ -6,6 +6,8 @@ import 'package:proyecto_flutter/profile/presentation/view_model/profile_view_mo
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// Pantalla de la configuración general
+///
+/// Permite cambiar el tema y el idioma.
 class GeneralSettingsScreen extends StatelessWidget {
   const GeneralSettingsScreen({super.key});
 

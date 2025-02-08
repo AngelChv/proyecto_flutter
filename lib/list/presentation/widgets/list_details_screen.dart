@@ -9,6 +9,11 @@ import '../../../core/presentation/theme/style_constants.dart';
 import '../../../film/domain/film.dart';
 import '../../../film/presentation/widgets/films_grid.dart';
 
+/// Pantalla que muestra las películas de una lista.
+///
+/// Medíante las acciones del toolbar permite modificar o eliminar la lista.
+/// Mediante el FAB permite ir a la pantalla de añadir películas.
+/// Cada tarjeta de película tiene un botón para eliminarla de la lista.
 class ListDetailsScreen extends StatelessWidget {
   const ListDetailsScreen({super.key});
 

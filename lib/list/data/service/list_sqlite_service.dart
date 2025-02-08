@@ -6,9 +6,16 @@ import 'package:sqflite/sqflite.dart';
 
 import '../../../core/data/sqlite_manager.dart';
 
+
+/// A través de una conexión a la base de datos realiza las operaciones indicadas.
+///
+/// Implementa la clase [ListService] para asegurar tener los métodos crud
+/// y que el repositorio pueda usar la interfáz para abstraerse del uso de
+/// un servicio concreto.
 class ListSqliteService implements ListService {
   static const String table = "lists";
 
+  /// Crea la definición de la tabla.
   static createDDL(Database db) async {
     db.execute("""
       CREATE TABLE IF NOT EXISTS $table (
@@ -22,6 +29,7 @@ class ListSqliteService implements ListService {
       """);
   }
 
+  /// Obtiene una lista con todas las listas del usuario por su id.
   @override
   Future<List<FilmsList>> findAllByUserId(int userId) async {
     List<FilmsList> lists = [];
@@ -40,12 +48,14 @@ class ListSqliteService implements ListService {
     return lists;
   }
 
+  /// Inserta una lista y devuelve su id generádo.
   @override
   Future<int?> insert(FilmsList list, int userId) async {
     final Database? db = await SqliteManager.db;
     return await db?.insert(table, list.toMap(userId));
   }
 
+  /// Actualiza una lista y devuelve un `bool` con el resultado.
   @override
   Future<bool> update(FilmsList list, int userId) async {
     final Database? db = await SqliteManager.db;
@@ -59,6 +69,7 @@ class ListSqliteService implements ListService {
     return count == 1;
   }
 
+  /// Elimina una lista y devuelve un `bool` con el resultado.
   @override
   Future<bool> delete(int id) async {
     final Database? db = await SqliteManager.db;
@@ -67,6 +78,7 @@ class ListSqliteService implements ListService {
     return count == 1;
   }
 
+  /// Añade una película a una lista por sus ids.
   @override
   Future<ListSqliteResult<bool>> addFilmToList(int listId, int filmId) async {
     final Database? db = await SqliteManager.db;
@@ -83,6 +95,7 @@ class ListSqliteService implements ListService {
     }
   }
 
+  /// Elimina una película de una lista por sus ids.
   @override
   Future<bool> removeFilmFromList(int listId, int filmId) async {
     final Database? db = await SqliteManager.db;

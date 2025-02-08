@@ -85,6 +85,7 @@ class FilmDetailsScreen extends StatelessWidget {
   }
 }
 
+/// Muestra los detalles de la película de manera responsiva.
 class ResponsiveFilmDetails extends StatelessWidget {
   const ResponsiveFilmDetails({super.key});
 
@@ -135,6 +136,7 @@ class ResponsiveFilmDetails extends StatelessWidget {
   }
 }
 
+/// Información centrada de la película, con un ancho máximo.
 class FilmDetailsInfo extends StatelessWidget {
   const FilmDetailsInfo({super.key});
 

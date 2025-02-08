@@ -52,14 +52,21 @@ class FilmRepository {
     return _filmService.delete(id);
   }
 
+  /// Se conecta al servicio para obtener las películas de una lista según su id.
+  ///
+  /// Si no encuentra nada devuelve la lista vacía.
   Future<List<Film>> getFilmsByListId(int id) {
     return _filmService.getFilmsByListId(id);
   }
 
+  /// Se conecta al servicio para obtener una película por su id.
+  ///
+  /// Si no encuentra nada devuelve null.
   Future<Film?> findById(int id) {
     return _filmService.findById(id);
   }
 
+  /// Se conecta al servicio para obtener el número total de películas.
   Future<int> countAllFilms() {
     return _filmService.countAllFilms();
   }

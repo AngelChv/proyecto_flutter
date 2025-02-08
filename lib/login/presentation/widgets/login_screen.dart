@@ -6,6 +6,7 @@ import 'package:proyecto_flutter/core/presentation/theme/style_constants.dart';
 import 'package:proyecto_flutter/login/presentation/view_model/user_view_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+/// Pantalla para iniciar sesión.
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 

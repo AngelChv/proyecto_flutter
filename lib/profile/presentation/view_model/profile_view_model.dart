@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// Gestiona el estado y permanencia de:
 /// * El tema.
 /// * Idioma.
+/// * Estadísticas.
 class ProfileViewModel extends ChangeNotifier {
   ProfileViewModel() {
     SharedPreferences.getInstance().then((prefs) {

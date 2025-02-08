@@ -84,6 +84,7 @@ class FilmSqliteService implements FilmService {
     return count == 1;
   }
 
+  /// Obtiene todas las películas de una lista por su id.
   @override
   Future<List<Film>> getFilmsByListId(int listId) async {
     final Database? db = await SqliteManager.db;

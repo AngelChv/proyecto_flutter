@@ -3,6 +3,11 @@ import 'package:proyecto_flutter/core/data/repository/user_repository.dart';
 import 'package:proyecto_flutter/core/domain/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// Gestiona el estado de la autenticación.
+///
+/// Guarda la sesión actual y permite cerrarla.
+///
+/// La sesión permanece gracias a [SharedPreferences].
 class UserViewModel extends ChangeNotifier {
   final UserRepository _repository = UserRepository();
   User? _currentUser;

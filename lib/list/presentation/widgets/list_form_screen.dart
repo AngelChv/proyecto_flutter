@@ -6,6 +6,7 @@ import 'package:proyecto_flutter/list/presentation/view_model/list_view_model.da
 import 'package:proyecto_flutter/list/presentation/widgets/list_form.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+/// Pantalla que muestra el formulario de listas.
 class ListFormScreen extends StatelessWidget {
   ListFormScreen({
     super.key,

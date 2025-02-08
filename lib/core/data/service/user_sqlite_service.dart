@@ -4,6 +4,7 @@ import 'package:sqflite/sqflite.dart';
 
 import '../sqlite_manager.dart';
 
+/// Trabaja con la base de datos realizando las diferentes operaciones.
 class UserSqliteService implements UserService {
   static const String table = "user";
 
@@ -18,6 +19,7 @@ class UserSqliteService implements UserService {
       """);
   }
 
+  /// Inicia sesión en sqlite.
   @override
   Future<User?> login(String username, String password) async {
     final Database? db = await SqliteManager.db;
@@ -36,12 +38,14 @@ class UserSqliteService implements UserService {
     return user;
   }
 
+  /// Crea una cuenta nueva en sqlite.
   @override
   Future<int?> insert(User user) async {
     final Database? db = await SqliteManager.db;
     return await db?.insert(table, user.toMap());
   }
 
+  /// Busca un usuario por su nombre.
   @override
   Future<User?> findByUsername(String userName) async {
     final Database? db = await SqliteManager.db;

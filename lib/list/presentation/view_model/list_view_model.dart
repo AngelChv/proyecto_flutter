@@ -24,6 +24,7 @@ class ListViewModel extends ChangeNotifier {
 
   List<FilmsList>? _lists;
 
+  /// Obtiene las listas, si no están cargadas hace una petición.
   List<FilmsList>? getLists() {
     if (_lists != null) return _lists!;
     return loadLists();
@@ -31,18 +32,24 @@ class ListViewModel extends ChangeNotifier {
 
   FilmsList? _selectedList;
 
+  /// Lista seleccionada.
   FilmsList? get selectedList => _selectedList;
 
   List<Film> _filmsOfList = [];
 
+  /// Películas de la lista seleccionada.
   List<Film> get filmsOfList => _filmsOfList;
 
+  /// Selecciona una lista.
   selectList(FilmsList listToSelect) {
     _selectedList = listToSelect;
     notifyListeners();
     loadFilmsOfCurrentList();
   }
 
+  /// Carga las listas del repositorio.
+  ///
+  /// Puede ser una petición a una api o a sqlite.
   List<FilmsList>? loadLists() {
     _listRepository.findAllByUserId(_currentUserId).then((result) {
       _lists = result;
@@ -51,6 +58,7 @@ class ListViewModel extends ChangeNotifier {
     return _lists;
   }
 
+  /// Carga las películas de la lista seleccionada.
   loadFilmsOfCurrentList() {
     if (_selectedList?.id != null) {
       _filmRepository.getFilmsByListId(_selectedList!.id!).then((result) {
@@ -60,6 +68,7 @@ class ListViewModel extends ChangeNotifier {
     }
   }
 
+  /// Crea una lista
   Future<bool> createList(FilmsList newList) async {
     final int? id = await _listRepository.insert(newList, _currentUserId);
     bool isSuccess = false;
@@ -94,6 +103,7 @@ class ListViewModel extends ChangeNotifier {
     return isSuccess;
   }
 
+  /// Elimina una lista
   Future<bool> deleteList(FilmsList list) async {
     if (list.id != null && await _listRepository.delete(list.id!) && _lists != null) {
       _lists?.remove(list);
@@ -103,6 +113,7 @@ class ListViewModel extends ChangeNotifier {
     return false;
   }
 
+  /// Añade una película a la lista.
   Future<ListResult<bool>> addFilmToList(int listId, int filmId) async {
     final ListResult<bool> result = await _listRepository.addFilmToList(
         listId, filmId);
@@ -118,6 +129,7 @@ class ListViewModel extends ChangeNotifier {
     return result;
   }
 
+  /// Elimina una película de la lista.
   Future<bool> removeFilmFromList(int listId, Film film) async {
     if (film.id == null) return false;
     final isSuccess = await _listRepository.removeFilmFromList(

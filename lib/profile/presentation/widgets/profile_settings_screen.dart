@@ -8,7 +8,7 @@ import '../../../login/presentation/view_model/user_view_model.dart';
 
 /// Pantalla de configuración del perfil de usuario.
 ///
-/// **En desarrollo.**
+/// Permite cerrar la sesión.
 class ProfileSettingsScreen extends StatelessWidget {
   const ProfileSettingsScreen({super.key});
 

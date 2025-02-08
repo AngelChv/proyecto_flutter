@@ -49,10 +49,16 @@ class ListRepository {
     return _listService.addFilmToList(listId, filmId);
   }
 
+  /// Se conecta al servicio para eliminar una película de una lista.
+  ///
+  /// Devuelve `bool` con el resultado.
   Future<bool> removeFilmFromList(int listId, int filmId) {
     return _listService.removeFilmFromList(listId, filmId);
   }
 
+  /// Se conecta al servicio para calcular las listas que tiene un usuario.
+  ///
+  /// Devuelve un `int` con el resultado.
   Future<int> countAllListsByUserId(int userId) {
     return _listService.countAllListsByUserId(userId);
   }

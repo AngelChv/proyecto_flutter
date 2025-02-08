@@ -11,6 +11,9 @@ import '../../../core/presentation/theme/style_constants.dart';
 import '../../../film/presentation/view_model/film_view_model.dart';
 import '../../../film/presentation/widgets/films_grid.dart';
 
+/// Pantalla que sirve para visualizar las películas que se pueden añadir a una lista.
+///
+/// Si se pulsa sobre alguna, se añadirán a la lista.
 class AddFilmsToListScreen extends StatelessWidget {
   const AddFilmsToListScreen({super.key, required FilmsList? selectedList})
       : _selectedList = selectedList;

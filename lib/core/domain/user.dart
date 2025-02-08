@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 
+/// Clase modelo para los datos necesarios de un usuario.
 class User {
   int? id;
   final String username;
@@ -41,6 +42,7 @@ class User {
     );
   }
 
+  /// Encripta la contraseña con el algoritmo sha256
   static String hashPassword(String password) {
     var bytes = utf8.encode(password);
     var digest = sha256.convert(bytes);

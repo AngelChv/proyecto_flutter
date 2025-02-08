@@ -7,6 +7,8 @@ import 'package:proyecto_flutter/login/presentation/view_model/user_view_model.d
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:proyecto_flutter/util/validator.dart';
 
+/// Pantalla para crear una nueva cuenta de usuario.
+///
 /// Es stateful por que hacer un viewmodel solo para un texto de error me parece demasiado.
 class RegisterScreen extends StatefulWidget {
   RegisterScreen({super.key});

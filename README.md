@@ -1,5 +1,8 @@
 # 🎬 App de Gestión de Películas
 
+## 📚 Manual de usuario
+[Enlace al manual](https://github.com/AngelChv/proyecto_flutter/blob/master/proyecto_flutter.pdf)
+
 ## 📌 Descripción
 Esta es una aplicación desarrollada con Flutter para gestionar películas. Permite a los usuarios almacenar, organizar y visualizar información sobre las películas que han visto, desean ver o les gustan. La interfaz es minimalista y fácil de usar, con navegación intuitiva a través de una barra inferior.
 

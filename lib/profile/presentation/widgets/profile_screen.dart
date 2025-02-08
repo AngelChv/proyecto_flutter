@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:proyecto_flutter/core/domain/user.dart';
 import 'package:proyecto_flutter/core/presentation/theme/style_constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:proyecto_flutter/login/presentation/view_model/user_view_model.dart';
@@ -87,7 +88,8 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userVM = context.watch<UserViewModel>();
-    final currentUser = userVM.currentUser;
+    var currentUser = userVM.currentUser;
+    currentUser = currentUser ?? User(username: "Loading", email: "Loading");
     final profileVM = Provider.of<ProfileViewModel>(context, listen: false);
 
     final stats = profileVM.getStats(userVM.currentUserId);
@@ -106,42 +108,44 @@ class ProfileScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(compactMargin),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              CircleAvatar(
-                radius: 50,
-                backgroundColor: Colors.blueAccent,
-                child: Text(
-                  currentUser.username[0].toUpperCase(),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(compactMargin),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 50,
+                  backgroundColor: Colors.blueAccent,
+                  child: Text(
+                    currentUser.username[0].toUpperCase(),
+                    style: const TextStyle(
+                      fontSize: 40,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  currentUser.username,
                   style: const TextStyle(
-                    fontSize: 40,
-                    color: Colors.white,
+                    fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                currentUser.username,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+                Text(
+                  currentUser.email,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey,
+                  ),
                 ),
-              ),
-              Text(
-                currentUser.email,
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey,
-                ),
-              ),
-              const SizedBox(height: 32),
-              _buildStatsCard(stats),
-            ],
+                const SizedBox(height: 32),
+                _buildStatsCard(stats),
+              ],
+            ),
           ),
         ),
       ),

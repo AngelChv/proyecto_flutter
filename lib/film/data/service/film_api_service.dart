@@ -79,16 +79,35 @@ class FilmApiService implements FilmService {
 
   @override
   Future<List<Film>> getFilmsByListId(int id) async {
+    // todo
     return await [];
   }
 
   @override
   Future<Film?> findById(int id) async {
-    return await null;
+    final url = Uri.parse("$urlBase/$id");
+    try {
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        return Film.fromMap(response.body as Map<String, dynamic>);
+      }
+    } catch (e, stackTrace) {
+      log("Excepción al obtener las películas: $e", stackTrace: stackTrace);
+    }
+    return null;
   }
 
   @override
   Future<int> countAllFilms() async {
-    return await 10;
+    final url = Uri.parse("$urlBase/countAll");
+    try {
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body) as int;
+      }
+    } catch (e, stackTrace) {
+      log("Excepción al eliminar una película: $e", stackTrace: stackTrace);
+    }
+    return 0;
   }
 }

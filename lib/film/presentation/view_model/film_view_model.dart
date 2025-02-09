@@ -122,7 +122,7 @@ class FilmViewModel extends ChangeNotifier {
       );
 
       // Comprobar si se ha modificado algo;
-      if (newFilm == oldFilm) {
+      if (newFilm.equals(oldFilm)) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(AppLocalizations.of(context)!.nothingHasBeenChanged),

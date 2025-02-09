@@ -22,8 +22,23 @@ class Film {
   ///
   /// El id se excluye para poder usarlo al insertar en sqlite y se
   /// genere un id auto incremental.
-  Map<String, Object?> toMap() {
+  Map<String, Object?> toMapWithOutId() {
     return {
+      'title': title,
+      'director': director,
+      'year': year,
+      'duration': duration,
+      'description': description,
+      'poster_path': posterPath,
+    };
+  }
+
+  /// Transforma la película a un mapa.
+  ///
+  /// Incluyendo el id.
+  Map<String, Object?> toMapWithId() {
+    return {
+      'id': id,
       'title': title,
       'director': director,
       'year': year,
@@ -56,20 +71,30 @@ class Film {
     );
   }
 
+  // todo usar este equals en lugar de == al comparar el resultado del form
+  // Ya lo uso falta comprobarlo
+  bool equals(Object? other) =>
+      identical(this, other) ||
+          other is Film &&
+              runtimeType == other.runtimeType &&
+              // Para comprobar si realmente se ha editado algo en el formulario
+              // películas, tengo que omitir la comprobación del id,
+              // debido a que la película nueva todavía no tiene.
+              //id == other.id &&
+              title == other.title &&
+              director == other.director &&
+              year == other.year &&
+              duration == other.duration &&
+              description == other.description &&
+              posterPath == other.posterPath;
 
-  /// Compara si dos películas son iguales.
-  ///
-  /// Compara por sus atributos no por la dirección de memoria.
-  /// No se comprueba por id.
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is Film &&
           runtimeType == other.runtimeType &&
-          // Para comprobar si realmente se ha editado algo en el formulario
-          // películas, tengo que omitir la comprobación del id,
-          // debido a que la película nueva todavía no tiene.
-          //id == other.id &&
+          id == other.id &&
           title == other.title &&
           director == other.director &&
           year == other.year &&

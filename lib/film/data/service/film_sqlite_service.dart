@@ -62,7 +62,7 @@ class FilmSqliteService implements FilmService {
   @override
   Future<int?> insert(Film film) async {
     final Database? db = await SqliteManager.db;
-    return await db?.insert(table, film.toMap());
+    return await db?.insert(table, film.toMapWithOutId());
   }
 
   /// Actualiza una película y devuelve un `bool` con el resultado.
@@ -70,7 +70,7 @@ class FilmSqliteService implements FilmService {
   Future<bool> update(Film film) async {
     final Database? db = await SqliteManager.db;
     final int? count = await db
-        ?.update(table, film.toMap(), where: "id = ?", whereArgs: [film.id]);
+        ?.update(table, film.toMapWithOutId(), where: "id = ?", whereArgs: [film.id]);
 
     return count == 1;
   }

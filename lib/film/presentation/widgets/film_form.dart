@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_flutter/film/presentation/view_model/film_view_model.dart';
@@ -183,7 +184,7 @@ class _FilmFormState extends State<FilmForm> {
           return null;
         },
       ),
-      PosterPicker(),
+      if (!kIsWeb) PosterPicker(),
       bottomSeparator,
     ];
   }

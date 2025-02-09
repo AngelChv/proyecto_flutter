@@ -52,7 +52,7 @@ class ListSqliteService implements ListService {
   @override
   Future<int?> insert(FilmsList list, int userId) async {
     final Database? db = await SqliteManager.db;
-    return await db?.insert(table, list.toMap(userId));
+    return await db?.insert(table, list.toMapWithoutId(userId));
   }
 
   /// Actualiza una lista y devuelve un `bool` con el resultado.
@@ -61,7 +61,7 @@ class ListSqliteService implements ListService {
     final Database? db = await SqliteManager.db;
     final int? count = await db?.update(
       table,
-      list.toMap(userId),
+      list.toMapWithoutId(userId),
       where: "id = ?",
       whereArgs: [list.id],
     );

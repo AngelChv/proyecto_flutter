@@ -17,8 +17,21 @@ class FilmsList {
   ///
   /// El id se excluye para poder usarlo al insertar en sqlite y se
   /// genere un id auto incremental.
-  Map<String, Object?> toMap(int userId) {
+  Map<String, Object?> toMapWithoutId(int userId) {
     return {
+      "name": name,
+      "create_date_time": createDateTime.toIso8601String(),
+      "edit_date_time": createDateTime.toIso8601String(),
+      "user_id": userId,
+    };
+  }
+
+  /// Transforma la lista de películas a un mapa.
+  ///
+  /// Incluye el id.
+  Map<String, Object?> toMapWithId(int userId) {
+    return {
+      "id": id,
       "name": name,
       "create_date_time": createDateTime.toIso8601String(),
       "edit_date_time": createDateTime.toIso8601String(),

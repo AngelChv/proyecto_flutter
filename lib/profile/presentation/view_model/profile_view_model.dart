@@ -1,8 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:proyecto_flutter/film/data/repository/film_repository.dart';
 import 'package:proyecto_flutter/list/data/repository/list_repository.dart';
 import 'package:proyecto_flutter/profile/domain/profile_stats.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 
 /// Gestiona el estado del perfíl y la configuración.
@@ -12,18 +14,40 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// * Idioma.
 /// * Estadísticas.
 class ProfileViewModel extends ChangeNotifier {
-  ProfileViewModel() {
-    SharedPreferences.getInstance().then((prefs) {
-      final bool? isDarkMode = prefs.getBool("isDarkMode");
-      if (isDarkMode != null) {
-        toggleTheme(isDarkMode);
-      }
+  final storage = FlutterSecureStorage();
 
-      final String? language = prefs.getString("language");
-      if (language != null) {
-        changeLanguage(language);
-      }
-    });
+  ProfileViewModel() {
+    _initData();
+  }
+
+  _initData() {
+    if (!kIsWeb) {
+      SharedPreferences.getInstance().then((prefs) {
+        _initDarkModeSharedPreferences(prefs);
+
+        final String? language = prefs.getString("language");
+        if (language != null) {
+          changeLanguage(language);
+        }
+      });
+    } else {
+      _initDarkModeWeb();
+    }
+  }
+
+  _initDarkModeSharedPreferences(SharedPreferences prefs) {
+    final bool? isDarkMode = prefs.getBool("isDarkMode");
+    if (isDarkMode != null) {
+      toggleTheme(isDarkMode);
+    }
+  }
+
+  _initDarkModeWeb() async {
+    final String? value = await storage.read(key: 'isDarkMode');
+    final bool? isDarkMode = value != null ? value == "true" : null ;
+    if (isDarkMode != null) {
+      toggleTheme(isDarkMode);
+    }
   }
 
   // Tema
@@ -33,10 +57,18 @@ class ProfileViewModel extends ChangeNotifier {
 
   toggleTheme(bool isDark) {
     _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
-    SharedPreferences.getInstance().then((prefs) {
-      prefs.setBool("isDarkMode", _themeMode == ThemeMode.dark);
-    });
+    _saveDarkMode();
     notifyListeners();
+  }
+
+  _saveDarkMode() async {
+    if (kIsWeb) {
+      await storage.write(key: 'isDarkMode', value: "${_themeMode == ThemeMode.dark}");
+    } else {
+      SharedPreferences.getInstance().then((prefs) {
+        prefs.setBool("isDarkMode", _themeMode == ThemeMode.dark);
+      });
+    }
   }
 
   // Idioma

@@ -13,11 +13,11 @@ class UserApiService implements UserService {
 
   @override
   Future<User?> login(String username, String password) async {
-    return await User(id: 0, username: "angel", email: "angel@gmail.com");
+    return await User(id: 1, username: "angel", email: "angel@gmail.com");
   }
 
   @override
   Future<User?> findByUsername(String userName) async {
-    return await User(id: 0, username: "angel", email: "angel@gmail.com");
+    return await User(id: 1, username: "angel", email: "angel@gmail.com");
   }
 }

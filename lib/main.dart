@@ -42,6 +42,10 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeMode = context.watch<ProfileViewModel>().themeMode;
     final String localeKey = context.watch<ProfileViewModel>().language;
+    final userVM = context.watch<UserViewModel>();
+    if (!userVM.isAuthenticated) {
+      //userVM.logout();
+    }
 
     return MaterialApp.router(
       //scaffoldMessengerKey: scaffoldKey,

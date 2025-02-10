@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:proyecto_flutter/core/data/repository/user_repository.dart';
 import 'package:proyecto_flutter/core/domain/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -39,6 +39,8 @@ class UserViewModel extends ChangeNotifier {
   }
 
   Future<bool?> loadSession() async {
+    // En web shared preferences funciona si se recarga la pagina,
+    // pero si se cierra y vuelve a abrir no.
     final preferences = await SharedPreferences.getInstance();
     final username = preferences.getString("username");
     final password = preferences.getString("password");

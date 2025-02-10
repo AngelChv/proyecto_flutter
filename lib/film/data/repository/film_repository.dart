@@ -19,15 +19,11 @@ class FilmRepository {
   late final FilmService _filmService;
 
   FilmRepository(){
-/*
     if (kIsWeb) {
       _filmService = FilmApiService();
     } else {
       _filmService = FilmSqliteService();
     }
-*/
-
-  _filmService = FilmApiService();
   }
 
   /// Se conecta al servicio para obtener todas las películas.

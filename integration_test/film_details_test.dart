@@ -55,11 +55,6 @@ void main() {
     await tester.pumpAndSettle();
 
 
-    // Mostrar número de películas encontradas:
-    final allCards = find.byType(Card);
-    print('Número de películas encontradas: ${tester.widgetList(allCards).length}');
-
-
     // Busca una película en la lista y la toca.
     final Finder lastFilm = find.byType(Card).last;
     expect(lastFilm, findsOneWidget);

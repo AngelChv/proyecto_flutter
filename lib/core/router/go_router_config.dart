@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:proyecto_flutter/core/presentation/widgets/scaffold_with_nested_navigation.dart';
 import 'package:proyecto_flutter/film/presentation/widgets/film_details_screen.dart';
 import 'package:proyecto_flutter/film/presentation/widgets/film_form_screen.dart';
@@ -15,6 +16,7 @@ import 'package:proyecto_flutter/profile/presentation/widgets/profile_screen.dar
 import 'package:proyecto_flutter/profile/presentation/widgets/profile_settings_screen.dart';
 import 'package:proyecto_flutter/profile/presentation/widgets/settings_menu_screen.dart';
 
+import '../../login/presentation/view_model/user_view_model.dart';
 import '../../login/presentation/widgets/login_screen.dart';
 
 /// Clave única del Gestor de rutas raíz de la app.
@@ -84,8 +86,7 @@ final _routes = [
                 // Importante las subpáginas se deben construir
                 // con builder no Pagebuilder
                 builder: (context, state) {
-                  final isEditing =
-                      state.pathParameters["isEditing"] == "true";
+                  final isEditing = state.pathParameters["isEditing"] == "true";
                   return FilmFormScreen(isEditing: isEditing);
                 },
               ),
@@ -116,7 +117,7 @@ final _routes = [
                 path: "form",
                 builder: (context, state) {
                   final list =
-                  state.extra != null ? state.extra as FilmsList : null;
+                      state.extra != null ? state.extra as FilmsList : null;
                   return ListFormScreen(oldList: list);
                 },
               ),
@@ -133,9 +134,8 @@ final _routes = [
                     name: "addFilmToList",
                     path: "addFilmToList",
                     builder: (context, state) {
-                      final list = state.extra != null
-                          ? state.extra as FilmsList
-                          : null;
+                      final list =
+                          state.extra != null ? state.extra as FilmsList : null;
                       return AddFilmsToListScreen(selectedList: list);
                     },
                   ),
@@ -166,15 +166,13 @@ final _routes = [
                     // General
                     name: "generalSettings",
                     path: "general",
-                    builder: (context, state) =>
-                    const GeneralSettingsScreen(),
+                    builder: (context, state) => const GeneralSettingsScreen(),
                   ),
                   GoRoute(
                     // Usuario
                     name: "userSettings",
                     path: "user",
-                    builder: (context, state) =>
-                    const ProfileSettingsScreen(),
+                    builder: (context, state) => const ProfileSettingsScreen(),
                   ),
                 ],
               ),
@@ -190,6 +188,15 @@ final _routes = [
 /// Funciona en base a rutas, permite redirección, protección, pasar parámetros
 /// y rutas anidadas.
 GoRouter routerConfig = GoRouter(
+  redirect: (context, state) {
+    final userViewModel = Provider.of<UserViewModel>(context, listen: false);
+    if (!userViewModel.isAuthenticated &&
+        state.fullPath != "/register" &&
+        state.fullPath != "/login") {
+      return '/login';
+    }
+    return null;
+  },
   initialLocation: "/login",
   navigatorKey: _rootNavigatorKey,
   routes: _routes,

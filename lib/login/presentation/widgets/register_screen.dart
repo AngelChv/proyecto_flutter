@@ -34,11 +34,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Future<void> _register(BuildContext context) async {
     if (widget._formKey.currentState!.validate()) {
-      final hashedPassword = User.hashPassword(_passwordController.text);
       final user = User(
         username: _usernameController.text,
         email: _emailController.text,
-        password: hashedPassword,
+        password: _passwordController.text,
       );
       if (await context.read<UserViewModel>().register(user) &&
           context.mounted) {

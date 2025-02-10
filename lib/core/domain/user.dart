@@ -1,18 +1,17 @@
-import 'dart:convert';
-import 'package:crypto/crypto.dart';
-
 /// Clase modelo para los datos necesarios de un usuario.
 class User {
   int? id;
   final String username;
   final String email;
   final String? password;
+  String? token;
 
   User({
     this.id,
     required this.username,
     required this.email,
     this.password,
+    this.token
   });
 
   /// Transforma el User a un mapa.
@@ -51,11 +50,21 @@ class User {
     );
   }
 
-  /// Encripta la contraseña con el algoritmo sha256
-  static String hashPassword(String password) {
-    var bytes = utf8.encode(password);
-    var digest = sha256.convert(bytes);
-    return digest.toString();
+  /// Devuelve un User del mapa recibido como parámetro.
+  ///
+  /// Se necesitan los siguiéntes valores del mapa:
+  /// 1. `int id`
+  /// 2. `String username`
+  /// 3. `String email`
+  /// 4. `String token`
+  static User fromLoginMap(Map<String, dynamic> map) {
+    return User(
+      id: map['id'],
+      // El id se asigna cuando recuperamos el objeto desde la base de datos
+      username: map['username'],
+      email: map['email'],
+      token: map['token'],
+    );
   }
 
   @override

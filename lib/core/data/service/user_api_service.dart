@@ -23,7 +23,8 @@ class UserApiService implements UserService {
       );
       if (response.statusCode == 200) {
         if (jsonDecode(response.body) == null) return null;
-        return jsonDecode(response.body) as int;
+        return User.fromLoginMap(
+            jsonDecode(response.body) as Map<String, dynamic>).id;
       }
       if (response.statusCode == 400) {
         log("El nombre de usuario ya existe");
@@ -46,7 +47,8 @@ class UserApiService implements UserService {
       );
       if (response.statusCode == 200) {
         if (jsonDecode(response.body) == null) return null;
-        return User.fromMap(jsonDecode(response.body) as Map<String, dynamic>);
+        return User.fromLoginMap(
+            jsonDecode(response.body) as Map<String, dynamic>);
       }
     } catch (e, stackTrace) {
       log("Excepción al iniciar sesión: $e", stackTrace: stackTrace);
@@ -64,7 +66,8 @@ class UserApiService implements UserService {
         return User.fromMap(jsonDecode(response.body) as Map<String, dynamic>);
       }
     } catch (e, stackTrace) {
-      log("Excepción al obtener un usuario por nombre: $e", stackTrace: stackTrace);
+      log("Excepción al obtener un usuario por nombre: $e",
+          stackTrace: stackTrace);
     }
     return null;
   }

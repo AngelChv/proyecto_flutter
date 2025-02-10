@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:proyecto_flutter/core/domain/user.dart';
 import 'package:proyecto_flutter/core/presentation/theme/style_constants.dart';
 import 'package:proyecto_flutter/login/presentation/view_model/user_view_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -37,10 +36,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   _login(BuildContext context) async {
     final userVM = context.read<UserViewModel>();
-    final hashedPassword = User.hashPassword(_passwordController.text);
     final isAuthenticated = await userVM.login(
       _usernameController.text,
-      hashedPassword,
+      _passwordController.text,
     );
 
     if (!isAuthenticated && context.mounted) {

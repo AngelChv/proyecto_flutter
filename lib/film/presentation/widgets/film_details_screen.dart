@@ -5,6 +5,7 @@ import 'package:proyecto_flutter/core/presentation/theme/style_constants.dart';
 import 'package:proyecto_flutter/film/presentation/widgets/film_card.dart';
 import 'package:proyecto_flutter/film/presentation/view_model/film_view_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:proyecto_flutter/login/presentation/view_model/user_view_model.dart';
 import '../../domain/film.dart';
 
 /// Pantalla de detalles de la película
@@ -16,7 +17,9 @@ class FilmDetailsScreen extends StatelessWidget {
   const FilmDetailsScreen({super.key});
 
   _deleteFilm(BuildContext context, Film film) async {
-    final isSuccess = await context.read<FilmViewModel>().deleteFilm(film);
+    final user = context.read<UserViewModel>().currentUser;
+    final isSuccess =
+        await context.read<FilmViewModel>().deleteFilm(user?.token, film);
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(isSuccess

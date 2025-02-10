@@ -7,11 +7,11 @@ import '../../domain/film.dart';
 /// De este modo se obtiene lo deseado independientemente del funcionamiento
 /// interno.
 abstract class FilmService {
-  Future<List<Film>> getAll();
-  Future<Film?> findById(int id);
-  Future<int?> insert(Film film);
-  Future<bool> update(Film film);
-  Future<bool> delete(int id);
-  Future<List<Film>> getFilmsByListId(int id);
-  Future<int> countAllFilms();
+  Future<List<Film>> getAll(String? token);
+  Future<Film?> findById(String? token, int id);
+  Future<int?> insert(String? token, Film film);
+  Future<bool> update(String? token, Film film);
+  Future<bool> delete(String? token, int id);
+  Future<List<Film>> getFilmsByListId(String? token, int id);
+  Future<int> countAllFilms(String? token);
 }

@@ -10,10 +10,15 @@ class FilmApiService implements FilmService {
   static const String urlBase = "http://127.0.0.1:8000/films";
 
   @override
-  Future<bool> delete(int id) async {
+  Future<bool> delete(String? token, int id) async {
     final url = Uri.parse("$urlBase/$id");
     try {
-      final response = await http.delete(url);
+      final response = await http.delete(
+        headers: {
+          "Authorization": "Bearer $token",
+        },
+        url,
+      );
       if (response.statusCode == 200) {
         return jsonDecode(response.body) as bool;
       }
@@ -24,10 +29,15 @@ class FilmApiService implements FilmService {
   }
 
   @override
-  Future<List<Film>> getAll() async {
+  Future<List<Film>> getAll(String? token) async {
     final url = Uri.parse("$urlBase/");
     try {
-      final response = await http.get(url);
+      final response = await http.get(
+        headers: {
+          "Authorization": "Bearer $token",
+        },
+        url,
+      );
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
 
@@ -42,12 +52,15 @@ class FilmApiService implements FilmService {
   }
 
   @override
-  Future<int?> insert(Film film) async {
+  Future<int?> insert(String? token, Film film) async {
     final url = Uri.parse("$urlBase/create");
     try {
       final response = await http.post(
         url,
-        headers: {"Content-Type": "application/json"},
+        headers: {
+          "Authorization": "Bearer $token",
+          "Content-Type": "application/json",
+        },
         body: jsonEncode(film.toMapWithOutId()),
       );
       if (response.statusCode == 200) {
@@ -60,12 +73,15 @@ class FilmApiService implements FilmService {
   }
 
   @override
-  Future<bool> update(Film film) async {
+  Future<bool> update(String? token, Film film) async {
     final url = Uri.parse("$urlBase/update");
     try {
       final response = await http.post(
         url,
-        headers: {"Content-Type": "application/json"},
+        headers: {
+          "Authorization": "Bearer $token",
+          "Content-Type": "application/json",
+        },
         body: jsonEncode(film.toMapWithId()),
       );
       if (response.statusCode == 200) {
@@ -78,16 +94,21 @@ class FilmApiService implements FilmService {
   }
 
   @override
-  Future<List<Film>> getFilmsByListId(int id) async {
+  Future<List<Film>> getFilmsByListId(String? token, int id) async {
     // todo
     return await [];
   }
 
   @override
-  Future<Film?> findById(int id) async {
+  Future<Film?> findById(String? token, int id) async {
     final url = Uri.parse("$urlBase/$id");
     try {
-      final response = await http.get(url);
+      final response = await http.get(
+        headers: {
+          "Authorization": "Bearer $token",
+        },
+        url,
+      );
       if (response.statusCode == 200) {
         // todo no se si funciona sin jsonDecode ?
         return Film.fromMap(response.body as Map<String, dynamic>);
@@ -99,10 +120,15 @@ class FilmApiService implements FilmService {
   }
 
   @override
-  Future<int> countAllFilms() async {
+  Future<int> countAllFilms(String? token) async {
     final url = Uri.parse("$urlBase/countAll");
     try {
-      final response = await http.get(url);
+      final response = await http.get(
+        headers: {
+          "Authorization": "Bearer $token",
+        },
+        url,
+      );
       if (response.statusCode == 200) {
         return jsonDecode(response.body) as int;
       }

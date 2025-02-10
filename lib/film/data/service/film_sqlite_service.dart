@@ -29,7 +29,7 @@ class FilmSqliteService implements FilmService {
 
   /// Obtiene una lista con todas las películas.
   @override
-  Future<List<Film>> getAll() async {
+  Future<List<Film>> getAll(_) async {
     List<Film> films = [];
     final Database? db = await SqliteManager.db;
 
@@ -46,7 +46,7 @@ class FilmSqliteService implements FilmService {
   ///
   /// Si no se encuentra devuelve null.
   @override
-  Future<Film?> findById(int id) async {
+  Future<Film?> findById(_, int id) async {
     final Database? db = await SqliteManager.db;
     final result = await db?.query(
       table,
@@ -60,14 +60,14 @@ class FilmSqliteService implements FilmService {
 
   /// Inserta una película y devuelve su id generádo.
   @override
-  Future<int?> insert(Film film) async {
+  Future<int?> insert(_, Film film) async {
     final Database? db = await SqliteManager.db;
     return await db?.insert(table, film.toMapWithOutId());
   }
 
   /// Actualiza una película y devuelve un `bool` con el resultado.
   @override
-  Future<bool> update(Film film) async {
+  Future<bool> update(_, Film film) async {
     final Database? db = await SqliteManager.db;
     final int? count = await db
         ?.update(table, film.toMapWithOutId(), where: "id = ?", whereArgs: [film.id]);
@@ -77,7 +77,7 @@ class FilmSqliteService implements FilmService {
 
   /// Elimina una película y devuelve un `bool` con el resultado.
   @override
-  Future<bool> delete(int id) async {
+  Future<bool> delete(_, int id) async {
     final Database? db = await SqliteManager.db;
     final int count =
         await db?.delete(table, where: "id = ?", whereArgs: [id]) ?? 0;
@@ -86,7 +86,7 @@ class FilmSqliteService implements FilmService {
 
   /// Obtiene todas las películas de una lista por su id.
   @override
-  Future<List<Film>> getFilmsByListId(int listId) async {
+  Future<List<Film>> getFilmsByListId(_, int listId) async {
     final Database? db = await SqliteManager.db;
 
     final List<Map<String, Object?>>? resultList = await db?.rawQuery("""
@@ -106,7 +106,7 @@ class FilmSqliteService implements FilmService {
 
   /// Obtiene el número total de películas guardadas.
   @override
-  Future<int> countAllFilms() async {
+  Future<int> countAllFilms(_) async {
     final Database? db = await SqliteManager.db;
     final result = await db?.rawQuery("SELECT COUNT(*) as count FROM $table");
     return result != null && result.isNotEmpty ? result.first['count'] as int : 0;

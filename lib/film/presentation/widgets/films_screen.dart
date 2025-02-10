@@ -4,11 +4,26 @@ import 'package:provider/provider.dart';
 import 'package:proyecto_flutter/film/presentation/widgets/films_grid.dart';
 import 'package:proyecto_flutter/film/presentation/view_model/film_view_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:proyecto_flutter/login/presentation/view_model/user_view_model.dart';
 import '../../../core/presentation/theme/style_constants.dart';
 
 /// Pantalla para visualizar las películas guardadas.
-class FilmsScreen extends StatelessWidget {
+class FilmsScreen extends StatefulWidget {
   const FilmsScreen({super.key});
+
+  @override
+  State<FilmsScreen> createState() => _FilmsScreenState();
+}
+
+class _FilmsScreenState extends State<FilmsScreen> {
+  @override
+  void initState() {
+    super.initState();
+    final user = context.read<UserViewModel>().currentUser;
+    if (user != null) {
+      context.read<FilmViewModel>().loadFilms(user.token);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

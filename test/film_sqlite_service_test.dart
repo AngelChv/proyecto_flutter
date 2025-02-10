@@ -14,15 +14,18 @@ void main() {
     posterPath: 'https://placehold.co/900x1600/png',
   );
 
+  // NO se si va a ser necesario qu el token no sea nulo.
+  final token = null;
+
   setUp(() async {
     filmService = FilmSqliteService();
   });
 
   test('Debe insertar y recuperar una película', () async {
-    film.id = await filmService.insert(film);
+    film.id = await filmService.insert(token, film);
     expect(film.id, isNotNull);
 
-    final Film? retrievedFilm = await filmService.findById(film.id!);
+    final Film? retrievedFilm = await filmService.findById(token, film.id!);
     expect(retrievedFilm, isNotNull);
     expect(retrievedFilm?.title, 'Inception');
   });
@@ -38,19 +41,19 @@ void main() {
       posterPath: film.posterPath,
     );
 
-    final bool updated = await filmService.update(updatedFilm);
+    final bool updated = await filmService.update(token, updatedFilm);
     expect(updated, isTrue);
 
-    final Film? retrievedFilm = await filmService.findById(updatedFilm.id!);
+    final Film? retrievedFilm = await filmService.findById(token, updatedFilm.id!);
     expect(retrievedFilm?.title, 'Inception (Actualizado)');
   });
 
   test('Debe eliminar una película', () async {
 
-    final bool deleted = await filmService.delete(film.id!);
+    final bool deleted = await filmService.delete(token, film.id!);
     expect(deleted, isTrue);
 
-    final Film? retrievedFilm = await filmService.findById(film.id!);
+    final Film? retrievedFilm = await filmService.findById(token, film.id!);
     expect(retrievedFilm, isNull);
   });
 }

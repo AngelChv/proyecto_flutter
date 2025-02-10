@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_flutter/film/presentation/widgets/film_form.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:proyecto_flutter/login/presentation/view_model/user_view_model.dart';
 import '../view_model/film_view_model.dart';
 
 /// Pantalla que muestra el formulario para editar o crear una película.
@@ -21,6 +22,7 @@ class _FilmFormScreenState extends State<FilmFormScreen> {
   @override
   Widget build(BuildContext context) {
     final filmForm = FilmForm(_formKey, isEditing: widget.isEditing);
+    final user = context.watch<UserViewModel>().currentUser;
 
     return Scaffold(
       appBar: AppBar(
@@ -36,13 +38,19 @@ class _FilmFormScreenState extends State<FilmFormScreen> {
             : AppLocalizations.of(context)!.createFilm,
         child: Icon(Icons.check),
         onPressed: () async {
-          final film = context.read<FilmViewModel>().submitForm(context, filmForm, _formKey);
+          final film = context
+              .read<FilmViewModel>()
+              .submitForm(context, filmForm, _formKey);
           if (film != null) {
             bool isSuccess;
             if (widget.isEditing) {
-              isSuccess = await context.read<FilmViewModel>().editFilm(film);
+              isSuccess = await context
+                  .read<FilmViewModel>()
+                  .editFilm(user?.token, film);
             } else {
-              isSuccess = await context.read<FilmViewModel>().createFilm(film);
+              isSuccess = await context
+                  .read<FilmViewModel>()
+                  .createFilm(user?.token, film);
             }
 
             if (isSuccess && context.mounted) {

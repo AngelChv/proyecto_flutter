@@ -38,12 +38,8 @@ class FilmViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  FilmViewModel() {
-    loadFilms();
-  }
-
-  Future<void> loadFilms() async {
-    _films = await filmRepository.getAll();
+  Future<void> loadFilms(String? token) async {
+    _films = await filmRepository.getAll(token);
     notifyListeners();
   }
 
@@ -51,8 +47,8 @@ class FilmViewModel extends ChangeNotifier {
   ///
   /// Si la operación se ha realizado con éxito, la película se añade a la lista
   /// y se procede a realizar una actualización de la interfáz.
-  Future<bool> createFilm(Film newFilm) async {
-    final int? id = await filmRepository.insert(newFilm);
+  Future<bool> createFilm(String? token, Film newFilm) async {
+    final int? id = await filmRepository.insert(token, newFilm);
     bool isSuccess = false;
     if (id != null) {
       newFilm.id = id;
@@ -68,11 +64,11 @@ class FilmViewModel extends ChangeNotifier {
   /// Si la película se modifica con éxito, la misma película seleccionada
   /// se actualiza de la lista y se actualiza la interfáz para mostrar el
   /// cambio.
-  Future<bool> editFilm(Film newFilm) async {
+  Future<bool> editFilm(String? token, Film newFilm) async {
     bool isSuccess = false;
     if (selectedFilm != null) {
       newFilm.id = selectedFilm?.id;
-      isSuccess = await filmRepository.update(newFilm);
+      isSuccess = await filmRepository.update(token, newFilm);
       if (isSuccess) {
         final int filmIndex = _films.indexOf(_selectedFilm!);
         if (filmIndex >= 0) {
@@ -91,8 +87,8 @@ class FilmViewModel extends ChangeNotifier {
   ///
   /// Si la operación se realiza con éxito, también se elimina la película
   /// de la lista en memoria, y se actualiza la interfáz.
-  Future<bool> deleteFilm(Film film) async {
-    if (await filmRepository.delete(film.id!)) {
+  Future<bool> deleteFilm(String? token, Film film) async {
+    if (await filmRepository.delete(token, film.id!)) {
       _films.remove(film);
       notifyListeners();
       return true;

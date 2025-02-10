@@ -92,7 +92,7 @@ class ProfileScreen extends StatelessWidget {
     currentUser = currentUser ?? User(username: "Loading", email: "Loading");
     final profileVM = Provider.of<ProfileViewModel>(context, listen: false);
 
-    final stats = profileVM.getStats(userVM.currentUserId);
+    final stats = profileVM.getStats(currentUser.token, userVM.currentUserId);
 
     return Scaffold(
       appBar: AppBar(

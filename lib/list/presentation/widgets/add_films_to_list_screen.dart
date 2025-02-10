@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:proyecto_flutter/list/domain/list.dart';
 import 'package:proyecto_flutter/list/domain/list_result.dart';
 import 'package:proyecto_flutter/list/presentation/view_model/list_view_model.dart';
+import 'package:proyecto_flutter/login/presentation/view_model/user_view_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../../../core/presentation/theme/style_constants.dart';
@@ -22,8 +23,10 @@ class AddFilmsToListScreen extends StatelessWidget {
   _addFilmToList(BuildContext context, int? filmId) async {
     late ListResult? result;
     final listId = _selectedList?.id;
+    final user = context.read<UserViewModel>().currentUser;
     if (filmId != null && listId != null) {
       result = await context.read<ListViewModel>().addFilmToList(
+            user?.token,
             listId,
             filmId,
           );
@@ -69,8 +72,7 @@ class AddFilmsToListScreen extends StatelessWidget {
         onFilmTap: (film) {
           _addFilmToList(context, film.id);
         },
-        onFilmLongPress: (film) {
-        },
+        onFilmLongPress: (film) {},
         films: films,
       ),
     );

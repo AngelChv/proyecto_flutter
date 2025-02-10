@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_flutter/list/presentation/view_model/list_view_model.dart';
 import 'package:proyecto_flutter/list/presentation/widgets/lists_grid.dart';
+import 'package:proyecto_flutter/login/presentation/view_model/user_view_model.dart';
 
 import '../../../core/presentation/theme/style_constants.dart';
 import '../../domain/list.dart';
@@ -19,7 +20,8 @@ class ListsScreen extends StatelessWidget {
     return ListsGrid(
       padding: EdgeInsets.all(isWideScreen ? mediumMargin : compactMargin),
       onListTap: (list) {
-        context.read<ListViewModel>().selectList(list);
+        final user = context.read<UserViewModel>().currentUser;
+        context.read<ListViewModel>().selectList(user?.token, list);
         context.pushNamed<FilmsList>("listDetails", extra: list);
       },
       lists: lists,

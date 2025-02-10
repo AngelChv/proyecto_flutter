@@ -27,47 +27,47 @@ class FilmRepository {
   }
 
   /// Se conecta al servicio para obtener todas las películas.
-  Future<List<Film>> getAll() {
-    return _filmService.getAll();
+  Future<List<Film>> getAll(String? token) {
+    return _filmService.getAll(token);
   }
 
   /// Se conecta al servicio para insertar una película.
   ///
   /// Devuelve el `int` id generado para la película
-  Future<int?> insert(Film film) {
-    return _filmService.insert(film);
+  Future<int?> insert(String? token, Film film) {
+    return _filmService.insert(token, film);
   }
 
   /// Se conecta al servicio para actualizar una película.
   ///
   /// Devuelve un `bool` con el resultado.
-  Future<bool> update(Film film) {
-    return _filmService.update(film);
+  Future<bool> update(String? token, Film film) {
+    return _filmService.update(token, film);
   }
 
   /// Se conecta al servicio para eliminar una película.
   ///
   /// Devuelve un `bool` con el resultado.
-  Future<bool> delete(int id) {
-    return _filmService.delete(id);
+  Future<bool> delete(String? token, int id) {
+    return _filmService.delete(token, id);
   }
 
   /// Se conecta al servicio para obtener las películas de una lista según su id.
   ///
   /// Si no encuentra nada devuelve la lista vacía.
-  Future<List<Film>> getFilmsByListId(int id) {
-    return _filmService.getFilmsByListId(id);
+  Future<List<Film>> getFilmsByListId(String? token, int id) {
+    return _filmService.getFilmsByListId(token, id);
   }
 
   /// Se conecta al servicio para obtener una película por su id.
   ///
   /// Si no encuentra nada devuelve null.
-  Future<Film?> findById(int id) {
-    return _filmService.findById(id);
+  Future<Film?> findById(String? token, int id) {
+    return _filmService.findById(token, id);
   }
 
   /// Se conecta al servicio para obtener el número total de películas.
-  Future<int> countAllFilms() {
-    return _filmService.countAllFilms();
+  Future<int> countAllFilms(String? token) {
+    return _filmService.countAllFilms(token);
   }
 }

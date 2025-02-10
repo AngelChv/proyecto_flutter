@@ -41,10 +41,10 @@ class ListViewModel extends ChangeNotifier {
   List<Film> get filmsOfList => _filmsOfList;
 
   /// Selecciona una lista.
-  selectList(FilmsList listToSelect) {
+  selectList(String? token, FilmsList listToSelect) {
     _selectedList = listToSelect;
     notifyListeners();
-    loadFilmsOfCurrentList();
+    loadFilmsOfCurrentList(token);
   }
 
   /// Carga las listas del repositorio.
@@ -59,9 +59,9 @@ class ListViewModel extends ChangeNotifier {
   }
 
   /// Carga las películas de la lista seleccionada.
-  loadFilmsOfCurrentList() {
+  loadFilmsOfCurrentList(String? token) {
     if (_selectedList?.id != null) {
-      _filmRepository.getFilmsByListId(_selectedList!.id!).then((result) {
+      _filmRepository.getFilmsByListId(token, _selectedList!.id!).then((result) {
         _filmsOfList = result;
         notifyListeners();
       });
@@ -114,13 +114,13 @@ class ListViewModel extends ChangeNotifier {
   }
 
   /// Añade una película a la lista.
-  Future<ListResult<bool>> addFilmToList(int listId, int filmId) async {
+  Future<ListResult<bool>> addFilmToList(String? token, int listId, int filmId) async {
     final ListResult<bool> result = await _listRepository.addFilmToList(
         listId, filmId);
 
     // Añadir película a la lista en memoria.
     if (result.result && _selectedList?.id == listId) {
-      final film = await _filmRepository.findById(filmId);
+      final film = await _filmRepository.findById(token, filmId);
       if (film != null) {
         _filmsOfList.add(film);
       }

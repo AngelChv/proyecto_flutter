@@ -24,6 +24,9 @@ void main() {
     posterPath: 'https://placehold.co/900x1600/png',
   );
 
+  // NO se si va a ser necesario qu el token no sea nulo.
+  final token = null;
+
   testWidgets('Navegar a detalles de película y eliminarla', (WidgetTester tester) async {
     // Iniciar la aplicación.
     await tester.pumpWidget(MultiProvider(
@@ -46,12 +49,12 @@ void main() {
     await tester.pumpAndSettle();
 
     // Crear una película:
-    await FilmSqliteService().insert(film);
+    await FilmSqliteService().insert(token, film);
     await tester.pumpAndSettle();
 
     // Asegurar que se actualiza la lista de películas.
     final filmViewModel = Provider.of<FilmViewModel>(tester.element(find.byType(App)), listen: false);
-    await filmViewModel.loadFilms();
+    await filmViewModel.loadFilms(token);
     await tester.pumpAndSettle();
 
 

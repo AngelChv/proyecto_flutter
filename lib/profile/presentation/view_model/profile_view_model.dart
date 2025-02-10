@@ -90,7 +90,7 @@ class ProfileViewModel extends ChangeNotifier {
   // Estadísticas:
   Future<ProfileStats> getStats(String? token, int userId) async {
     final totalFilms = await FilmRepository().countAllFilms(token);
-    final totalLists = await ListRepository().countAllListsByUserId(userId);
+    final totalLists = await ListRepository().countAllListsByUserId(token, userId);
     return ProfileStats(totalFilms: totalFilms, totalLists: totalLists);
   }
 }

@@ -17,49 +17,49 @@ class ListRepository {
   }
 
   /// Se conecta al servicio para obtener todas las listas.
-  Future<List<FilmsList>> findAllByUserId(int userId) {
-    return _listService.findAllByUserId(userId);
+  Future<List<FilmsList>> findAllByUserId(String? token, int userId) {
+    return _listService.findAllByUserId(token, userId);
   }
 
   /// Se conecta al servicio para insertar una lista.
   ///
   /// Devuelve el `int` id generado para la lista
-  Future<int?> insert(FilmsList list, int userId) {
-    return _listService.insert(list, userId);
+  Future<int?> insert(String? token, FilmsList list, int userId) {
+    return _listService.insert(token, list, userId);
   }
 
   /// Se conecta al servicio para actualizar una lista.
   ///
   /// Devuelve un `bool` con el resultado.
-  Future<bool> update(FilmsList list, int userId) {
-    return _listService.update(list, userId);
+  Future<bool> update(String? token, FilmsList list, int userId) {
+    return _listService.update(token, list, userId);
   }
 
   /// Se conecta al servicio para eliminar una lista.
   ///
   /// Devuelve un `bool` con el resultado.
-  Future<bool> delete(int id) {
-    return _listService.delete(id);
+  Future<bool> delete(String? token, int id) {
+    return _listService.delete(token, id);
   }
 
   /// Se conecta al servicio para insertar una película a una lista.
   ///
   /// Devuelve el `int` id generado para la relación.
-  Future<ListResult<bool>> addFilmToList(int listId, int filmId) {
-    return _listService.addFilmToList(listId, filmId);
+  Future<ListResult<bool>> addFilmToList(String? token, int listId, int filmId) {
+    return _listService.addFilmToList(token, listId, filmId);
   }
 
   /// Se conecta al servicio para eliminar una película de una lista.
   ///
   /// Devuelve `bool` con el resultado.
-  Future<bool> removeFilmFromList(int listId, int filmId) {
-    return _listService.removeFilmFromList(listId, filmId);
+  Future<bool> removeFilmFromList(String? token, int listId, int filmId) {
+    return _listService.removeFilmFromList(token, listId, filmId);
   }
 
   /// Se conecta al servicio para calcular las listas que tiene un usuario.
   ///
   /// Devuelve un `int` con el resultado.
-  Future<int> countAllListsByUserId(int userId) {
-    return _listService.countAllListsByUserId(userId);
+  Future<int> countAllListsByUserId(String? token, int userId) {
+    return _listService.countAllListsByUserId(token, userId);
   }
 }

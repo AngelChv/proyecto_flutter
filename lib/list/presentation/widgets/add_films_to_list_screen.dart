@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:proyecto_flutter/core/domain/http_status_exception.dart';
 import 'package:proyecto_flutter/list/domain/list.dart';
 import 'package:proyecto_flutter/list/domain/list_result.dart';
 import 'package:proyecto_flutter/list/presentation/view_model/list_view_model.dart';
@@ -39,6 +40,9 @@ class AddFilmsToListScreen extends StatelessWidget {
         message = AppLocalizations.of(context)!.addFilmToListError;
       } else if (result.e is DatabaseException &&
           (result.e as DatabaseException).isUniqueConstraintError()) {
+        message = AppLocalizations.of(context)!.filmAlreadyIsInList;
+      } else if (result.e is HttpStatusException &&
+          (result.e as HttpStatusException).statusCode == 400) {
         message = AppLocalizations.of(context)!.filmAlreadyIsInList;
       } else if (result.result is bool && result.result) {
         message = AppLocalizations.of(context)!.addedFilmToList;

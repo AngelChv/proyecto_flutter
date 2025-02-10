@@ -31,7 +31,7 @@ class ListSqliteService implements ListService {
 
   /// Obtiene una lista con todas las listas del usuario por su id.
   @override
-  Future<List<FilmsList>> findAllByUserId(int userId) async {
+  Future<List<FilmsList>> findAllByUserId(_, int userId) async {
     List<FilmsList> lists = [];
     final Database? db = await SqliteManager.db;
 
@@ -50,14 +50,14 @@ class ListSqliteService implements ListService {
 
   /// Inserta una lista y devuelve su id generádo.
   @override
-  Future<int?> insert(FilmsList list, int userId) async {
+  Future<int?> insert(_, FilmsList list, int userId) async {
     final Database? db = await SqliteManager.db;
     return await db?.insert(table, list.toMapWithoutId(userId));
   }
 
   /// Actualiza una lista y devuelve un `bool` con el resultado.
   @override
-  Future<bool> update(FilmsList list, int userId) async {
+  Future<bool> update(_, FilmsList list, int userId) async {
     final Database? db = await SqliteManager.db;
     final int? count = await db?.update(
       table,
@@ -71,7 +71,7 @@ class ListSqliteService implements ListService {
 
   /// Elimina una lista y devuelve un `bool` con el resultado.
   @override
-  Future<bool> delete(int id) async {
+  Future<bool> delete(_, int id) async {
     final Database? db = await SqliteManager.db;
     final int count =
         await db?.delete(table, where: "id = ?", whereArgs: [id]) ?? 0;
@@ -80,7 +80,7 @@ class ListSqliteService implements ListService {
 
   /// Añade una película a una lista por sus ids.
   @override
-  Future<ListSqliteResult<bool>> addFilmToList(int listId, int filmId) async {
+  Future<ListSqliteResult<bool>> addFilmToList(_, int listId, int filmId) async {
     final Database? db = await SqliteManager.db;
     try {
       final id = await db?.insert("list_films", {
@@ -97,7 +97,7 @@ class ListSqliteService implements ListService {
 
   /// Elimina una película de una lista por sus ids.
   @override
-  Future<bool> removeFilmFromList(int listId, int filmId) async {
+  Future<bool> removeFilmFromList(_, int listId, int filmId) async {
     final Database? db = await SqliteManager.db;
     final int count = await db?.delete(
           "list_films",
@@ -110,7 +110,7 @@ class ListSqliteService implements ListService {
 
   /// Obtiene el número total de películas guardadas.
   @override
-  Future<int> countAllListsByUserId(int userId) async {
+  Future<int> countAllListsByUserId(_, int userId) async {
     final Database? db = await SqliteManager.db;
     final result = await db?.rawQuery(
       "SELECT COUNT(*) as count FROM $table WHERE user_id = $userId",

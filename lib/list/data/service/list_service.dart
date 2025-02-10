@@ -8,11 +8,11 @@ import 'package:proyecto_flutter/list/domain/list_result.dart';
 /// De este modo se obtiene lo deseado independientemente del funcionamiento
 /// interno.
 abstract class ListService {
-  Future<List<FilmsList>> findAllByUserId(int userId);
-  Future<int?> insert(FilmsList list, int userId);
-  Future<bool> update(FilmsList list, int userId);
-  Future<bool> delete(int id);
-  Future<ListResult<bool>> addFilmToList(int listId, int filmId);
-  Future<bool> removeFilmFromList(int listId, int filmId);
-  Future<int> countAllListsByUserId(int userId);
+  Future<List<FilmsList>> findAllByUserId(String? token, int userId);
+  Future<int?> insert(String? token, FilmsList list, int userId);
+  Future<bool> update(String? token, FilmsList list, int userId);
+  Future<bool> delete(String? token, int id);
+  Future<ListResult<bool>> addFilmToList(String? token, int listId, int filmId);
+  Future<bool> removeFilmFromList(String? token, int listId, int filmId);
+  Future<int> countAllListsByUserId(String? token, int userId);
 }

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto_flutter/list/domain/list.dart';
 import 'package:proyecto_flutter/list/presentation/view_model/list_view_model.dart';
+import 'package:proyecto_flutter/login/presentation/view_model/user_view_model.dart';
 
 import '../../../core/presentation/theme/style_constants.dart';
 import '../../../film/domain/film.dart';
@@ -18,7 +19,9 @@ class ListDetailsScreen extends StatelessWidget {
   const ListDetailsScreen({super.key});
 
   _deleteList(BuildContext context, FilmsList list) async {
-    final isSuccess = await context.read<ListViewModel>().deleteList(list);
+    final user = context.read<UserViewModel>().currentUser;
+    final isSuccess =
+        await context.read<ListViewModel>().deleteList(user?.token, list);
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(isSuccess
@@ -54,7 +57,9 @@ class ListDetailsScreen extends StatelessWidget {
   }
 
   _removeFilmFromList(BuildContext context, int listId, Film film) async {
+    final user = context.read<UserViewModel>().currentUser;
     final isSuccess = await context.read<ListViewModel>().removeFilmFromList(
+          user?.token,
           listId,
           film,
         );

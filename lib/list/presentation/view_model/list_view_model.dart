@@ -17,17 +17,17 @@ class ListViewModel extends ChangeNotifier {
 
   late int _currentUserId;
 
-  set currentUserId(int value) {
+  void setCurrentUserId(String? token, int value) {
     _currentUserId = value;
-    loadLists();
+    loadLists(token);
   }
 
   List<FilmsList>? _lists;
 
   /// Obtiene las listas, si no están cargadas hace una petición.
-  List<FilmsList>? getLists() {
+  List<FilmsList>? getLists(String? token) {
     if (_lists != null) return _lists!;
-    return loadLists();
+    return loadLists(token);
   }
 
   FilmsList? _selectedList;
@@ -50,8 +50,8 @@ class ListViewModel extends ChangeNotifier {
   /// Carga las listas del repositorio.
   ///
   /// Puede ser una petición a una api o a sqlite.
-  List<FilmsList>? loadLists() {
-    _listRepository.findAllByUserId(_currentUserId).then((result) {
+  List<FilmsList>? loadLists(String? token) {
+    _listRepository.findAllByUserId(token, _currentUserId).then((result) {
       _lists = result;
       notifyListeners();
     });
@@ -69,8 +69,8 @@ class ListViewModel extends ChangeNotifier {
   }
 
   /// Crea una lista
-  Future<bool> createList(FilmsList newList) async {
-    final int? id = await _listRepository.insert(newList, _currentUserId);
+  Future<bool> createList(String? token, FilmsList newList) async {
+    final int? id = await _listRepository.insert(token, newList, _currentUserId);
     bool isSuccess = false;
     if (id != null) {
       newList.id = id;
@@ -86,10 +86,10 @@ class ListViewModel extends ChangeNotifier {
   /// Si la lista se modifica con éxito, la misma lista seleccionada
   /// se actualiza de la lista total y se actualiza la interfáz para mostrar el
   /// cambio.
-  Future<bool> editList(FilmsList newList, FilmsList oldList) async {
+  Future<bool> editList(String? token, FilmsList newList, FilmsList oldList) async {
     bool isSuccess = false;
     newList.id = oldList.id;
-    isSuccess = await _listRepository.update(newList, _currentUserId);
+    isSuccess = await _listRepository.update(token, newList, _currentUserId);
     if (isSuccess && _lists != null) {
       final int filmIndex = _lists?.indexOf(oldList) ?? -1;
       if (filmIndex >= 0) {
@@ -104,8 +104,8 @@ class ListViewModel extends ChangeNotifier {
   }
 
   /// Elimina una lista
-  Future<bool> deleteList(FilmsList list) async {
-    if (list.id != null && await _listRepository.delete(list.id!) && _lists != null) {
+  Future<bool> deleteList(String? token, FilmsList list) async {
+    if (list.id != null && await _listRepository.delete(token, list.id!) && _lists != null) {
       _lists?.remove(list);
       notifyListeners();
       return true;
@@ -116,7 +116,7 @@ class ListViewModel extends ChangeNotifier {
   /// Añade una película a la lista.
   Future<ListResult<bool>> addFilmToList(String? token, int listId, int filmId) async {
     final ListResult<bool> result = await _listRepository.addFilmToList(
-        listId, filmId);
+        token, listId, filmId);
 
     // Añadir película a la lista en memoria.
     if (result.result && _selectedList?.id == listId) {
@@ -130,10 +130,10 @@ class ListViewModel extends ChangeNotifier {
   }
 
   /// Elimina una película de la lista.
-  Future<bool> removeFilmFromList(int listId, Film film) async {
+  Future<bool> removeFilmFromList(String? token, int listId, Film film) async {
     if (film.id == null) return false;
     final isSuccess = await _listRepository.removeFilmFromList(
-        listId, film.id!);
+        token, listId, film.id!);
     if (isSuccess && _selectedList?.id == listId) {
       _filmsOfList.remove(film);
       notifyListeners();

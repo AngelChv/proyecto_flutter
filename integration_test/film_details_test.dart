@@ -36,7 +36,8 @@ void main() {
         ChangeNotifierProxyProvider<UserViewModel, ListViewModel>(
           create: (_) => ListViewModel(),
           update: (_, userVM, listVM) {
-            listVM!.currentUserId = userVM.currentUserId;
+            final user = userVM.currentUser;
+            listVM!.setCurrentUserId(user?.token, userVM.currentUserId);
             return listVM;
           },
         ),

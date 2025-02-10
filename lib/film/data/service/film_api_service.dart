@@ -95,8 +95,25 @@ class FilmApiService implements FilmService {
 
   @override
   Future<List<Film>> getFilmsByListId(String? token, int id) async {
-    // todo
-    return await [];
+    final url = Uri.parse("$urlBase/of_list/$id");
+    try {
+      final response = await http.get(
+        headers: {
+          "Authorization": "Bearer $token",
+        },
+        url,
+      );
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(response.body);
+
+        return data.map((map) {
+          return Film.fromMap(map as Map<String, dynamic>);
+        }).toList();
+      }
+    } catch (e, stackTrace) {
+      log("Excepción al obtener las películas de la lista: $e", stackTrace: stackTrace);
+    }
+    return [];
   }
 
   @override
@@ -110,8 +127,7 @@ class FilmApiService implements FilmService {
         url,
       );
       if (response.statusCode == 200) {
-        // todo no se si funciona sin jsonDecode ?
-        return Film.fromMap(response.body as Map<String, dynamic>);
+        return Film.fromMap(jsonDecode(response.body) as Map<String, dynamic>);
       }
     } catch (e, stackTrace) {
       log("Excepción al obtener las películas: $e", stackTrace: stackTrace);

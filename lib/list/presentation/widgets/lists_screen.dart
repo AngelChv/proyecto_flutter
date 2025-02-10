@@ -16,12 +16,15 @@ class ListsScreen extends StatelessWidget {
   const ListsScreen({super.key});
 
   ListsGrid _listsGrid(
-      BuildContext context, bool isWideScreen, List<FilmsList> lists) {
+    BuildContext context,
+    bool isWideScreen,
+    List<FilmsList> lists,
+    String? token,
+  ) {
     return ListsGrid(
       padding: EdgeInsets.all(isWideScreen ? mediumMargin : compactMargin),
       onListTap: (list) {
-        final user = context.read<UserViewModel>().currentUser;
-        context.read<ListViewModel>().selectList(user?.token, list);
+        context.read<ListViewModel>().selectList(token, list);
         context.pushNamed<FilmsList>("listDetails", extra: list);
       },
       lists: lists,
@@ -35,14 +38,16 @@ class ListsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isWideScreen = MediaQuery.sizeOf(context).width >= 600;
-    final lists = context.watch<ListViewModel>().getLists();
+    final user = Provider.of<UserViewModel>(context, listen: false).currentUser;
+    final lists = context.watch<ListViewModel>().getLists(user?.token);
 
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.lists),
       ),
-      body:
-          lists == null ? _loading() : _listsGrid(context, isWideScreen, lists),
+      body: lists == null
+          ? _loading()
+          : _listsGrid(context, isWideScreen, lists, user?.token),
       floatingActionButton: FloatingActionButton(
         heroTag: "listsScreenFab",
         tooltip: AppLocalizations.of(context)!.createList,

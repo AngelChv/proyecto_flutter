@@ -22,6 +22,7 @@ class UserApiService implements UserService {
         body: jsonEncode(user.toMap()),
       );
       if (response.statusCode == 200) {
+        if (jsonDecode(response.body) == null) return null;
         return jsonDecode(response.body) as int;
       }
       if (response.statusCode == 400) {
@@ -44,6 +45,7 @@ class UserApiService implements UserService {
         body: jsonEncode(loginUser.toLoginMap()),
       );
       if (response.statusCode == 200) {
+        if (jsonDecode(response.body) == null) return null;
         return User.fromMap(jsonDecode(response.body) as Map<String, dynamic>);
       }
     } catch (e, stackTrace) {
@@ -58,6 +60,7 @@ class UserApiService implements UserService {
     try {
       final response = await http.get(url);
       if (response.statusCode == 200) {
+        if (jsonDecode(response.body) == null) return null;
         return User.fromMap(jsonDecode(response.body) as Map<String, dynamic>);
       }
     } catch (e, stackTrace) {

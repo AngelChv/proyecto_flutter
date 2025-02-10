@@ -27,6 +27,15 @@ class User {
     };
   }
 
+  /// Transforma el User a un mapa especifico para el login.
+  ///
+  Map<String, Object?> toLoginMap() {
+    return {
+      'username': username,
+      'password': password,
+    };
+  }
+
   /// Devuelve un User del mapa recibido como parámetro.
   ///
   /// Se necesitan los siguiéntes valores del mapa:

@@ -89,6 +89,7 @@ class FilmApiService implements FilmService {
     try {
       final response = await http.get(url);
       if (response.statusCode == 200) {
+        // todo no se si funciona sin jsonDecode ?
         return Film.fromMap(response.body as Map<String, dynamic>);
       }
     } catch (e, stackTrace) {
